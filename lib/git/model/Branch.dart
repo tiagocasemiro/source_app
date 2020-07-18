@@ -6,6 +6,6 @@ class Branch {
 
   @override
   String toString() {
-    return 'Branch{name: $name}';
+    return '\nBranch{name: $name}';
   }
 }

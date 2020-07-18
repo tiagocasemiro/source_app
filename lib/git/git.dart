@@ -6,8 +6,14 @@ class Git {
   String _path;
   Git(this._path);
 
-  Future<List<Branch>> branches() {
+  Future<List<Branch>> branchesRemote() {
     return Terminal(_path).git(['branch', '-r']).then((String terminalOutput) {
+      return BranchAdapter().toBranches(terminalOutput != null ? terminalOutput: "");
+    });
+  }
+
+  Future<List<Branch>> branchesLocal() {
+    return Terminal(_path).git(['branch']).then((String terminalOutput) {
       return BranchAdapter().toBranches(terminalOutput != null ? terminalOutput: "");
     });
   }
