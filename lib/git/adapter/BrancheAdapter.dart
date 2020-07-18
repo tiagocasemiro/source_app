@@ -4,21 +4,22 @@ import '../model/Branch.dart';
 class BranchAdapter extends BaseAdapter {
 
   List<Branch> toBranches(String terminalOutput) {
-    List<Branch> branchs = List();
+    List<Branch> branches = List();
     toLines(terminalOutput).forEach((line) {
       if(line.isNotEmpty) {
-        branchs.add(Branch(clean(line)));
+        branches.add(Branch(clean(line)));
       }
     });
 
-    return branchs;
+    return branches;
   }
 
   Branch toBranch(String terminalOutput) {
-    if(terminalOutput.isNotEmpty) {
-      return Branch(clean(terminalOutput));
-    }
+    String branch = toLines(terminalOutput).firstWhere(
+      (line) => line.isNotEmpty && line.startsWith("*"),
+      orElse: () => null
+    );
 
-    return null;
+    return branch != null ? Branch(clean(branch)) : null;
   }
 }
