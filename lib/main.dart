@@ -6,13 +6,21 @@ import 'git/shell/Terminal.dart';
 void main() {
   runApp(SourceApp());
 
-  Git("/home/tiagocasemiro/Documentos/projetos/paranaue/pos-service-gestao").branchesLocal().then((branches) => print(branches));
-  Git("/home/tiagocasemiro/Documentos/projetos/paranaue/pos-service-gestao").branchesRemote().then((branches) => print(branches));
+  //Git("/home/tiagocasemiro/Documentos/projetos/paranaue/pos-service-gestao").branchesLocal().then((branches) => print(branches));
+  //Git("/home/tiagocasemiro/Documentos/projetos/paranaue/pos-service-gestao").branchesRemote().then((branches) => print(branches));
   /*Git("/home/tiagocasemiro/Documentos/projetos/pessoal/ChuckNorrisFacts").branchesRemote().then((branches) => print(branches));
   Git("/home/tiagocasemiro/Documentos/projetos/ayla/ayla-package-application-salesman").branchesRemote().then((branches) => print(branches));
   Git("/home/tiagocasemiro/Documentos/projetos/pessoal/ChuckNorrisFacts").branch().then((branch) => print("result ->" + branch.toString()));
   Git("/home/tiagocasemiro/Documentos/projetos/ayla/ayla-package-application-salesman").branch().then((branch) => print("result ->" + branch.toString()));
   Terminal("/home/tiagocasemiro/Documentos/projetos/pessoal/ChuckNorrisFacts").ls().then((value) => print(value));*/
+
+  //Git("/home/tiagocasemiro/Documentos/projetos/paranaue/pos-service-gestao").branch().remote().then((branches) => print(branches));
+ // Git("/home/tiagocasemiro/Documentos/projetos/pessoal/TestSource").tag().all().then((branches) => print(branches));
+ // Git("/home/tiagocasemiro/Documentos/projetos/pessoal/TestSource").add().all().then((branches) => print(branches));
+//  Git("/home/tiagocasemiro/Documentos/projetos/pessoal/TestSource").add().files(["name"]).then((branches) => print(branches));
+  Git("/home/tiagocasemiro/Documentos/projetos/pessoal/TestSource").commit("initial commit").then((branches) => print(branches));
+
+
 }
 
 class SourceApp extends StatelessWidget {
