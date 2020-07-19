@@ -23,6 +23,10 @@ class Git {
   Future<bool> commit(String message) {
     return _Commit(_path).execute(message);
   }
+
+  Future<bool> push() {
+    return _Push(_path).execute();
+  }
 }
 
 class _Branch {
@@ -84,8 +88,19 @@ class _Commit {
 
   Future<bool> execute(String message) {
     return Terminal(_path).git(['commit', '-m', message]).then((String terminalOutput) {
+      print(terminalOutput);
       return true;
     });
   }
+}
 
+class _Push {
+  String _path;
+  _Push(this._path);
+
+  Future<bool> execute() {
+    return Terminal(_path).git(['push']).then((String terminalOutput) {
+      return true;
+    });
+  }
 }

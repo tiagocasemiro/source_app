@@ -6,6 +6,8 @@ import 'git/shell/Terminal.dart';
 void main() {
   runApp(SourceApp());
 
+  String workDirectory = "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
+
   //Git("/home/tiagocasemiro/Documentos/projetos/paranaue/pos-service-gestao").branchesLocal().then((branches) => print(branches));
   //Git("/home/tiagocasemiro/Documentos/projetos/paranaue/pos-service-gestao").branchesRemote().then((branches) => print(branches));
   /*Git("/home/tiagocasemiro/Documentos/projetos/pessoal/ChuckNorrisFacts").branchesRemote().then((branches) => print(branches));
@@ -18,8 +20,10 @@ void main() {
  // Git("/home/tiagocasemiro/Documentos/projetos/pessoal/TestSource").tag().all().then((branches) => print(branches));
  // Git("/home/tiagocasemiro/Documentos/projetos/pessoal/TestSource").add().all().then((branches) => print(branches));
 //  Git("/home/tiagocasemiro/Documentos/projetos/pessoal/TestSource").add().files(["name"]).then((branches) => print(branches));
-  Git("/home/tiagocasemiro/Documentos/projetos/pessoal/TestSource").commit("initial commit").then((branches) => print(branches));
+  //Git("/home/tiagocasemiro/Documentos/projetos/pessoal/documentation").add().files(["document_1.txt"]).then((branches) => print(branches));
 
+  //Git(workDirectory).commit("initial commit").then((branches) => print(branches));
+  Git(workDirectory).push().then((branches) => print(branches));
 
 }
 
