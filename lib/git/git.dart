@@ -1,3 +1,6 @@
+import 'package:source_app/git/adapter/AddAdapter.dart';
+import 'package:source_app/git/adapter/CommitAdapter.dart';
+import 'package:source_app/git/adapter/PushAdapter.dart';
 import 'adapter/BrancheAdapter.dart';
 import 'adapter/TagAdapter.dart';
 import 'model/Branch.dart';
@@ -21,11 +24,15 @@ class Git {
   }
 
   Future<bool> commit(String message) {
-    return _Commit(_path).execute(message);
+    return Terminal(_path).git(['commit', '-m', message]).then((String terminalOutput) {
+      return CommitAdapter().commitConfirm(terminalOutput);
+    });
   }
 
   Future<bool> push() {
-    return _Push(_path).execute();
+    return Terminal(_path).git(['push']).then((String terminalOutput) {
+      return PushAdapter().pushConfirm(terminalOutput);
+    });
   }
 }
 
@@ -69,7 +76,7 @@ class _Add {
 
   Future<bool> all() {
     return Terminal(_path).git(['add', '.']).then((String terminalOutput) {
-      return true;
+      return AddAdapter().allConfirm(terminalOutput);
     });
   }
 
@@ -77,30 +84,7 @@ class _Add {
     List<String> command = ["add"];
     command.addAll(files);
     return Terminal(_path).git(command).then((String terminalOutput) {
-      return true;
-    });
-  }
-}
-
-class _Commit {
-  String _path;
-  _Commit(this._path);
-
-  Future<bool> execute(String message) {
-    return Terminal(_path).git(['commit', '-m', message]).then((String terminalOutput) {
-      print(terminalOutput);
-      return true;
-    });
-  }
-}
-
-class _Push {
-  String _path;
-  _Push(this._path);
-
-  Future<bool> execute() {
-    return Terminal(_path).git(['push']).then((String terminalOutput) {
-      return true;
+      return AddAdapter().filesConfirm(terminalOutput);
     });
   }
 }
