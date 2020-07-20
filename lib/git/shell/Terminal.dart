@@ -1,27 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
 
 class Terminal {
-  final String _git = "git";
-  final String _path;
+  final String _workDirectory;
 
-  Terminal(this._path);
+  Terminal(this._workDirectory);
 
-  Future<String> _run(String command, {List<String> parameters = const []}) {
-    return Process.run(command, parameters, workingDirectory: _path).then((results) {
+  Future<String> run(String command, {List<String> parameters = const []}) {
+    return Process.run(command, parameters, workingDirectory: _workDirectory).then((results) {
       return results.stdout.toString();
     });
-  }
-
-  Future<String> git(List<String> parameters) {
-    return _run(_git, parameters: parameters);
-  }
-
-  Future<String> ls() {
-    return _run("ls");
-  }
-
-  Future<String> pwd() {
-    return _run("pwd");
   }
 }

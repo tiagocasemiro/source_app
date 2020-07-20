@@ -1,6 +1,4 @@
-
-class PushAdapter {
-
+class FetchAdapter {
   bool confirm(String terminalOutput) {
     // TODO implement
 

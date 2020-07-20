@@ -1,91 +1,100 @@
 import 'package:source_app/git/adapter/AddAdapter.dart';
 import 'package:source_app/git/adapter/CommitAdapter.dart';
 import 'package:source_app/git/adapter/PushAdapter.dart';
-import 'adapter/BrancheAdapter.dart';
+import 'adapter/BranchAdapter.dart';
 import 'adapter/TagAdapter.dart';
 import 'model/Branch.dart';
 import 'model/Tag.dart';
 import 'shell/Terminal.dart';
 
 class Git {
-  String _path;
-  final String _originWithCredential;
+  final String _workDirectory = "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
+  final String _host = "github.com";
+  final String _repository = "tiagocasemiro/documentation.git";
 
-  Git(this._path, {String user, String password, String host, String repository}) : _originWithCredential="https://$user:$password@$host/$repository";
+  String _originWithCredential(String user, String password) {
+    return "https://$user:$password@$_host/$_repository";
+  }
 
   _Branch branch() {
-    return _Branch(_path);
+    return _Branch(_workDirectory);
   }
 
   _Tag tag() {
-    return _Tag(_path);
+    return _Tag(_workDirectory);
   }
 
   _Add add() {
-    return _Add(_path);
+    return _Add(_workDirectory);
   }
 
   Future<bool> commit(String message) {
-    return Terminal(_path).git(['commit', '-m', message]).then((String terminalOutput) {
-      return CommitAdapter().commitConfirm(terminalOutput);
+    return Terminal(_workDirectory).run("git", parameters: ['commit', '-m', message]).then((String terminalOutput) {
+      return CommitAdapter().confirm(terminalOutput);
     });
   }
 
-  Future<bool> push() {
-    return Terminal(_path).git(['push', _originWithCredential]).then((String terminalOutput) {
-      return PushAdapter().pushConfirm(terminalOutput);
+  Future<bool> push(String username, String password) {
+    return Terminal(_workDirectory).run("git", parameters: ['push', _originWithCredential(username, password)]).then((String terminalOutput) {
+      return PushAdapter().confirm(terminalOutput);
+    });
+  }
+
+  Future<bool> fetch() {
+    return Terminal(_workDirectory).run("git", parameters: ['fetch']).then((String terminalOutput) {
+      return PushAdapter().confirm(terminalOutput);
     });
   }
 }
 
 class _Branch {
-  String _path;
-  _Branch(this._path);
+  String _workDirectory;
+  _Branch(this._workDirectory);
 
   Future<List<Branch>> remote() {
-    return Terminal(_path).git(['branch', '-r']).then((String terminalOutput) {
+    return Terminal(_workDirectory).run("git", parameters: ['branch', '-r']).then((String terminalOutput) {
       return BranchAdapter().toBranches(terminalOutput != null ? terminalOutput: "");
     });
   }
 
   Future<List<Branch>> local() {
-    return Terminal(_path).git(['branch']).then((String terminalOutput) {
+    return Terminal(_workDirectory).run("git", parameters: ['branch']).then((String terminalOutput) {
       return BranchAdapter().toBranches(terminalOutput != null ? terminalOutput: "");
     });
   }
 
   Future<Branch> current() {
-    return Terminal(_path).git(['branch']).then((String terminalOutput) {
+    return Terminal(_workDirectory).run("git", parameters: ['branch']).then((String terminalOutput) {
       return BranchAdapter().toBranch(terminalOutput != null ? terminalOutput: "");
     });
   }
 }
 
 class _Tag {
-  String _path;
-  _Tag(this._path);
+  String _workDirectory;
+  _Tag(this._workDirectory);
 
   Future<List<Tag>> all() {
-    return Terminal(_path).git(['tag']).then((String terminalOutput) {
+    return Terminal(_workDirectory).run("git", parameters: ['tag']).then((String terminalOutput) {
       return TagAdapter().toTags(terminalOutput != null ? terminalOutput: "");
     });
   }
 }
 
 class _Add {
-  String _path;
-  _Add(this._path);
+  String _workDirectory;
+  _Add(this._workDirectory);
 
   Future<bool> all() {
-    return Terminal(_path).git(['add', '.']).then((String terminalOutput) {
+    return Terminal(_workDirectory).run("git", parameters: ['add', '.']).then((String terminalOutput) {
       return AddAdapter().allConfirm(terminalOutput);
     });
   }
 
   Future<bool> files(List<String> files) {
-    List<String> command = ["add"];
-    command.addAll(files);
-    return Terminal(_path).git(command).then((String terminalOutput) {
+    List<String> parameters = ["add"];
+    parameters.addAll(files);
+    return Terminal(_workDirectory).run("git", parameters: parameters).then((String terminalOutput) {
       return AddAdapter().filesConfirm(terminalOutput);
     });
   }

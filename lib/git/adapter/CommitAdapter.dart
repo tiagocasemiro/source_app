@@ -1,7 +1,7 @@
 
 class CommitAdapter {
 
-  bool commitConfirm(String terminalOutput) {
+  bool confirm(String terminalOutput) {
     // TODO implement
 
     return true;
