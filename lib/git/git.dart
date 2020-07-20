@@ -9,7 +9,9 @@ import 'shell/Terminal.dart';
 
 class Git {
   String _path;
-  Git(this._path);
+  final String _originWithCredential;
+
+  Git(this._path, {String user, String password, String host, String repository}) : _originWithCredential="https://$user:$password@$host/$repository";
 
   _Branch branch() {
     return _Branch(_path);
@@ -30,7 +32,7 @@ class Git {
   }
 
   Future<bool> push() {
-    return Terminal(_path).git(['push']).then((String terminalOutput) {
+    return Terminal(_path).git(['push', _originWithCredential]).then((String terminalOutput) {
       return PushAdapter().pushConfirm(terminalOutput);
     });
   }

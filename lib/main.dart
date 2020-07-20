@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'git/git.dart';
@@ -23,7 +26,17 @@ void main() {
   //Git("/home/tiagocasemiro/Documentos/projetos/pessoal/documentation").add().files(["document_1.txt"]).then((branches) => print(branches));
 
   //Git(workDirectory).commit("initial commit").then((branches) => print(branches));
+  //Terminal(workDirectory).pwd().then((value) => print(value));
+
   Git(workDirectory).push().then((branches) => print(branches));
+/*  Process.start('cat', []).then((Process process) {
+    process.stdout
+        .transform(utf8.decoder)
+        .listen((data) { print(data); });
+    process.stdin.writeln('Hello, world!');
+    process.stdin.writeln('Hello, galaxy!');
+    process.stdin.writeln('Hello, universe!');
+  });*/
 
 }
 
