@@ -45,6 +45,12 @@ class Git {
       return PushAdapter().confirm(terminalOutput);
     });
   }
+
+  Future<bool> pull() {
+    return Terminal(_workDirectory).run("git", parameters: ['pull']).then((String terminalOutput) {
+      return PushAdapter().confirm(terminalOutput);
+    });
+  }
 }
 
 class _Branch {

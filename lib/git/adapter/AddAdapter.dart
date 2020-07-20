@@ -1,5 +1,7 @@
 
-class AddAdapter {
+import 'BaseAdapter.dart';
+
+class AddAdapter extends BaseAdapter {
 
   bool allConfirm(String terminalOutput) {
     // TODO implement

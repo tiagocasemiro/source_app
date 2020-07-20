@@ -1,7 +1,6 @@
-
 import 'BaseAdapter.dart';
 
-class CommitAdapter extends BaseAdapter {
+class PullAdapter extends BaseAdapter {
 
   bool confirm(String terminalOutput) {
     // TODO implement
