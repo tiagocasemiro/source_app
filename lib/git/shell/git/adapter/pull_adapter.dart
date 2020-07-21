@@ -1,7 +1,6 @@
+import 'base/base_adapter.dart';
 
-import 'BaseAdapter.dart';
-
-class PushAdapter extends BaseAdapter {
+class PullAdapter extends BaseAdapter {
 
   bool confirm(String terminalOutput) {
     // TODO implement

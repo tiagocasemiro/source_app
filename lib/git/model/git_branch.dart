@@ -1,8 +1,8 @@
 
-class Branch {
+class GitBranch {
   String name;
 
-  Branch(this.name);
+  GitBranch(this.name);
 
   @override
   String toString() {

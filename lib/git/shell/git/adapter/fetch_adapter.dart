@@ -1,8 +1,6 @@
+import 'base/base_adapter.dart';
 
-import 'BaseAdapter.dart';
-
-class CommitAdapter extends BaseAdapter {
-
+class FetchAdapter extends BaseAdapter {
   bool confirm(String terminalOutput) {
     // TODO implement
 

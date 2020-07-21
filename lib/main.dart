@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'git/git.dart';
-import 'git/shell/Terminal.dart';
+import 'git/shell/git/git.dart';
+import 'git/shell/terminal.dart';
 
 void main() {
   runApp(SourceApp());
@@ -12,7 +12,7 @@ void main() {
   //Git().add().files(["document_1.txt"]).then((branches) => print(branches));
   //Git().commit("linha 9 passo a passo").then((branches) => print(branches));
   //Git().push("tiagocasemiro", "password").then((branches) => print(branches));
-  Git().fetch().then((value) => print(value));
+  Git().add().all().execute().then((value) => print(value));
 
 }
 

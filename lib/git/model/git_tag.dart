@@ -1,8 +1,8 @@
 
-class Tag {
+class GitTag {
   String name;
 
-  Tag(this.name);
+  GitTag(this.name);
 
   @override
   String toString() {
