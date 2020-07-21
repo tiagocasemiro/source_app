@@ -1,15 +1,16 @@
-
-import 'package:source_app/git/model/git_tag.dart';
 import 'package:source_app/git/shell/git/adapter/tag_adapter.dart';
-import '../../terminal.dart';
+import 'base/base_command.dart';
 
-class Tag {
-  String _workDirectory;
-  Tag(this._workDirectory);
+class Tag extends BaseGitCommand {
 
-  Future<List<GitTag>> all() {
-    return Terminal(_workDirectory).run("git", parameters: ['tag']).then((String terminalOutput) {
-      return TagAdapter().toTags(terminalOutput != null ? terminalOutput: "");
-    });
+  Tag(workDirectory): super(workDirectory) {
+    parameters.add('tag');
+  }
+
+  @override
+  Future call() async {
+    String terminalOutput = await super.execute(parameters: parameters);
+
+    return TagAdapter().toTags(terminalOutput);
   }
 }

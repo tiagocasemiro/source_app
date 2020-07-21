@@ -1,13 +1,22 @@
 import 'package:source_app/git/shell/git/adapter/commit_adapter.dart';
-import '../../terminal.dart';
+import 'base/base_command.dart';
 
-class Commit {
-  String _workDirectory;
-  Commit(this._workDirectory);
+class Commit extends BaseGitCommand {
+  Commit(workDirectory): super(workDirectory) {
+    parameters.add("commit");
+  }
 
-  Future<bool> commit(String message) {
-    return Terminal(_workDirectory).run("git", parameters: ['commit', '-m', message]).then((String terminalOutput) {
-      return CommitAdapter().confirm(terminalOutput);
-    });
+  Commit commit(String message) {
+    parameters.add('-m');
+    parameters.add(message);
+
+    return this;
+  }
+
+  @override
+  Future call() async {
+    String terminalOutput = await super.execute(parameters: parameters);
+
+    return CommitAdapter().confirm(terminalOutput);
   }
 }

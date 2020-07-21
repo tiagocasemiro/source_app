@@ -1,19 +1,22 @@
 import 'package:source_app/git/shell/git/adapter/fetch_adapter.dart';
 import '../../terminal.dart';
+import 'base/base_command.dart';
 
-class Fetch {
-  String _workDirectory;
-  Fetch(this._workDirectory);
-
-  Future<bool> prune() {
-    return Terminal(_workDirectory).run("git", parameters: ['fetch', '-p']).then((String terminalOutput) {
-      return FetchAdapter().confirm(terminalOutput);
-    });
+class Fetch extends BaseGitCommand {
+  Fetch(workDirectory): super(workDirectory) {
+    parameters.add('fetch');
   }
 
-  Future<bool> exec() {
-    return Terminal(_workDirectory).run("git", parameters: ['fetch']).then((String terminalOutput) {
-      return FetchAdapter().confirm(terminalOutput);
-    });
+  Fetch prune() {
+    parameters.add('-p');
+
+    return this;
+  }
+
+  @override
+  Future call() async {
+    String terminalOutput = await super.execute(parameters: parameters);
+
+    return FetchAdapter().confirm(terminalOutput);
   }
 }

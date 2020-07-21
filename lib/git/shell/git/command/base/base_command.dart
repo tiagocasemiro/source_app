@@ -3,14 +3,16 @@ import '../../../terminal.dart';
 abstract class BaseGitCommand {
   final String git = 'git';
   final String noResult = "";
-  String workDirectory;
+  String _workDirectory;
   final List<String> parameters = List();
 
-  BaseGitCommand(this.workDirectory);
+  BaseGitCommand(this._workDirectory);
 
-  String execute({List<String> parameters = const []}) {
-    String terminalOutput = Terminal(workDirectory).run(git, parameters: parameters) as String;
+  Future<String> execute({List<String> parameters = const []}) async {
+    String terminalOutput = await  Terminal(_workDirectory).run(git, parameters: parameters);
 
-    return terminalOutput != null ? terminalOutput: "";
+    return terminalOutput != null? terminalOutput: noResult;
   }
+
+  Future call();
 }

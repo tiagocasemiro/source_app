@@ -12,7 +12,7 @@ void main() {
   //Git().add().files(["document_1.txt"]).then((branches) => print(branches));
   //Git().commit("linha 9 passo a passo").then((branches) => print(branches));
   //Git().push("tiagocasemiro", "password").then((branches) => print(branches));
-  Git().add().all().execute().then((value) => print(value));
+  Git().branch().local().call().then((value) => print(value));
 
 }
 

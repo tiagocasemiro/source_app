@@ -23,9 +23,9 @@ class Add extends BaseGitCommand {
     return this;
   }
 
-
+  @override
   Future call() async {
-    String terminalOutput = super.execute(parameters: parameters);
+    String terminalOutput = await super.execute(parameters: parameters);
 
     switch(_variant) {
       case _Variant.all: return AddAdapter().filesConfirm(terminalOutput);

@@ -4,7 +4,7 @@ import 'base/base_command.dart';
 class Branch extends BaseGitCommand  {
   _Variant _variant;
 
-  Branch(String workDirectory): super(workDirectory) {
+  Branch(String _workDirectory): super(_workDirectory) {
     parameters.add('branch');
   }
 
@@ -28,8 +28,9 @@ class Branch extends BaseGitCommand  {
     return this;
   }
 
+  @override
   Future call() async {
-    String terminalOutput = super.execute(parameters: parameters);
+    String terminalOutput = await super.execute(parameters: parameters);
 
     switch(_variant) {
       case _Variant.single: return BranchAdapter().toBranch(terminalOutput);

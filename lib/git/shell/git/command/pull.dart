@@ -1,13 +1,17 @@
 import 'package:source_app/git/shell/git/adapter/pull_adapter.dart';
 import '../../terminal.dart';
+import 'base/base_command.dart';
 
-class Pull {
-  String _workDirectory;
-  Pull(this._workDirectory);
+class Pull extends BaseGitCommand {
 
-  Future<bool> pull() {
-    return Terminal(_workDirectory).run("git", parameters: ['pull']).then((String terminalOutput) {
-      return PullAdapter().confirm(terminalOutput);
-    });
+  Pull(workDirectory): super(workDirectory) {
+    parameters.add('pull');
+  }
+
+  @override
+  Future call() async {
+    String terminalOutput = await super.execute(parameters: parameters);
+
+    return PullAdapter().confirm(terminalOutput);
   }
 }

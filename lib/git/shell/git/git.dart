@@ -11,8 +11,8 @@ class Git {
   final String _host = "github.com";
   final String _repository = "tiagocasemiro/documentation.git";
 
-  String _originWithCredential(String user, String password) {
-    return "https://$user:$password@$_host/$_repository";
+  String _originWithCredential(String username, String password) {
+    return "https://$username:$password@$_host/$_repository";
   }
 
   Branch branch() {
@@ -36,7 +36,7 @@ class Git {
   }
 
   Push push(String username, String password) {
-    return Push(_workDirectory);
+    return Push(_workDirectory, _originWithCredential(username, password));
   }
 
   Pull pull() {

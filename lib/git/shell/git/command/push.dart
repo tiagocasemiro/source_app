@@ -1,16 +1,18 @@
-
 import 'package:source_app/git/shell/git/adapter/push_adapter.dart';
+import 'base/base_command.dart';
 
-import '../../terminal.dart';
+class Push extends BaseGitCommand {
+  final String _originWithCredential;
+  Push(workDirectory, this._originWithCredential): super(workDirectory) {
+    parameters.add('push');
+  }
 
-class Push {
-  String _workDirectory;
-  Push(this._workDirectory);
+  @override
+  Future call() async {
+    parameters.add(_originWithCredential);
+    String terminalOutput = await super.execute(parameters: parameters);
 
-  Future<bool> push(String username, String password, String _originWithCredential) {
-    return Terminal(_workDirectory).run("git", parameters: ['push', _originWithCredential]).then((String terminalOutput) {
-      return PushAdapter().confirm(terminalOutput);
-    });
+    return PushAdapter().confirm(terminalOutput);
   }
 }
 
