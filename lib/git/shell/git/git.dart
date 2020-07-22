@@ -1,10 +1,12 @@
 import 'package:source_app/git/shell/git/command/base/base_command.dart';
+import 'package:source_app/git/shell/git/command/checkout.dart';
 import 'package:source_app/git/shell/git/command/pull.dart';
 import '../terminal.dart';
 import 'command/add.dart';
 import 'command/branch.dart';
 import 'command/commit.dart';
 import 'command/fetch.dart';
+import 'command/log.dart';
 import 'command/merge.dart';
 import 'command/push.dart';
 import 'command/stash.dart';
@@ -53,6 +55,14 @@ class Git {
 
   Stash stash() {
     return Stash(_workDirectory);
+  }
+
+  Checkout checkout() {
+    return Checkout(_workDirectory);
+  }
+
+  Log log() {
+    return Log(_workDirectory);
   }
 
   Future<bool> isGitDirectory() async {

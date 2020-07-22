@@ -7,6 +7,19 @@ class Tag extends BaseGitCommand {
     parameters.add('tag');
   }
 
+  Tag create(String name) {
+    parameters.add(name);
+
+    return this;
+  }
+
+  Tag delete(String name) {
+    parameters.add('-d');
+    parameters.add(name);
+
+    return this;
+  }
+
   @override
   Future call() async {
     String terminalOutput = await super.execute(parameters: parameters);
