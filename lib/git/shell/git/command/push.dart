@@ -7,6 +7,12 @@ class Push extends BaseGitCommand {
     parameters.add('push');
   }
 
+  Push tags() {
+    parameters.add('--tags');
+
+    return this;
+  }
+
   @override
   Future call() async {
     parameters.add(_originWithCredential);

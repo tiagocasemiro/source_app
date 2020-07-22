@@ -1,5 +1,4 @@
 import 'package:source_app/git/shell/git/adapter/pull_adapter.dart';
-import '../../terminal.dart';
 import 'base/base_command.dart';
 
 class Pull extends BaseGitCommand {

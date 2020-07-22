@@ -1,14 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'git/shell/git/git.dart';
-import 'git/shell/terminal.dart';
-
-
-import 'package:git/git.dart';
-import 'package:path/path.dart' as p;
 
 void main() {
   runApp(SourceApp());

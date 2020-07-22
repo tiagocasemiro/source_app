@@ -5,7 +5,9 @@ import 'command/add.dart';
 import 'command/branch.dart';
 import 'command/commit.dart';
 import 'command/fetch.dart';
+import 'command/merge.dart';
 import 'command/push.dart';
+import 'command/stash.dart';
 import 'command/tag.dart';
 
 class Git {
@@ -43,6 +45,14 @@ class Git {
 
   Pull pull() {
     return Pull(_workDirectory);
+  }
+
+  Merge merge() {
+    return Merge(_workDirectory);
+  }
+
+  Stash stash() {
+    return Stash(_workDirectory);
   }
 
   Future<bool> isGitDirectory() async {

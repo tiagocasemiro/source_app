@@ -1,5 +1,4 @@
 import 'package:source_app/git/shell/git/adapter/fetch_adapter.dart';
-import '../../terminal.dart';
 import 'base/base_command.dart';
 
 class Fetch extends BaseGitCommand {

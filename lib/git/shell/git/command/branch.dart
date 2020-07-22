@@ -29,6 +29,13 @@ class Branch extends BaseGitCommand  {
     return this;
   }
 
+  Branch create(String name) {
+    _variant = _Variant.single;
+    parameters.add(name);
+
+    return this;
+  }
+
   @override
   Future call() async {
     String terminalOutput = await super.execute(parameters: parameters);

@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 class BaseAdapter {
 
   String removeBreakLine(String line) {
@@ -14,6 +16,6 @@ class BaseAdapter {
   }
 
   List<String> toLines(String terminalOutput) {
-    return terminalOutput.split("\n");
+    return const LineSplitter().convert(terminalOutput);
   }
 }
