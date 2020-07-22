@@ -1,3 +1,4 @@
+import 'package:source_app/git/shell/extension/extension.dart';
 import 'package:source_app/git/shell/git/adapter/add_adapter.dart';
 import 'package:source_app/git/shell/git/command/base/base_command.dart';
 
@@ -30,7 +31,7 @@ class Add extends BaseGitCommand {
     switch(_variant) {
       case _Variant.all: return AddAdapter().filesConfirm(terminalOutput);
       case _Variant.files: return AddAdapter().allConfirm(terminalOutput);
-      default: return noResult;
+      default: return Shell.empty();
     }
   }
 }

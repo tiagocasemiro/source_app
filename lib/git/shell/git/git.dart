@@ -1,4 +1,6 @@
+import 'package:source_app/git/shell/git/command/base/base_command.dart';
 import 'package:source_app/git/shell/git/command/pull.dart';
+import '../terminal.dart';
 import 'command/add.dart';
 import 'command/branch.dart';
 import 'command/commit.dart';
@@ -41,5 +43,11 @@ class Git {
 
   Pull pull() {
     return Pull(_workDirectory);
+  }
+
+  Future<bool> isGitDirectory() async {
+    final int processResult = await Terminal(_workDirectory).runAndReturnExitCode(BaseGitCommand.git, parameters: [BaseGitCommand.status]);
+
+    return processResult == 0;
   }
 }

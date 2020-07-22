@@ -1,3 +1,4 @@
+import 'package:source_app/git/shell/extension/extension.dart';
 import 'package:source_app/git/shell/git/adapter/branch_adapter.dart';
 import 'base/base_command.dart';
 
@@ -35,7 +36,7 @@ class Branch extends BaseGitCommand  {
     switch(_variant) {
       case _Variant.single: return BranchAdapter().toBranch(terminalOutput);
       case _Variant.multiple: return BranchAdapter().toBranches(terminalOutput);
-      default: return noResult;
+      default: return Shell.empty();
     }
   }
 }
