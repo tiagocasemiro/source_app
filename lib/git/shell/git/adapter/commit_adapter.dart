@@ -3,9 +3,9 @@ import 'base/base_adapter.dart';
 
 class CommitAdapter extends BaseAdapter {
 
-  bool confirm(String terminalOutput) {
+  String confirm(String terminalOutput) {
     // TODO implement
-
-    return true;
+    print(terminalOutput);
+    return "";
   }
 }

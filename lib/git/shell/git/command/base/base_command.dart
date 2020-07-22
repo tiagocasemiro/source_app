@@ -1,3 +1,5 @@
+import 'package:source_app/git/shell/extension/extension.dart';
+
 import '../../../terminal.dart';
 
 abstract class BaseGitCommand {
@@ -11,7 +13,7 @@ abstract class BaseGitCommand {
   Future<String> execute({List<String> parameters = const []}) async {
     String terminalOutput = await  Terminal(_workDirectory).run(git, parameters: parameters);
 
-    return terminalOutput != null? terminalOutput: noResult;
+    return terminalOutput != null? terminalOutput: Shell.empty();
   }
 
   Future call();

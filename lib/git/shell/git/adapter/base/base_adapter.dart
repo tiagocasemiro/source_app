@@ -1,10 +1,6 @@
 
 class BaseAdapter {
 
-  bool confirm(String terminalOutput) {
-    return identical("", terminalOutput);
-  }
-
   String removeBreakLine(String line) {
     return line?.replaceAll("\n", "");
   }
