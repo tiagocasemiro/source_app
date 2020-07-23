@@ -1,8 +1,6 @@
-
 import 'dart:convert';
 
 class BaseAdapter {
-
   String removeBreakLine(String line) {
     return line?.replaceAll("\n", "");
   }

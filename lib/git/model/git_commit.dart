@@ -1,4 +1,3 @@
-
 class GitCommit {
   String hash;
   String abbreviatedHash;

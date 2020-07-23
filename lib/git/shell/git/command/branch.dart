@@ -2,10 +2,10 @@ import 'package:source_app/git/shell/extension/extension.dart';
 import 'package:source_app/git/shell/git/adapter/branch_adapter.dart';
 import 'base/base_command.dart';
 
-class Branch extends BaseGitCommand  {
+class Branch extends BaseGitCommand {
   _Variant _variant;
 
-  Branch(String _workDirectory): super(_workDirectory) {
+  Branch(String _workDirectory) : super(_workDirectory) {
     parameters.add('branch');
   }
 
@@ -55,14 +55,15 @@ class Branch extends BaseGitCommand  {
   Future call() async {
     String terminalOutput = await super.execute(parameters: parameters);
 
-    switch(_variant) {
-      case _Variant.single: return BranchAdapter().toBranch(terminalOutput);
-      case _Variant.multiple: return BranchAdapter().toBranches(terminalOutput);
-      default: return Shell.empty();
+    switch (_variant) {
+      case _Variant.single:
+        return BranchAdapter().toBranch(terminalOutput);
+      case _Variant.multiple:
+        return BranchAdapter().toBranches(terminalOutput);
+      default:
+        return Shell.empty();
     }
   }
 }
 
-enum _Variant {
-  single, multiple
-}
+enum _Variant { single, multiple }

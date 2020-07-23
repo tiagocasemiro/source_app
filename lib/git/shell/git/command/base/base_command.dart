@@ -11,13 +11,16 @@ abstract class BaseGitCommand {
   BaseGitCommand(this._workDirectory);
 
   Future<String> execute({List<String> parameters = const []}) async {
-    String terminalOutput = await  Terminal(_workDirectory).run(git, parameters: parameters);
+    String terminalOutput =
+        await Terminal(_workDirectory).run(git, parameters: parameters);
 
-    return terminalOutput != null? terminalOutput: Shell.empty();
+    return terminalOutput != null ? terminalOutput : Shell.empty();
   }
 
-  Future<int> executeAndReturnExitCode({List<String> parameters = const []}) async {
-    final int processResult = await Terminal(_workDirectory).runAndReturnExitCode(git, parameters: parameters);
+  Future<int> executeAndReturnExitCode(
+      {List<String> parameters = const []}) async {
+    final int processResult = await Terminal(_workDirectory)
+        .runAndReturnExitCode(git, parameters: parameters);
 
     return processResult;
   }

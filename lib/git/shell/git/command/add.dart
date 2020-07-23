@@ -6,7 +6,7 @@ class Add extends BaseGitCommand {
   String _dot = ".";
   _Variant _variant;
 
-  Add(workDirectory): super(workDirectory) {
+  Add(workDirectory) : super(workDirectory) {
     parameters.add("add");
   }
 
@@ -28,14 +28,15 @@ class Add extends BaseGitCommand {
   Future call() async {
     String terminalOutput = await super.execute(parameters: parameters);
 
-    switch(_variant) {
-      case _Variant.all: return AddAdapter().filesConfirm(terminalOutput);
-      case _Variant.files: return AddAdapter().allConfirm(terminalOutput);
-      default: return Shell.empty();
+    switch (_variant) {
+      case _Variant.all:
+        return AddAdapter().filesConfirm(terminalOutput);
+      case _Variant.files:
+        return AddAdapter().allConfirm(terminalOutput);
+      default:
+        return Shell.empty();
     }
   }
 }
 
-enum _Variant {
-  all, files
-}
+enum _Variant { all, files }

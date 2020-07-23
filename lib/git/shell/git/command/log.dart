@@ -4,7 +4,7 @@ import 'base/base_command.dart';
 class Log extends BaseGitCommand {
   static const String historyFormat = "%h - %an - %s - %as";
 
-  Log(String workDirectory): super(workDirectory) {
+  Log(String workDirectory) : super(workDirectory) {
     parameters.add('log');
   }
 
@@ -13,12 +13,12 @@ class Log extends BaseGitCommand {
 
     return this;
   }
-  
+
   Log graph() {
     parameters.add('--graph');
-    
+
     return this;
-  } 
+  }
 
   @override
   Future call() async {

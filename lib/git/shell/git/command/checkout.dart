@@ -25,5 +25,4 @@ class Checkout extends BaseGitCommand {
 
     return CheckoutAdapter().confirm(terminalOutput);
   }
-
 }

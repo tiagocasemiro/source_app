@@ -1,4 +1,3 @@
-
 class GitTag {
   String name;
 

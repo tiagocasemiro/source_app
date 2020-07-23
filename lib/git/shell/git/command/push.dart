@@ -3,7 +3,8 @@ import 'base/base_command.dart';
 
 class Push extends BaseGitCommand {
   final String _originWithCredential;
-  Push(workDirectory, this._originWithCredential): super(workDirectory) {
+
+  Push(workDirectory, this._originWithCredential) : super(workDirectory) {
     parameters.add('push');
   }
 
@@ -37,4 +38,3 @@ class Push extends BaseGitCommand {
     return PushAdapter().confirm(terminalOutput);
   }
 }
-
