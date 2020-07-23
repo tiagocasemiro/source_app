@@ -1,4 +1,3 @@
-
 import 'base/base_adapter.dart';
 
 class PushAdapter extends BaseAdapter {

@@ -13,6 +13,22 @@ class Push extends BaseGitCommand {
     return this;
   }
 
+  Push delete(String branch) {
+    parameters.add('origin');
+    parameters.add('--delete');
+    parameters.add(branch);
+
+    return this;
+  }
+
+  Push rename(String oldName, String newName) {
+    parameters.add('origin');
+    parameters.add(oldName);
+    parameters.add(newName);
+
+    return this;
+  }
+
   @override
   Future call() async {
     parameters.add(_originWithCredential);

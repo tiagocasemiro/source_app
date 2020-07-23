@@ -36,6 +36,21 @@ class Branch extends BaseGitCommand  {
     return this;
   }
 
+  Branch rename(String oldName, String newName) {
+    parameters.add('-m');
+    parameters.add(oldName);
+    parameters.add(newName);
+
+    return this;
+  }
+
+  Branch delete(String name) {
+    parameters.add('-d');
+    parameters.add(name);
+
+    return this;
+  }
+
   @override
   Future call() async {
     String terminalOutput = await super.execute(parameters: parameters);
