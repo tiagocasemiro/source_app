@@ -18,8 +18,12 @@ class BaseAdapter {
     return const LineSplitter().convert(terminalOutput);
   }
 
-  TerminalOutput defaultConfirm(String terminalOutput) {
-    print("Terminal output: " + terminalOutput);
-    return TerminalOutput(isSuccess: terminalOutput.trim().isNotEmpty);
+  TerminalOutput defaultConfirm(String _terminalOutput) {
+    print("Terminal output: " + _terminalOutput);
+    bool isSuccess = _terminalOutput.trim().isNotEmpty;
+
+    return isSuccess
+        ? TerminalOutput().success()
+        : TerminalOutput().failure(_terminalOutput);
   }
 }
