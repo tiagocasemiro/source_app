@@ -4,18 +4,18 @@ import 'package:source_app/git/shell/model/terminal_output.dart';
 
 class TagAdapter extends BaseAdapter {
 
-  TerminalOutput<List<GitTag>> toTags(String terminalOutput) {
+  TerminalOutput<List<GitTag>> toTags(String _terminalOutput) {
     try {
       List<GitTag> tags = List();
-      toLines(terminalOutput).forEach((line) {
+      toLines(_terminalOutput).forEach((line) {
         if (line.isNotEmpty) {
           tags.add(GitTag(clean(line)));
         }
       });
 
-      return TerminalOutput(object: tags);
-    }catch (e) {
-      return TerminalOutput(isSuccess: false);
+      return TerminalOutput().success(object: tags);
+    } catch (e) {
+      return TerminalOutput().failure(_terminalOutput);
     }
   }
 }

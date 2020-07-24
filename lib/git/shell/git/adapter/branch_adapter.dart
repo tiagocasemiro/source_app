@@ -12,23 +12,23 @@ class BranchAdapter extends BaseAdapter {
         }
       });
 
-      return TerminalOutput(object: branches);
+      return TerminalOutput().success(object: branches);
     } catch (e) {
-      return TerminalOutput(isSuccess: false);
+      return TerminalOutput().failure(_terminalOutput);
     }
   }
 
-  TerminalOutput<GitBranch> toBranch(String terminalOutput) {
+  TerminalOutput<GitBranch> toBranch(String _terminalOutput) {
     try {
-      String branch = toLines(terminalOutput).firstWhere(
+      String branch = toLines(_terminalOutput).firstWhere(
           (line) => line.isNotEmpty && line.startsWith("*"),
           orElse: () => null);
 
       return branch != null
-          ? TerminalOutput(object: GitBranch(clean(branch)))
-          : TerminalOutput(isSuccess: false);
+          ? TerminalOutput().success(object: GitBranch(clean(branch)))
+          : TerminalOutput().failure(_terminalOutput);
     } catch (e) {
-      return TerminalOutput(isSuccess: false);
+      return TerminalOutput().failure(_terminalOutput);
     }
   }
 }

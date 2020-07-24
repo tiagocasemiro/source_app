@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:source_app/git/shell/extension/extension.dart';
+import 'package:source_app/git/shell/model/terminal_output.dart';
 
 class BaseAdapter {
   String removeBreakLine(String line) {
@@ -19,7 +18,8 @@ class BaseAdapter {
     return const LineSplitter().convert(terminalOutput);
   }
 
-  bool noResultSuccess(String terminalOutput) {
-    return terminalOutput.trim().isNotEmpty;
+  TerminalOutput defaultConfirm(String terminalOutput) {
+    print("Terminal output: " + terminalOutput);
+    return TerminalOutput(isSuccess: terminalOutput.trim().isNotEmpty);
   }
 }

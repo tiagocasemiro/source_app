@@ -7,6 +7,6 @@ class LogAdapter extends BaseAdapter {
   TerminalOutput<List<GitCommit>> confirm(String terminalOutput) {
     // TODO implement
     print(terminalOutput);
-    return TerminalOutput(object: List());
+    return TerminalOutput().success(object: List());
   }
 }
