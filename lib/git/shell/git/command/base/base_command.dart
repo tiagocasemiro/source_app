@@ -12,6 +12,7 @@ abstract class BaseGitCommand {
   BaseGitCommand(this._workDirectory);
 
   Future<String> execute({List<String> parameters = const []}) async {
+    print("Directory: " + _workDirectory);
     String terminalOutput =
         await Terminal(_workDirectory).run(git, parameters: parameters);
 

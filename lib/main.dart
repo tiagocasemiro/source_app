@@ -1,12 +1,14 @@
 
 import 'package:flutter/material.dart';
 
+import 'git/shell/git/git.dart';
+
 
 void main() {
   runApp(SourceApp());
 
-  //Git().add().files(["document_1.txt"]).then((branches) => print(branches));
-  //Git().commit("linha 9 passo a passo").then((branches) => print(branches));
+   Git().add().all().call().then((branches) => print(branches));
+   Git().commit("commitado pelo app").call().then((branches) => print(branches));
   //Git().push("tiagocasemiro", "password").then((branches) => print(branches));
   //Git().add().all().call().then((value) => print(value));
 

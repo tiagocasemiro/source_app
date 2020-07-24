@@ -16,5 +16,10 @@ class TerminalOutput<T> {
 
     return this;
   }
+
+  @override
+  String toString() {
+    return 'TerminalOutput{isSuccess: $isSuccess, message: $message, object: $object}';
+  }
 }
 
