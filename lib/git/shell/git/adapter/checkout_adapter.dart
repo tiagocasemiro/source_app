@@ -1,11 +1,11 @@
-
 import 'package:source_app/git/shell/git/adapter/base/base_adapter.dart';
+import 'package:source_app/git/shell/model/terminal_output.dart';
 
 class CheckoutAdapter extends BaseAdapter {
 
-  String confirm(String terminalOutput) {
+  TerminalOutput confirm(String terminalOutput) {
     // TODO implement
     print(terminalOutput);
-    return "";
+    return TerminalOutput();
   }
 }

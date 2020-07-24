@@ -1,5 +1,6 @@
 import 'package:source_app/git/shell/extension/extension.dart';
 import 'package:source_app/git/shell/git/adapter/branch_adapter.dart';
+import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Branch extends BaseGitCommand {
@@ -52,7 +53,7 @@ class Branch extends BaseGitCommand {
   }
 
   @override
-  Future call() async {
+  Future<TerminalOutput> call() async {
     String terminalOutput = await super.execute(parameters: parameters);
 
     switch (_variant) {
@@ -61,7 +62,7 @@ class Branch extends BaseGitCommand {
       case _Variant.multiple:
         return BranchAdapter().toBranches(terminalOutput);
       default:
-        return Shell.empty();
+        return TerminalOutput();
     }
   }
 }

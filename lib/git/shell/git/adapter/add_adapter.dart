@@ -1,15 +1,16 @@
+import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_adapter.dart';
 
 class AddAdapter extends BaseAdapter {
-  String allConfirm(String terminalOutput) {
+  TerminalOutput allConfirm(String terminalOutput) {
     // TODO implement
     print(terminalOutput);
-    return "NOT IMPLEMENTED";
+    return TerminalOutput();
   }
 
-  String filesConfirm(String terminalOutput) {
+  TerminalOutput filesConfirm(String terminalOutput) {
     // TODO implement
     print(terminalOutput);
-    return "NOT IMPLEMENTED";
+    return TerminalOutput();
   }
 }

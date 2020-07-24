@@ -1,4 +1,5 @@
 import 'package:source_app/git/shell/git/adapter/fetch_adapter.dart';
+import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Fetch extends BaseGitCommand {
@@ -13,7 +14,7 @@ class Fetch extends BaseGitCommand {
   }
 
   @override
-  Future call() async {
+  Future<TerminalOutput> call() async {
     String terminalOutput = await super.execute(parameters: parameters);
 
     return FetchAdapter().confirm(terminalOutput);
