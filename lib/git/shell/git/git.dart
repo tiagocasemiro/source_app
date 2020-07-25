@@ -39,7 +39,7 @@ class Git {
     return Fetch(_workDirectory);
   }
 
-  Commit commit(String message) {
+  Commit commit() {
     return Commit(_workDirectory);
   }
 

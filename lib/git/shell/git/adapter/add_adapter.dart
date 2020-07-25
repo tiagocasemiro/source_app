@@ -3,10 +3,10 @@ import 'base/base_adapter.dart';
 
 class AddAdapter extends BaseAdapter {
   TerminalOutput allConfirm(String terminalOutput) {
-    return super.defaultConfirm(terminalOutput);
+    return super.noOutputIsSuccess(terminalOutput);
   }
 
   TerminalOutput filesConfirm(String terminalOutput) {
-    return super.defaultConfirm(terminalOutput);
+    return super.noOutputIsSuccess(terminalOutput);
   }
 }

@@ -7,7 +7,7 @@ class Commit extends BaseGitCommand {
     parameters.add("commit");
   }
 
-  Commit commit(String message) {
+  Commit message(String message) {
     parameters.add('-m');
     parameters.add(message);
 

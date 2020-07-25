@@ -18,9 +18,9 @@ class BaseAdapter {
     return const LineSplitter().convert(terminalOutput);
   }
 
-  TerminalOutput defaultConfirm(String _terminalOutput) {
+  TerminalOutput noOutputIsSuccess(String _terminalOutput) {
     print("Terminal output: " + _terminalOutput);
-    bool isSuccess = _terminalOutput.trim().isNotEmpty;
+    bool isSuccess = _terminalOutput.trim().isEmpty;
 
     return isSuccess
         ? TerminalOutput().success()

@@ -8,7 +8,7 @@ void main() {
   runApp(SourceApp());
 
    Git().add().all().call().then((branches) => print(branches));
-   Git().commit("commitado pelo app").call().then((branches) => print(branches));
+   Git().commit().message("commitado pelo app").call().then((branches) => print(branches));
   //Git().push("tiagocasemiro", "password").then((branches) => print(branches));
   //Git().add().all().call().then((value) => print(value));
 
