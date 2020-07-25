@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:source_app/git/model/git_commit.dart';
+import 'package:source_app/git/shell/terminal.dart';
 
 import 'git/shell/git/git.dart';
 
@@ -12,9 +13,15 @@ void main() {
   //Git().commit().message("commitado pelo app").call().then((branches) => print(branches));
   //Git().push("tiagocasemiro", "password").then((branches) => print(branches));
   //Git().add().all().call().then((value) => print(value));
-    Git().checkout().branch("tiago").call().then((value) => print(value));
+   // Git().checkout().branch("tiago").call().then((value) => print(value));
   //Git().branch().delete("tiago").call().then((branches) => print(branches));
 
+  Terminal terminal = Terminal("/home/tiagocasemiro/Documentos/projetos/pessoal/documentation");
+
+  terminal.run("git", parameters: ["checkout", "tiago"]).then((value) => print(value));
+  terminal.runAndReturnExitCode("git", parameters: ["checkout", "tiago"]).then((value) => print(value));
+  terminal.run("ls").then((value) => print(value));
+  terminal.runAndReturnExitCode("ls").then((value) => print(value));
 }
 
 /*Future<void> main() async {

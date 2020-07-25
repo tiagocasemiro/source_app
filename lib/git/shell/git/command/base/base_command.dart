@@ -1,5 +1,5 @@
 import 'package:source_app/git/shell/extension/extension.dart';
-import 'package:source_app/git/shell/model/terminal_output.dart';
+import 'package:source_app/git/shell/git/model/git_output.dart';
 import '../../../terminal.dart';
 
 abstract class BaseGitCommand {
@@ -19,10 +19,10 @@ abstract class BaseGitCommand {
     });
     print("Command : " + git + allParameters);
 
-    String terminalOutput =
+    String gitOutput =
         await Terminal(_workDirectory).run(git, parameters: parameters);
 
-    return terminalOutput != null ? terminalOutput : Shell.empty();
+    return gitOutput != null ? gitOutput : Shell.empty();
   }
 
   Future<int> executeAndReturnExitCode(
@@ -33,7 +33,7 @@ abstract class BaseGitCommand {
     return processResult;
   }
 
-  Future<TerminalOutput> call();
+  Future<GitOutput> call();
 }
 
 class NoParameterException implements Exception {

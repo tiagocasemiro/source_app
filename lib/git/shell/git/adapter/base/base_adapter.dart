@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:source_app/git/shell/model/terminal_output.dart';
+import 'package:source_app/git/shell/git/model/git_output.dart';
 
 class BaseAdapter {
   String _prefixOutputError = "error: ";
@@ -16,27 +16,27 @@ class BaseAdapter {
     return removePointer(removeBreakLine(line))?.trim();
   }
 
-  List<String> toLines(String terminalOutput) {
-    return const LineSplitter().convert(terminalOutput);
+  List<String> toLines(String gitOutput) {
+    return const LineSplitter().convert(gitOutput);
   }
 
-  TerminalOutput noOutput(String _terminalOutput) {
-    print("Terminal output: " + _terminalOutput);
-    bool isSuccess = _terminalOutput.trim().isEmpty;
+  GitOutput noOutput(String _gitOutput) {
+    print("Terminal output: " + _gitOutput);
+    bool isSuccess = _gitOutput.trim().isEmpty;
 
     return isSuccess
-        ? TerminalOutput(_terminalOutput).success()
-        : noError(_terminalOutput);
+        ? GitOutput(_gitOutput).success()
+        : noError(_gitOutput);
   }
 
-  TerminalOutput noError(String _terminalOutput) {
-    print("Terminal output: " + _terminalOutput);
-    toLines(_terminalOutput).forEach((line) {
+  GitOutput noError(String _gitOutput) {
+    print("Terminal output: " + _gitOutput);
+    toLines(_gitOutput).forEach((line) {
       if(line.contains(_prefixOutputError)) {
-        return TerminalOutput(_terminalOutput).failure();
+        return GitOutput(_gitOutput).failure();
       }
     });
 
-    return TerminalOutput(_terminalOutput).success();
+    return GitOutput(_gitOutput).success();
   }
 }

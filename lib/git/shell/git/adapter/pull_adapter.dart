@@ -1,10 +1,10 @@
-import 'package:source_app/git/shell/model/terminal_output.dart';
+import 'package:source_app/git/shell/git/model/git_output.dart';
 import 'base/base_adapter.dart';
 
 class PullAdapter extends BaseAdapter {
-  TerminalOutput confirm(String _terminalOutput) {
+  GitOutput confirm(String _gitOutput) {
     // TODO implement
-    print(_terminalOutput);
-    return TerminalOutput(_terminalOutput);
+    print(_gitOutput);
+    return GitOutput(_gitOutput);
   }
 }

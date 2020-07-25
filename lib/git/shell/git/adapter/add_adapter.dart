@@ -1,12 +1,12 @@
-import 'package:source_app/git/shell/model/terminal_output.dart';
+import 'package:source_app/git/shell/git/model/git_output.dart';
 import 'base/base_adapter.dart';
 
 class AddAdapter extends BaseAdapter {
-  TerminalOutput allConfirm(String terminalOutput) {
-    return super.noOutput(terminalOutput);
+  GitOutput allConfirm(String gitOutput) {
+    return super.noOutput(gitOutput);
   }
 
-  TerminalOutput filesConfirm(String terminalOutput) {
-    return super.noOutput(terminalOutput);
+  GitOutput filesConfirm(String gitOutput) {
+    return super.noOutput(gitOutput);
   }
 }

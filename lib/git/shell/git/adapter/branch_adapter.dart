@@ -1,29 +1,29 @@
-import 'package:source_app/git/shell/model/terminal_output.dart';
+import 'package:source_app/git/shell/git/model/git_output.dart';
 import 'base/base_adapter.dart';
 import '../../../model/git_branch.dart';
 
 class BranchAdapter extends BaseAdapter {
   int _singleResult = 1;
 
-  TerminalOutput toBranches(String _terminalOutput) {
+  GitOutput toBranches(String _gitOutput) {
     try {
       List<GitBranch> branches = List();
-      toLines(_terminalOutput).forEach((line) {
+      toLines(_gitOutput).forEach((line) {
         if (line.isNotEmpty) {
           branches.add(GitBranch(clean(line)));
         }
       });
 
-      return TerminalOutput(_terminalOutput).success(object: branches);
+      return GitOutput(_gitOutput).success(object: branches);
     } catch (e) {
-      return TerminalOutput(_terminalOutput).failure();
+      return GitOutput(_gitOutput).failure();
     }
   }
 
-  TerminalOutput toBranch(String _terminalOutput) {
+  GitOutput toBranch(String _gitOutput) {
     try {
-      print("_terminalOutput: " + _terminalOutput);
-      List<String> lines = toLines(_terminalOutput);
+      print("_gitOutput: " + _gitOutput);
+      List<String> lines = toLines(_gitOutput);
       String branch = lines.firstWhere(
           (line) =>
               lines.length == _singleResult ||
@@ -31,10 +31,10 @@ class BranchAdapter extends BaseAdapter {
           orElse: () => null);
 
       return branch != null
-          ? TerminalOutput(_terminalOutput).success(object: GitBranch(clean(branch)))
-          : TerminalOutput(_terminalOutput).failure();
+          ? GitOutput(_gitOutput).success(object: GitBranch(clean(branch)))
+          : GitOutput(_gitOutput).failure();
     } catch (e) {
-      return TerminalOutput(_terminalOutput).failure();
+      return GitOutput(_gitOutput).failure();
     }
   }
 }

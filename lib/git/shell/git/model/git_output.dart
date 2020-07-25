@@ -1,17 +1,17 @@
-class TerminalOutput {
+class GitOutput {
   bool isSuccess = true;
   String message;
   var object;
 
-  TerminalOutput(this.message);
+  GitOutput(this.message);
 
-  TerminalOutput failure() {
+  GitOutput failure() {
     this.isSuccess = false;
 
     return this;
   }
 
-  TerminalOutput success({var object}) {
+  GitOutput success({var object}) {
     this.isSuccess = true;
     this.object = object;
 
@@ -20,7 +20,7 @@ class TerminalOutput {
 
   @override
   String toString() {
-    return 'TerminalOutput{isSuccess: $isSuccess, message: $message, object: $object}';
+    return 'gitOutput{isSuccess: $isSuccess, message: $message, object: $object}';
   }
 }
 

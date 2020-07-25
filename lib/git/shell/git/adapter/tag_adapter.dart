@@ -1,21 +1,21 @@
 import 'package:source_app/git/shell/git/adapter/base/base_adapter.dart';
 import 'package:source_app/git/model/git_tag.dart';
-import 'package:source_app/git/shell/model/terminal_output.dart';
+import 'package:source_app/git/shell/git/model/git_output.dart';
 
 class TagAdapter extends BaseAdapter {
 
-  TerminalOutput toTags(String _terminalOutput) {
+  GitOutput toTags(String _gitOutput) {
     try {
       List<GitTag> tags = List();
-      toLines(_terminalOutput).forEach((line) {
+      toLines(_gitOutput).forEach((line) {
         if (line.isNotEmpty) {
           tags.add(GitTag(clean(line)));
         }
       });
 
-      return TerminalOutput(_terminalOutput).success(object: tags);
+      return GitOutput(_gitOutput).success(object: tags);
     } catch (e) {
-      return TerminalOutput(_terminalOutput).failure();
+      return GitOutput(_gitOutput).failure();
     }
   }
 }
