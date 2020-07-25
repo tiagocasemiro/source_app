@@ -4,9 +4,9 @@ import 'package:source_app/git/shell/model/terminal_output.dart';
 
 class LogAdapter extends BaseAdapter {
   //https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
-  TerminalOutput<List<GitCommit>> confirm(String terminalOutput) {
+  TerminalOutput confirm(String _terminalOutput) {
     // TODO implement
-    print(terminalOutput);
-    return TerminalOutput().success(object: List());
+    print(_terminalOutput);
+    return TerminalOutput(_terminalOutput).success(object: List());
   }
 }

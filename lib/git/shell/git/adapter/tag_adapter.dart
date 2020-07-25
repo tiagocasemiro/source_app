@@ -4,7 +4,7 @@ import 'package:source_app/git/shell/model/terminal_output.dart';
 
 class TagAdapter extends BaseAdapter {
 
-  TerminalOutput<List<GitTag>> toTags(String _terminalOutput) {
+  TerminalOutput toTags(String _terminalOutput) {
     try {
       List<GitTag> tags = List();
       toLines(_terminalOutput).forEach((line) {
@@ -13,9 +13,9 @@ class TagAdapter extends BaseAdapter {
         }
       });
 
-      return TerminalOutput().success(object: tags);
+      return TerminalOutput(_terminalOutput).success(object: tags);
     } catch (e) {
-      return TerminalOutput().failure(_terminalOutput);
+      return TerminalOutput(_terminalOutput).failure();
     }
   }
 }

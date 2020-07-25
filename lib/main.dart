@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:source_app/git/model/git_commit.dart';
 
 import 'git/shell/git/git.dart';
 
@@ -7,10 +8,12 @@ import 'git/shell/git/git.dart';
 void main() {
   runApp(SourceApp());
 
-   Git().add().all().call().then((branches) => print(branches));
-   Git().commit().message("commitado pelo app").call().then((branches) => print(branches));
+  //Git().add().all().call().then((branches) => print(branches));
+  //Git().commit().message("commitado pelo app").call().then((branches) => print(branches));
   //Git().push("tiagocasemiro", "password").then((branches) => print(branches));
   //Git().add().all().call().then((value) => print(value));
+    Git().checkout().branch("tiago").call().then((value) => print(value));
+  //Git().branch().delete("tiago").call().then((branches) => print(branches));
 
 }
 

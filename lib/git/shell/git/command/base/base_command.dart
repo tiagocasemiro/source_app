@@ -13,6 +13,12 @@ abstract class BaseGitCommand {
 
   Future<String> execute({List<String> parameters = const []}) async {
     print("Directory: " + _workDirectory);
+    var allParameters = "";
+    parameters.forEach((element) {
+      allParameters += " " + element;
+    });
+    print("Command : " + git + allParameters);
+
     String terminalOutput =
         await Terminal(_workDirectory).run(git, parameters: parameters);
 
@@ -28,4 +34,10 @@ abstract class BaseGitCommand {
   }
 
   Future<TerminalOutput> call();
+}
+
+class NoParameterException implements Exception {
+  final String msg;
+  const NoParameterException({this.msg = "No parameter. Call some method like current() to result"});
+  String toString() => 'NoParameterException: $msg';
 }

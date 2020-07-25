@@ -8,7 +8,7 @@ class Checkout extends BaseGitCommand {
     parameters.add('checkout');
   }
 
-  Checkout banch(String name) {
+  Checkout branch(String name) {
     parameters.add(name);
 
     return this;

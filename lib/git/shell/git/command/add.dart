@@ -36,7 +36,7 @@ class Add extends BaseGitCommand {
       case _Variant.files:
         return AddAdapter().allConfirm(terminalOutput);
       default:
-        return TerminalOutput();
+        throw NoParameterException();
     }
   }
 }

@@ -8,10 +8,10 @@ class CommitAdapter extends BaseAdapter {
     toLines(_terminalOutput).forEach((line) {
       if(line.contains("error: ")) {
         print("Falha no commit");
-        return TerminalOutput().failure(_terminalOutput);
+        return TerminalOutput(_terminalOutput).failure();
       }
     });
     print("uhuuuuu sucesso no commit");
-    return TerminalOutput().success();
+    return TerminalOutput(_terminalOutput).success();
   }
 }

@@ -1,10 +1,11 @@
+import 'package:source_app/git/model/git_branch.dart';
 import 'package:source_app/git/shell/extension/extension.dart';
 import 'package:source_app/git/shell/git/adapter/branch_adapter.dart';
 import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Branch extends BaseGitCommand {
-  _Variant _variant;
+  _Variant _variant = _Variant.multiple;
 
   Branch(String _workDirectory) : super(_workDirectory) {
     parameters.add('branch');
@@ -17,12 +18,6 @@ class Branch extends BaseGitCommand {
     return this;
   }
 
-  Branch local() {
-    _variant = _Variant.multiple;
-
-    return this;
-  }
-
   Branch current() {
     _variant = _Variant.single;
     parameters.add('--show-current');
@@ -31,7 +26,7 @@ class Branch extends BaseGitCommand {
   }
 
   Branch create(String name) {
-    _variant = _Variant.single;
+    _variant = _Variant.noOutput;
     parameters.add(name);
 
     return this;
@@ -48,6 +43,7 @@ class Branch extends BaseGitCommand {
   Branch delete(String name) {
     parameters.add('-d');
     parameters.add(name);
+    _variant = _Variant.noErrorOutput;
 
     return this;
   }
@@ -61,10 +57,14 @@ class Branch extends BaseGitCommand {
         return BranchAdapter().toBranch(terminalOutput);
       case _Variant.multiple:
         return BranchAdapter().toBranches(terminalOutput);
+      case _Variant.noOutput:
+        return BranchAdapter().noOutput(terminalOutput);
+      case _Variant.noErrorOutput:
+        return BranchAdapter().noError(terminalOutput);
       default:
-        return TerminalOutput();
+        throw NoParameterException();
     }
   }
 }
 
-enum _Variant { single, multiple }
+enum _Variant { single, multiple, noOutput, noErrorOutput }

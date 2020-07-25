@@ -1,16 +1,17 @@
-class TerminalOutput<T> {
+class TerminalOutput {
   bool isSuccess = true;
   String message;
-  T object;
+  var object;
 
-  TerminalOutput failure(String terminalOutput) {
+  TerminalOutput(this.message);
+
+  TerminalOutput failure() {
     this.isSuccess = false;
-    this.message = terminalOutput;
 
     return this;
   }
 
-  TerminalOutput success({T object}) {
+  TerminalOutput success({var object}) {
     this.isSuccess = true;
     this.object = object;
 
