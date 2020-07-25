@@ -1,17 +1,24 @@
 import 'package:source_app/git/shell/git/model/git_output.dart';
+import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_adapter.dart';
 
 class CommitAdapter extends BaseAdapter {
-  GitOutput commitToObject(String _gitOutput) {
-    print("Terminal output: " + _gitOutput);
-
-    toLines(_gitOutput).forEach((line) {
-      if(line.contains("error: ")) {
-        print("Falha no commit");
-        return GitOutput(_gitOutput).failure();
+  GitOutput commitToObject(TerminalOutput terminalOutput) {
+    var gitOutput = toGitOutput(terminalOutput);
+    try {
+      if (gitOutput.isFailure()) {
+        return gitOutput;
       }
-    });
-    print("uhuuuuu sucesso no commit");
-    return GitOutput(_gitOutput).success();
+      toLines(terminalOutput.message).forEach((line) {
+        if (line.contains("error: ")) {
+          return gitOutput.failure();
+        }
+      });
+
+      return gitOutput.success();
+    } catch (e) {
+
+      return gitOutput.failure();
+    }
   }
 }

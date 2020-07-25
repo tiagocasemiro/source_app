@@ -2,6 +2,7 @@ import 'package:source_app/git/shell/extension/extension.dart';
 import 'package:source_app/git/shell/git/adapter/add_adapter.dart';
 import 'package:source_app/git/shell/git/command/base/base_command.dart';
 import 'package:source_app/git/shell/git/model/git_output.dart';
+import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'package:source_app/git/shell/terminal.dart';
 
 class Add extends BaseGitCommand {
@@ -28,13 +29,13 @@ class Add extends BaseGitCommand {
 
   @override
   Future<GitOutput> call() async {
-    String gitOutput = await super.execute(parameters: parameters);
+    TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
     switch (_variant) {
       case _Variant.all:
-        return AddAdapter().filesConfirm(gitOutput);
+        return AddAdapter().filesConfirm(terminalOutput);
       case _Variant.files:
-        return AddAdapter().allConfirm(gitOutput);
+        return AddAdapter().allConfirm(terminalOutput);
       default:
         throw NoParameterException();
     }

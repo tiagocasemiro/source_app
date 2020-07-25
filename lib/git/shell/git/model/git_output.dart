@@ -1,26 +1,30 @@
 class GitOutput {
-  bool isSuccess = true;
+  bool _isSuccess = true;
   String message;
   var object;
 
   GitOutput(this.message);
 
   GitOutput failure() {
-    this.isSuccess = false;
+    this._isSuccess = false;
 
     return this;
   }
 
   GitOutput success({var object}) {
-    this.isSuccess = true;
+    this._isSuccess = true;
     this.object = object;
 
     return this;
   }
 
+  bool isFailure() {
+    return !_isSuccess;
+  }
+
   @override
   String toString() {
-    return 'gitOutput{isSuccess: $isSuccess, message: $message, object: $object}';
+    return 'gitOutput{isSuccess: $_isSuccess, message: $message, object: $object}';
   }
 }
 

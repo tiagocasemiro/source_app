@@ -2,6 +2,7 @@ import 'package:source_app/git/model/git_branch.dart';
 import 'package:source_app/git/shell/extension/extension.dart';
 import 'package:source_app/git/shell/git/adapter/branch_adapter.dart';
 import 'package:source_app/git/shell/git/model/git_output.dart';
+import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Branch extends BaseGitCommand {
@@ -50,17 +51,17 @@ class Branch extends BaseGitCommand {
 
   @override
   Future<GitOutput> call() async {
-    String gitOutput = await super.execute(parameters: parameters);
+    TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
     switch (_variant) {
       case _Variant.single:
-        return BranchAdapter().toBranch(gitOutput);
+        return BranchAdapter().toBranch(terminalOutput);
       case _Variant.multiple:
-        return BranchAdapter().toBranches(gitOutput);
+        return BranchAdapter().toBranches(terminalOutput);
       case _Variant.noOutput:
-        return BranchAdapter().noOutput(gitOutput);
+        return BranchAdapter().noOutput(terminalOutput);
       case _Variant.noErrorOutput:
-        return BranchAdapter().noError(gitOutput);
+        return BranchAdapter().noError(terminalOutput);
       default:
         throw NoParameterException();
     }

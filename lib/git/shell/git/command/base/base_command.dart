@@ -1,5 +1,6 @@
 import 'package:source_app/git/shell/extension/extension.dart';
 import 'package:source_app/git/shell/git/model/git_output.dart';
+import 'package:source_app/git/shell/model/terminal_output.dart';
 import '../../../terminal.dart';
 
 abstract class BaseGitCommand {
@@ -11,7 +12,7 @@ abstract class BaseGitCommand {
 
   BaseGitCommand(this._workDirectory);
 
-  Future<String> execute({List<String> parameters = const []}) async {
+  Future<TerminalOutput> execute({List<String> parameters = const []}) async {
     print("Directory: " + _workDirectory);
     var allParameters = "";
     parameters.forEach((element) {
@@ -19,19 +20,19 @@ abstract class BaseGitCommand {
     });
     print("Command : " + git + allParameters);
 
-    String gitOutput =
-        await Terminal(_workDirectory).run(git, parameters: parameters);
+    TerminalOutput gitOutput = await Terminal(_workDirectory).run(git, parameters: parameters);
 
-    return gitOutput != null ? gitOutput : Shell.empty();
+    return gitOutput;
   }
 
+ /* @deprecated
   Future<int> executeAndReturnExitCode(
       {List<String> parameters = const []}) async {
     final int processResult = await Terminal(_workDirectory)
         .runAndReturnExitCode(git, parameters: parameters);
 
     return processResult;
-  }
+  }*/
 
   Future<GitOutput> call();
 }
