@@ -22,6 +22,10 @@ class GitOutput {
     return !_isSuccess;
   }
 
+  bool isSuccess() {
+    return _isSuccess;
+  }
+
   @override
   String toString() {
     return 'gitOutput{isSuccess: $_isSuccess, message: $message, object: $object}';

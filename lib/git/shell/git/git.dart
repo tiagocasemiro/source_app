@@ -1,9 +1,6 @@
-import 'package:source_app/git/shell/git/command/base/base_command.dart';
 import 'package:source_app/git/shell/git/command/checkout.dart';
 import 'package:source_app/git/shell/git/command/pull.dart';
-import 'package:source_app/git/shell/model/terminal_output.dart';
-
-import '../terminal.dart';
+import 'package:source_app/git/shell/git/model/git_output.dart';
 import 'command/add.dart';
 import 'command/branch.dart';
 import 'command/commit.dart';
@@ -12,6 +9,7 @@ import 'command/log.dart';
 import 'command/merge.dart';
 import 'command/push.dart';
 import 'command/stash.dart';
+import 'command/status.dart';
 import 'command/tag.dart';
 
 class Git {
@@ -68,11 +66,13 @@ class Git {
     return Log(_workDirectory);
   }
 
-  Future<bool> isGitDirectory() async {
-    final TerminalOutput terminalOutput = await Terminal(_workDirectory)
-        .run(BaseGitCommand.git,
-            parameters: [BaseGitCommand.status]);
+  Status status() {
+    return Status(_workDirectory);
+  }
 
-    return terminalOutput.isSuccess();
+  Future<bool> isGitDirectory() async {
+    GitOutput gitOutput = await status().call();
+
+    return gitOutput.isSuccess();
   }
 }
