@@ -1,6 +1,7 @@
 import 'package:source_app/git/shell/git/command/base/base_command.dart';
 import 'package:source_app/git/shell/git/command/checkout.dart';
 import 'package:source_app/git/shell/git/command/pull.dart';
+import 'package:source_app/git/shell/model/terminal_output.dart';
 
 import '../terminal.dart';
 import 'command/add.dart';
@@ -68,10 +69,10 @@ class Git {
   }
 
   Future<bool> isGitDirectory() async {
-    final int processResult = await Terminal(_workDirectory)
-        .runAndReturnExitCode(BaseGitCommand.git,
+    final TerminalOutput terminalOutput = await Terminal(_workDirectory)
+        .run(BaseGitCommand.git,
             parameters: [BaseGitCommand.status]);
 
-    return processResult == 0;
+    return terminalOutput.isSuccess();
   }
 }

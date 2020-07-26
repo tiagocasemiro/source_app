@@ -1,5 +1,6 @@
 import 'package:source_app/git/shell/git/adapter/push_adapter.dart';
 import 'package:source_app/git/shell/git/model/git_output.dart';
+import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Push extends BaseGitCommand {
@@ -34,8 +35,8 @@ class Push extends BaseGitCommand {
   @override
   Future<GitOutput> call() async {
     parameters.add(_originWithCredential);
-    String gitOutput = await super.execute(parameters: parameters);
+    TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return PushAdapter().confirm(gitOutput);
+    return PushAdapter().confirm(terminalOutput);
   }
 }

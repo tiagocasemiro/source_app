@@ -1,9 +1,7 @@
-import 'package:source_app/git/shell/extension/extension.dart';
 import 'package:source_app/git/shell/git/adapter/add_adapter.dart';
 import 'package:source_app/git/shell/git/command/base/base_command.dart';
 import 'package:source_app/git/shell/git/model/git_output.dart';
 import 'package:source_app/git/shell/model/terminal_output.dart';
-import 'package:source_app/git/shell/terminal.dart';
 
 class Add extends BaseGitCommand {
   String _dot = ".";

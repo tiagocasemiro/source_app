@@ -1,5 +1,6 @@
 import 'package:source_app/git/shell/git/adapter/tag_adapter.dart';
 import 'package:source_app/git/shell/git/model/git_output.dart';
+import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Tag extends BaseGitCommand {
@@ -22,8 +23,8 @@ class Tag extends BaseGitCommand {
 
   @override
   Future<GitOutput> call() async {
-    String gitOutput = await super.execute(parameters: parameters);
+    TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return TagAdapter().toTags(gitOutput);
+    return TagAdapter().toTags(terminalOutput);
   }
 }

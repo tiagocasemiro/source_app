@@ -1,5 +1,6 @@
 import 'package:source_app/git/shell/git/adapter/stash_adapter.dart';
 import 'package:source_app/git/shell/git/model/git_output.dart';
+import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Stash extends BaseGitCommand {
@@ -35,8 +36,8 @@ class Stash extends BaseGitCommand {
 
   @override
   Future<GitOutput> call() async {
-    String gitOutput = await super.execute(parameters: parameters);
+    TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return StashAdapter().confirm(gitOutput);
+    return StashAdapter().confirm(terminalOutput);
   }
 }

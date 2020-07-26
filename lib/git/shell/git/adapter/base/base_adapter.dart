@@ -4,7 +4,6 @@ import 'package:source_app/git/shell/model/terminal_output.dart';
 
 class BaseAdapter {
   String prefixOutputError = "error: ";
-  int successTerminalExitCode = 0;
 
   String removeBreakLine(String line) {
     return line?.replaceAll("\n", "");
@@ -24,10 +23,10 @@ class BaseAdapter {
 
   GitOutput toGitOutput(TerminalOutput terminalOutput) {
     try {
-      print("Terminal output: " + terminalOutput.message);
+      print("Terminal output: " + terminalOutput.toString());
       var gitOutput = GitOutput(terminalOutput.message);
-      if(terminalOutput.exitCode != successTerminalExitCode) {
-        gitOutput.failure();
+      if (terminalOutput.isFailure()) {
+        return gitOutput.failure();
       }
       toLines(terminalOutput.message).forEach((line) {
         if (line.contains(prefixOutputError)) {

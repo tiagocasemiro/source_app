@@ -1,5 +1,3 @@
-import 'package:source_app/git/model/git_branch.dart';
-import 'package:source_app/git/shell/extension/extension.dart';
 import 'package:source_app/git/shell/git/adapter/branch_adapter.dart';
 import 'package:source_app/git/shell/git/model/git_output.dart';
 import 'package:source_app/git/shell/model/terminal_output.dart';
@@ -44,7 +42,7 @@ class Branch extends BaseGitCommand {
   Branch delete(String name) {
     parameters.add('-d');
     parameters.add(name);
-    _variant = _Variant.noErrorOutput;
+    _variant = _Variant.noOutput;
 
     return this;
   }
@@ -59,13 +57,11 @@ class Branch extends BaseGitCommand {
       case _Variant.multiple:
         return BranchAdapter().toBranches(terminalOutput);
       case _Variant.noOutput:
-        return BranchAdapter().noOutput(terminalOutput);
-      case _Variant.noErrorOutput:
-        return BranchAdapter().noError(terminalOutput);
+        return BranchAdapter().toGitOutput(terminalOutput);
       default:
         throw NoParameterException();
     }
   }
 }
 
-enum _Variant { single, multiple, noOutput, noErrorOutput }
+enum _Variant { single, multiple, noOutput }
