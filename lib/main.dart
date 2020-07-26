@@ -10,8 +10,8 @@ void main() {
   //Git().commit().message("commitado pelo app").call().then((branches) => print(branches));
   //Git().push("tiagocasemiro", "password").then((branches) => print(branches));
   //Git().add().all().call().then((value) => print(value));
-  Git().checkout().branch("develop").call().then((value) => print(value));
-  //Git().branch().delete("develop").call().then((branches) => print(branches));
+  //Git().checkout().branch("develop").call().then((value) => print(value));
+  Git().branch().delete("develop").call().then((branches) => print(branches));
 
   //Terminal terminal = Terminal("/home/tiagocasemiro/Documentos/projetos/pessoal/documentation");
   //terminal.run("git", parameters: ["checkout", "tiago"]).then((value) => print(value));

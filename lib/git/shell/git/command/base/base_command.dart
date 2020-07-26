@@ -24,15 +24,6 @@ abstract class BaseGitCommand {
     return gitOutput;
   }
 
- /* @deprecated
-  Future<int> executeAndReturnExitCode(
-      {List<String> parameters = const []}) async {
-    final int processResult = await Terminal(_workDirectory)
-        .runAndReturnExitCode(git, parameters: parameters);
-
-    return processResult;
-  }*/
-
   Future<GitOutput> call();
 }
 
