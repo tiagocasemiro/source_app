@@ -11,16 +11,19 @@ abstract class BaseGitCommand {
   BaseGitCommand(this._workDirectory);
 
   Future<TerminalOutput> execute({List<String> parameters = const []}) async {
+    _printCommand(parameters);
+    TerminalOutput gitOutput = await Terminal(_workDirectory).run(_git, parameters: parameters);
+
+    return gitOutput;
+  }
+
+  void _printCommand(List<String> parameters) {
     print("Directory: " + _workDirectory);
     var allParameters = "";
     parameters.forEach((element) {
       allParameters += " " + element;
     });
     print("Command : " + _git + allParameters);
-
-    TerminalOutput gitOutput = await Terminal(_workDirectory).run(_git, parameters: parameters);
-
-    return gitOutput;
   }
 
   Future<GitOutput> call();
