@@ -3,8 +3,7 @@ import 'package:source_app/git/shell/model/terminal_output.dart';
 import '../../../terminal.dart';
 
 abstract class BaseGitCommand {
-  static const String git = 'git';
-  static const String status = 'status';
+  static const String _git = 'git';
 
   final List<String> parameters = List();
   String _workDirectory;
@@ -17,9 +16,9 @@ abstract class BaseGitCommand {
     parameters.forEach((element) {
       allParameters += " " + element;
     });
-    print("Command : " + git + allParameters);
+    print("Command : " + _git + allParameters);
 
-    TerminalOutput gitOutput = await Terminal(_workDirectory).run(git, parameters: parameters);
+    TerminalOutput gitOutput = await Terminal(_workDirectory).run(_git, parameters: parameters);
 
     return gitOutput;
   }
