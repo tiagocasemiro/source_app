@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'git/shell/git/command/log.dart';
 import 'git/shell/git/git.dart';
 
 
@@ -12,7 +13,9 @@ void main() {
   //Git().checkout().branch("develop").call().then((value) => print(value));
   //Git().branch().delete("develop").call().then((branches) => print(branches));
 
-  Git().isGitDirectory().then((branches) => print(branches));
+  //Git().isGitDirectory().then((branches) => print(branches));
+
+  Git().log().graph().pretty(Log.historyFormat).call().then((branches) => print(branches));
 }
 
 /*Future<void> main() async {

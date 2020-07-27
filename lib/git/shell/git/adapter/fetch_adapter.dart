@@ -5,8 +5,6 @@ import 'base/base_adapter.dart';
 class FetchAdapter extends BaseAdapter {
 
   GitOutput confirm(TerminalOutput terminalOutput) {
-    //TODO implement
-
     return toGitOutput(terminalOutput);
   }
 }

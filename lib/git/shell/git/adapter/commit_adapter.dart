@@ -7,13 +7,8 @@ class CommitAdapter extends BaseAdapter {
     var gitOutput = toGitOutput(terminalOutput);
     try {
       if (gitOutput.isFailure()) {
-        return gitOutput;
+        return gitOutput.failure();
       }
-      toLines(terminalOutput.message).forEach((line) {
-        if (line.contains("error: ")) {
-          return gitOutput.failure();
-        }
-      });
 
       return gitOutput.success();
     } catch (e) {

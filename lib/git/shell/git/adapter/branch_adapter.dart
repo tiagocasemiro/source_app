@@ -30,7 +30,7 @@ class BranchAdapter extends BaseAdapter {
     var gitOutput = toGitOutput(terminalOutput);
     try {
       if(gitOutput.isFailure()) {
-        return gitOutput;
+        return gitOutput.failure();
       }
       List<String> lines = toLines(terminalOutput.message);
       String branch = lines.firstWhere(
