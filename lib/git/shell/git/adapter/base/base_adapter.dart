@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:source_app/git/shell/git/model/git_output.dart';
 import 'package:source_app/git/shell/model/terminal_output.dart';
 
-class BaseAdapter {
+abstract class BaseAdapter {
   String prefixOutputError = "error: ";
 
   String removeBreakLine(String line) {
@@ -41,4 +41,8 @@ class BaseAdapter {
       return GitOutput(terminalOutput.message).failure();
     }
   }
+
+  GitOutput execute(GitOutput gitOutput);
 }
+
+
