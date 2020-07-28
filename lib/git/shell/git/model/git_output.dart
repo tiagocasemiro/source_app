@@ -11,8 +11,12 @@ class GitOutput {
     return this;
   }
 
-  GitOutput success({var object}) {
+  GitOutput success() {
     this._isSuccess = true;
+    return this;
+  }
+
+  GitOutput withObject(var object) {
     this.object = object;
 
     return this;

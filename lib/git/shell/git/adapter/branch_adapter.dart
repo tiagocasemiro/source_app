@@ -10,7 +10,7 @@ class BranchAdapter extends BaseAdapter {
     var gitOutput = toGitOutput(terminalOutput);
     try {
       if(gitOutput.isFailure()) {
-        return gitOutput;
+        return gitOutput.failure();
       }
       List<GitBranch> branches = List();
       toLines(terminalOutput.message).forEach((line) {
@@ -19,7 +19,7 @@ class BranchAdapter extends BaseAdapter {
         }
       });
 
-      return gitOutput.success(object: branches);
+      return gitOutput.withObject(branches).success();
     } catch (e) {
 
       return gitOutput.failure();
@@ -30,7 +30,7 @@ class BranchAdapter extends BaseAdapter {
     var gitOutput = toGitOutput(terminalOutput);
     try {
       if(gitOutput.isFailure()) {
-        return gitOutput.failure();
+        return gitOutput;
       }
       List<String> lines = toLines(terminalOutput.message);
       String branch = lines.firstWhere(
@@ -40,7 +40,7 @@ class BranchAdapter extends BaseAdapter {
           orElse: () => null);
 
       return branch != null
-          ? gitOutput.success(object: GitBranch(clean(branch)))
+          ? gitOutput.withObject(GitBranch(clean(branch))).success()
           :gitOutput.failure();
     } catch (e) {
 

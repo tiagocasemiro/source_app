@@ -32,6 +32,14 @@ class Push extends BaseGitCommand {
     return this;
   }
 
+  Push branch(String name) {
+    parameters.add('--set-upstream');
+    parameters.add('origin');
+    parameters.add(name);
+
+    return this;
+  }
+
   @override
   Future<GitOutput> call() async {
     parameters.add(_originWithCredential);

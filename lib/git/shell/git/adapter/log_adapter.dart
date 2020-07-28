@@ -8,7 +8,6 @@ class LogAdapter extends BaseAdapter {
 
   // to try get color of line -> https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
   GitOutput toCommits(TerminalOutput terminalOutput) {
-    //* "# 4cfb90e - Tiago - message - 2020-07-19"
     var gitOutput = toGitOutput(terminalOutput);
     try {
       if (gitOutput.isFailure()) {
@@ -22,7 +21,7 @@ class LogAdapter extends BaseAdapter {
         commits.add(GitCommit(brokedLine[0], brokedLine[1], brokedLine[2], brokedLine[3], brokedLine[4]));
       });
 
-      return gitOutput.success(object: commits);
+      return gitOutput.withObject(commits).success();
     } catch (e) {
 
       return gitOutput.failure();

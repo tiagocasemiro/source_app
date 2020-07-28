@@ -8,6 +8,9 @@ class TagAdapter extends BaseAdapter {
   GitOutput toTags(TerminalOutput terminalOutput) {
     var gitOutput = toGitOutput(terminalOutput);
     try {
+      if(gitOutput.isFailure()) {
+        return gitOutput.failure();
+      }
       List<GitTag> tags = List();
       toLines(terminalOutput.message).forEach((line) {
         if (line.isNotEmpty) {
@@ -15,7 +18,7 @@ class TagAdapter extends BaseAdapter {
         }
       });
 
-      return gitOutput.success(object: tags);
+      return gitOutput.withObject(tags);
     } catch (e) {
 
       return gitOutput.failure();
