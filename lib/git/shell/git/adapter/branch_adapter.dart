@@ -1,50 +1,37 @@
 import 'package:source_app/git/shell/git/model/git_output.dart';
-import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_adapter.dart';
 import '../../../model/git_branch.dart';
 
 class BranchAdapter extends BaseAdapter {
   int _singleResult = 1;
 
-  GitOutput toBranches(TerminalOutput terminalOutput) {
-    var gitOutput = toGitOutput(terminalOutput);
-    try {
-      if(gitOutput.isFailure()) {
-        return gitOutput.failure();
-      }
+  BranchAdapter(terminalOutput) : super(terminalOutput);
+
+  GitOutput toBranches() {
+    return execute(transform: (gitOutput) {
       List<GitBranch> branches = List();
-      toLines(terminalOutput.message).forEach((line) {
+      toLines(gitOutput.message).forEach((line) {
         if (line.isNotEmpty) {
           branches.add(GitBranch(clean(line)));
         }
       });
 
-      return gitOutput.withObject(branches).success();
-    } catch (e) {
-
-      return gitOutput.failure();
-    }
+      return gitOutput.withObject(branches);
+    });
   }
 
-  GitOutput toBranch(TerminalOutput terminalOutput) {
-    var gitOutput = toGitOutput(terminalOutput);
-    try {
-      if(gitOutput.isFailure()) {
-        return gitOutput;
-      }
-      List<String> lines = toLines(terminalOutput.message);
+  GitOutput toBranch() {
+    return execute(transform: (gitOutput) {
+      List<String> lines = toLines(gitOutput.message);
       String branch = lines.firstWhere(
-          (line) =>
-              lines.length == _singleResult ||
+              (line) =>
+          lines.length == _singleResult ||
               (line.isNotEmpty && line.startsWith("*")),
           orElse: () => null);
 
       return branch != null
           ? gitOutput.withObject(GitBranch(clean(branch))).success()
-          :gitOutput.failure();
-    } catch (e) {
-
-      return gitOutput.failure();
-    }
+          : gitOutput.failure();
+    });
   }
 }

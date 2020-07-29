@@ -3,15 +3,13 @@ import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_adapter.dart';
 
 class AddAdapter extends BaseAdapter {
-  TerminalOutput _terminalOutput;
-
-  AddAdapter(this._terminalOutput);
+  AddAdapter(terminalOutput) : super(terminalOutput) ;
 
   GitOutput all() {
-    return execute(_terminalOutput);
+    return execute();
   }
 
   GitOutput files() {
-    return execute(_terminalOutput);
+    return execute();
   }
 }

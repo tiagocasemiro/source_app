@@ -53,11 +53,11 @@ class Branch extends BaseGitCommand {
 
     switch (_variant) {
       case _Variant.single:
-        return BranchAdapter().toBranch(terminalOutput);
+        return BranchAdapter(terminalOutput).toBranch();
       case _Variant.multiple:
-        return BranchAdapter().toBranches(terminalOutput);
+        return BranchAdapter(terminalOutput).toBranches();
       case _Variant.noOutput:
-        return BranchAdapter().toGitOutput(terminalOutput);
+        return BranchAdapter(terminalOutput).execute();
       default:
         throw NoParameterException();
     }
