@@ -3,14 +3,14 @@ import 'base/base_adapter.dart';
 
 class AddAllAdapter extends BaseAdapter {
   @override
-  GitOutput execute(GitOutput gitOutput) {
+  GitOutput transform(GitOutput gitOutput) {
     return gitOutput;
   }
 }
 
 class AddFilesAdapter extends BaseAdapter {
   @override
-  GitOutput execute(GitOutput gitOutput) {
+  GitOutput transform(GitOutput gitOutput) {
     return gitOutput;
   }
 }

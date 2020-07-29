@@ -1,6 +1,6 @@
 import 'package:source_app/git/shell/git/adapter/add_adapter.dart';
 import 'package:source_app/git/shell/git/adapter/add_adapter.dart';
-import 'package:source_app/git/shell/git/adapter/base/tamplete_method_adapter.dart';
+import 'package:source_app/git/shell/git/adapter/base/transformation.dart';
 import 'package:source_app/git/shell/git/command/base/base_command.dart';
 import 'package:source_app/git/shell/git/model/git_output.dart';
 import 'package:source_app/git/shell/model/terminal_output.dart';
@@ -33,9 +33,9 @@ class Add extends BaseGitCommand {
 
     switch (_variant) {
       case _Variant.all:
-        return Adapter(terminalOutput).execute(AddFilesAdapter());
+        return Transformation(terminalOutput).execute(AddFilesAdapter());
       case _Variant.files:
-        return Adapter(terminalOutput).execute(AddAllAdapter());
+        return Transformation(terminalOutput).execute(AddAllAdapter());
       default:
         throw NoParameterException();
     }

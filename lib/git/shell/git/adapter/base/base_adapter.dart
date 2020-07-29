@@ -42,7 +42,7 @@ abstract class BaseAdapter {
     }
   }
 
-  GitOutput execute(GitOutput gitOutput);
+  GitOutput transform(GitOutput gitOutput);
 }
 
 
