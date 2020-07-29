@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:source_app/git/shell/git/model/git_output.dart';
 import 'package:source_app/git/shell/model/terminal_output.dart';
 
@@ -22,7 +21,7 @@ abstract class BaseAdapter {
     return const LineSplitter().convert(gitOutput);
   }
 
-  GitOutput toGitOutput(TerminalOutput terminalOutput) {
+  GitOutput _toGitOutput(TerminalOutput terminalOutput) {
     try {
       print("Terminal output: " + terminalOutput.toString());
       var gitOutput = GitOutput(terminalOutput.message);
@@ -42,7 +41,17 @@ abstract class BaseAdapter {
     }
   }
 
-  GitOutput transform(GitOutput gitOutput);
+  GitOutput execute(TerminalOutput terminalOutput, {GitOutput transform(GitOutput gitOutput)}) {
+    var gitOutput = _toGitOutput(terminalOutput);
+    try {
+      if(gitOutput.isFailure()) {
+        return gitOutput.failure();
+      }
+
+      return ((transform != null)? transform(gitOutput) : gitOutput).success();
+    } catch (e) {
+
+      return gitOutput.failure();
+    }
+  }
 }
-
-
