@@ -45,6 +45,6 @@ class Push extends BaseGitCommand {
     parameters.add(_originWithCredential);
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return PushAdapter().confirm(terminalOutput);
+    return PushAdapter(terminalOutput).confirm();
   }
 }

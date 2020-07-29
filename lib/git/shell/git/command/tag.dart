@@ -25,6 +25,6 @@ class Tag extends BaseGitCommand {
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return TagAdapter().toTags(terminalOutput);
+    return TagAdapter(terminalOutput).toTags();
   }
 }

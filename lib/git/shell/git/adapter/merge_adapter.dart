@@ -3,9 +3,12 @@ import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_adapter.dart';
 
 class MergeAdapter extends BaseAdapter {
-  GitOutput confirm(TerminalOutput terminalOutput) {
+
+  MergeAdapter(TerminalOutput terminalOutput) : super(terminalOutput);
+
+  GitOutput confirm() {
     //TODO implement
 
-    return toGitOutput(terminalOutput);
+    return execute();
   }
 }

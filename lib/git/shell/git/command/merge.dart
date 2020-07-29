@@ -18,6 +18,6 @@ class Merge extends BaseGitCommand {
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return MergeAdapter().confirm(terminalOutput);
+    return MergeAdapter(terminalOutput).confirm();
   }
 }

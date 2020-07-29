@@ -38,6 +38,6 @@ class Stash extends BaseGitCommand {
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return StashAdapter().confirm(terminalOutput);
+    return StashAdapter(terminalOutput).confirm();
   }
 }
