@@ -25,6 +25,6 @@ class Checkout extends BaseGitCommand {
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return CheckoutAdapter().confirm(terminalOutput);
+    return CheckoutAdapter(terminalOutput).execute();
   }
 }

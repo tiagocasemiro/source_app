@@ -5,7 +5,6 @@ import 'package:source_app/git/shell/model/terminal_output.dart';
 
 class Add extends BaseGitCommand {
   String _dot = ".";
-  _Variant _variant;
 
   Add(workDirectory) : super(workDirectory) {
     parameters.add("add");
@@ -13,14 +12,12 @@ class Add extends BaseGitCommand {
 
   Add all() {
     parameters.add(_dot);
-    _variant = _Variant.all;
 
     return this;
   }
 
   Add files(List<String> files) {
     parameters.addAll(files);
-    _variant = _Variant.files;
 
     return this;
   }
@@ -29,15 +26,7 @@ class Add extends BaseGitCommand {
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    switch (_variant) {
-      case _Variant.all:
-        return AddAdapter(terminalOutput).all();
-      case _Variant.files:
-        return AddAdapter(terminalOutput).files();
-      default:
-        throw NoParameterException();
-    }
+    return AddAdapter(terminalOutput).execute();
   }
 }
 
-enum _Variant { all, files }

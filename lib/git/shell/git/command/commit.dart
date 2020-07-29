@@ -19,6 +19,6 @@ class Commit extends BaseGitCommand {
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return CommitAdapter().commitToObject(terminalOutput);
+    return CommitAdapter(terminalOutput).execute();
   }
 }

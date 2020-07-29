@@ -25,7 +25,6 @@ class Branch extends BaseGitCommand {
   }
 
   Branch create(String name) {
-    _variant = _Variant.noOutput;
     parameters.add(name);
 
     return this;
@@ -42,7 +41,6 @@ class Branch extends BaseGitCommand {
   Branch delete(String name) {
     parameters.add('-d');
     parameters.add(name);
-    _variant = _Variant.noOutput;
 
     return this;
   }
@@ -56,12 +54,10 @@ class Branch extends BaseGitCommand {
         return BranchAdapter(terminalOutput).toBranch();
       case _Variant.multiple:
         return BranchAdapter(terminalOutput).toBranches();
-      case _Variant.noOutput:
-        return BranchAdapter(terminalOutput).execute();
       default:
-        throw NoParameterException();
+        return BranchAdapter(terminalOutput).execute();
     }
   }
 }
 
-enum _Variant { single, multiple, noOutput }
+enum _Variant { single, multiple }

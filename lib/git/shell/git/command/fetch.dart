@@ -18,6 +18,6 @@ class Fetch extends BaseGitCommand {
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return FetchAdapter().confirm(terminalOutput);
+    return FetchAdapter(terminalOutput).execute();
   }
 }
