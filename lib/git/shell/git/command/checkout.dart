@@ -21,6 +21,14 @@ class Checkout extends BaseGitCommand {
     return this;
   }
 
+  Checkout remoteBranch(String localName, String remoteName) {
+    parameters.add('-b');
+    parameters.add(localName);
+    parameters.add('origin/$remoteName');
+
+    return this;
+  }
+
   @override
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
