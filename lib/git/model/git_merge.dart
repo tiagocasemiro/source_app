@@ -1,0 +1,4 @@
+
+class Merge {
+  bool hasConflict;
+}
