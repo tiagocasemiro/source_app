@@ -3,7 +3,8 @@ import 'package:source_app/git/shell/model/terminal_output.dart';
 import '../../../terminal.dart';
 
 abstract class BaseGitCommand {
-  static const String _git = 'git';
+  static const String _language = 'LANG=en_GB ';
+  static const String _git = '$_language git';
 
   final List<String> parameters = List();
   String _workDirectory;

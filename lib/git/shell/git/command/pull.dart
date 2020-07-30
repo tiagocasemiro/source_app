@@ -12,6 +12,6 @@ class Pull extends BaseGitCommand {
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return PullAdapter(terminalOutput).confirm();
+    return PullAdapter(terminalOutput).execute();
   }
 }
