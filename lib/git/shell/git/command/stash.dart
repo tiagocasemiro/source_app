@@ -1,35 +1,40 @@
+import 'package:source_app/git/model/git_stash.dart';
 import 'package:source_app/git/shell/git/adapter/stash_adapter.dart';
 import 'package:source_app/git/shell/git/model/git_output.dart';
 import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Stash extends BaseGitCommand {
+  _Variant _variant;
+
   Stash(String workDirectory) : super(workDirectory) {
     parameters.add('stash');
   }
 
   Stash list() {
     parameters.add('list');
+    _variant = _Variant.list;
 
     return this;
   }
 
-  Stash apply() {
+  Stash apply(GitStash gitStash) {
     parameters.add('apply');
+    parameters.add(gitStash.reference);
 
     return this;
   }
 
   Stash create(String name) {
-    parameters.add('create');
+    parameters.add('save');
     parameters.add(name);
 
     return this;
   }
 
-  Stash drop(String name) {
+  Stash drop(GitStash gitStash) {
     parameters.add('drop');
-    parameters.add(name);
+    parameters.add(gitStash.reference);
 
     return this;
   }
@@ -38,6 +43,14 @@ class Stash extends BaseGitCommand {
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return StashAdapter(terminalOutput).confirm();
+    switch(_variant) {
+      case _Variant.list:
+        return StashAdapter(terminalOutput).toList();
+        break;
+    }
+
+    return StashAdapter(terminalOutput).execute();
   }
 }
+
+enum _Variant { list }
