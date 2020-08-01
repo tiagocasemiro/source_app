@@ -4,6 +4,7 @@ import 'package:source_app/git/shell/model/terminal_output.dart';
 
 abstract class BaseAdapter {
   String _prefixOutputError = "error: ";
+  String _prefixOutputFatal = "fatal: ";
   TerminalOutput _terminalOutput;
 
   BaseAdapter(this._terminalOutput);
@@ -32,7 +33,7 @@ abstract class BaseAdapter {
         return gitOutput.failure();
       }
       toLines(_terminalOutput.message).forEach((line) {
-        if (line.contains(_prefixOutputError)) {
+        if (line.contains(_prefixOutputError) || line.contains(_prefixOutputFatal)) {
           return gitOutput.failure();
         }
       });
