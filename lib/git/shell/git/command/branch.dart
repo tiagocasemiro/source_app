@@ -4,21 +4,21 @@ import 'package:source_app/git/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Branch extends BaseGitCommand {
-  _Variant _variant = _Variant.multiple;
+  _Variant _variant;
 
   Branch(String _workDirectory) : super(_workDirectory) {
     parameters.add('branch');
   }
 
   Branch remote() {
-    _variant = _Variant.multiple;
+    _variant = _Variant.remote;
     parameters.add('-r');
 
     return this;
   }
 
   Branch current() {
-    _variant = _Variant.single;
+    _variant = _Variant.current;
     parameters.add('--show-current');
 
     return this;
@@ -50,9 +50,9 @@ class Branch extends BaseGitCommand {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
     switch (_variant) {
-      case _Variant.single:
+      case _Variant.current:
         return BranchAdapter(terminalOutput).toBranch();
-      case _Variant.multiple:
+      case _Variant.remote:
         return BranchAdapter(terminalOutput).toBranches();
       default:
         return BranchAdapter(terminalOutput).execute();
@@ -60,4 +60,4 @@ class Branch extends BaseGitCommand {
   }
 }
 
-enum _Variant { single, multiple }
+enum _Variant { current, remote }
