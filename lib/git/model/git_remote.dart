@@ -1,7 +1,8 @@
 
 class GitRemote {
   String name;
-  String url;
+  String fetchUrl;
+  String pushUrl;
 
-  GitRemote(this.name, {this.url});
+  GitRemote();
 }
