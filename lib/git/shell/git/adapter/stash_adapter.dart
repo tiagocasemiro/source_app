@@ -22,4 +22,12 @@ class StashAdapter extends BaseAdapter {
       return gitOutput;
     });
   }
+
+  GitOutput toDetails() {
+    return execute(transform: (gitOutput) {
+      List<String> alterations = toLines(gitOutput.message);
+
+      return gitOutput.withObject(alterations);
+    });
+  }
 }

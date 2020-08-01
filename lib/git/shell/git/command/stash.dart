@@ -38,6 +38,14 @@ class Stash extends BaseGitCommand {
 
     return this;
   }
+  
+  Stash show(GitStash gitStash) {
+    parameters.add('show');
+    parameters.add(gitStash.reference);
+    _variant = _Variant.show;
+
+    return this;
+  }
 
   @override
   Future<GitOutput> call() async {
@@ -47,10 +55,13 @@ class Stash extends BaseGitCommand {
       case _Variant.list:
         return StashAdapter(terminalOutput).toList();
         break;
+      case _Variant.show:
+        return StashAdapter(terminalOutput).toDetails();
+        break;
     }
 
     return StashAdapter(terminalOutput).execute();
   }
 }
 
-enum _Variant { list }
+enum _Variant { list, show }
