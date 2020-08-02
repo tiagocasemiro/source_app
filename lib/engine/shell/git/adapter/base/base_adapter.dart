@@ -21,10 +21,6 @@ abstract class BaseAdapter {
     return removePointer(removeBreakLine(line))?.trim();
   }
 
-  /*List<String> toLines(String gitOutput) {
-    return LineSplitter().convert(gitOutput);
-  }*/
-
   GitOutput execute({GitOutput transform(GitOutput gitOutput)}) {
     try {
       print("Terminal output: " + _terminalOutput.toString());
