@@ -1,5 +1,6 @@
 import 'package:source_app/engine/shell/git/command/checkout.dart';
 import 'package:source_app/engine/shell/git/command/pull.dart';
+import 'package:source_app/engine/shell/git/command/restore.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'command/add.dart';
 import 'command/branch.dart';
@@ -68,6 +69,10 @@ class Git {
 
   Status status() {
     return Status(_workDirectory);
+  }
+
+  Restore restore() {
+    return Restore(_workDirectory);
   }
 
   Future<bool> isGitDirectory() async {
