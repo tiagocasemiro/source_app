@@ -1,4 +1,4 @@
-import 'package:source_app/engine/model/git_commit.dart';
+import 'package:source_app/engine/domain/model/git_commit.dart';
 import 'package:source_app/engine/shell/git/adapter/commit_adapter.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/shell/model/terminal_output.dart';

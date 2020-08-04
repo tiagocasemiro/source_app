@@ -1,6 +1,7 @@
+import 'package:source_app/engine/domain/model/git_branch.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'base/base_adapter.dart';
-import '../../../model/git_branch.dart';
+
 
 class BranchAdapter extends BaseAdapter {
   int _singleResult = 1;

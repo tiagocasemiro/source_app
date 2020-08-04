@@ -1,4 +1,4 @@
-import 'package:source_app/engine/model/git_merge.dart';
+import 'package:source_app/engine/domain/model/git_merge.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/shell/model/terminal_output.dart';
 import 'base/base_adapter.dart';
