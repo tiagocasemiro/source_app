@@ -23,14 +23,14 @@ class Git {
   static String _username;
   static String _repository = "origin";
 
-  Future<bool> init(String username, String password, String workDirectory, String host, String pathDotGit) async {
+  Future<bool> startRepository(String username, String password, String workDirectory, String host, String pathDotGit) async {
     _username = username;
     _password = password;
     _workDirectory = workDirectory;
     _host = host;
     _pathDotGit = pathDotGit;
     remote().call().then((GitOutput remote) => {
-      _repository = (remote as GitRemote).name
+      _repository = (remote.object as GitRemote).name
     });
 
     return true;
@@ -61,7 +61,7 @@ class Git {
   }
 
   Push push(String username, String password) {
-    return Push(_workDirectory, _originWithCredential());
+    return Push(_workDirectory, _originWithCredential(), _repository);
   }
 
   Pull pull() {
@@ -77,7 +77,7 @@ class Git {
   }
 
   Checkout checkout() {
-    return Checkout(_workDirectory);
+    return Checkout(_workDirectory, _repository);
   }
 
   Log log() {

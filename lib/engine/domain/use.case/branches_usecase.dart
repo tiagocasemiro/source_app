@@ -1,15 +1,20 @@
-import 'package:source_app/engine/domain/model/git_branch.dart';
+import 'package:source_app/engine/shell/git/git.dart';
+import 'package:source_app/engine/shell/git/model/git_output.dart';
 
 class BranchesUseCase {
-  List<GitBranch> local() {
-    return List();
+  Future<GitOutput> local() async {
+    return Git().branch().call();
   }
 
-  List<GitBranch> remote() {
-    return List();
+  Future<GitOutput> remote() async {
+    return Git().branch().remote().call();
   }
 
-  void newBranch() {}
+  Future<GitOutput> newBranch(String name) async {
+    return Git().branch().create(name).call();
+  }
 
-  void mergeBranch() {}
+  Future<GitOutput> mergeWith(String branchName) async {
+    return Git().merge().branch(branchName).call();
+  }
 }
