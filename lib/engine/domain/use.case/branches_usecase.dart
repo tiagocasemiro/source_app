@@ -10,8 +10,8 @@ class BranchesUseCase {
     return Git().branch().remote().call();
   }
 
-  Future<GitOutput> newBranch(String name) async {
-    return Git().branch().create(name).call();
+  Future<GitOutput> newBranch(String branchName) async {
+    return Git().branch().create(branchName).call();
   }
 
   Future<GitOutput> mergeWith(String branchName) async {
