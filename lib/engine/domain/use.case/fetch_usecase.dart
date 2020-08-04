@@ -1,0 +1,3 @@
+class FetchUseCase {
+  void fetch() {}
+}

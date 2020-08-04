@@ -1,0 +1,3 @@
+class PullUseCase {
+  void pull() {}
+}
