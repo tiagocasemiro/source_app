@@ -1,5 +1,7 @@
+import 'package:source_app/engine/domain/model/git_remote.dart';
 import 'package:source_app/engine/shell/git/command/checkout.dart';
 import 'package:source_app/engine/shell/git/command/pull.dart';
+import 'package:source_app/engine/shell/git/command/remote.dart';
 import 'package:source_app/engine/shell/git/command/restore.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'command/add.dart';
@@ -14,13 +16,28 @@ import 'command/status.dart';
 import 'command/tag.dart';
 
 class Git {
-  final String _workDirectory =
-      "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
-  final String _host = "github.com";
-  final String _repository = "tiagocasemiro/documentation.git";
+  static String _workDirectory;
+  static String _host ;
+  static String _pathDotGit;
+  static String _password;
+  static String _username;
+  static String _repository = "origin";
 
-  String _originWithCredential(String username, String password) {
-    return "https://$username:$password@$_host/$_repository";
+  Future<bool> init(String username, String password, String workDirectory, String host, String pathDotGit) async {
+    _username = username;
+    _password = password;
+    _workDirectory = workDirectory;
+    _host = host;
+    _pathDotGit = pathDotGit;
+    remote().call().then((GitOutput remote) => {
+      _repository = (remote as GitRemote).name
+    });
+
+    return true;
+  }
+
+  String _originWithCredential() {
+    return "https://$_username:$_password@$_host/$_pathDotGit";
   }
 
   Branch branch() {
@@ -44,7 +61,7 @@ class Git {
   }
 
   Push push(String username, String password) {
-    return Push(_workDirectory, _originWithCredential(username, password));
+    return Push(_workDirectory, _originWithCredential());
   }
 
   Pull pull() {
@@ -73,6 +90,10 @@ class Git {
 
   Restore restore() {
     return Restore(_workDirectory);
+  }
+
+  Remote remote() {
+    return Remote(_workDirectory);
   }
 
   Future<bool> isGitDirectory() async {

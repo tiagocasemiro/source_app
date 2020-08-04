@@ -4,9 +4,10 @@ import 'package:source_app/engine/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Push extends BaseGitCommand {
-  final String _originWithCredential;
+  final String _credentials;
+  final String _repository;
 
-  Push(workDirectory, this._originWithCredential) : super(workDirectory) {
+  Push(workDirectory, this._credentials, this._repository) : super(workDirectory) {
     parameters.add('push');
   }
 
@@ -17,7 +18,7 @@ class Push extends BaseGitCommand {
   }
 
   Push delete(String branch) {
-    parameters.add('origin');
+    parameters.add(_repository);
     parameters.add('--delete');
     parameters.add(branch);
 
@@ -25,7 +26,7 @@ class Push extends BaseGitCommand {
   }
 
   Push rename(String oldName, String newName) {
-    parameters.add('origin');
+    parameters.add(_repository);
     parameters.add(oldName);
     parameters.add(newName);
 
@@ -34,7 +35,7 @@ class Push extends BaseGitCommand {
 
   Push branch(String name) {
     parameters.add('--set-upstream');
-    parameters.add('origin');
+    parameters.add(_repository);
     parameters.add(name);
 
     return this;
@@ -42,7 +43,7 @@ class Push extends BaseGitCommand {
 
   @override
   Future<GitOutput> call() async {
-    parameters.add(_originWithCredential);
+    parameters.add(_credentials);
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
     return PushAdapter(terminalOutput).execute();
