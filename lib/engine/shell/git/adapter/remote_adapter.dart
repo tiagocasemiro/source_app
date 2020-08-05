@@ -21,16 +21,17 @@ class RemoteAdapter extends BaseAdapter {
     return execute(transform: (gitOutput) {
       GitRemote gitRemote = GitRemote();
       gitOutput.lines.forEach((line) {
-        if(line.startsWith("* remote")) {
+        if(line.trim().startsWith("* remote")) {
           gitRemote.name = _extractRemoteName(line);
         }
-        if(line.startsWith("Fetch")) {
-          gitRemote.name = _extractFetchUrl(line);
+        if(line.trim().startsWith("Fetch")) {
+          gitRemote.fetchUrl = _extractFetchUrl(line);
         }
-        if(line.startsWith("Push")) {
-          gitRemote.name = _extractPushUrl(line);
+        if(line.trim().startsWith("Push")) {
+          gitRemote.pushUrl = _extractPushUrl(line);
         }
       });
+      gitOutput.withObject(gitRemote);
 
       return gitOutput;
     });

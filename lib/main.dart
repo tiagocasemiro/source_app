@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:source_app/engine/domain/use.case/start_repository_usecase.dart';
+import 'engine/domain/use.case/add_repository_usecase.dart';
 import 'engine/presenter/view/main_view.dart';
 import 'engine/shell/git/command/log.dart';
 import 'engine/shell/git/git.dart';
@@ -18,12 +19,12 @@ void main() {
   //Git().log().graph().pretty(Log.historyFormat).call().then((branches) => print(branches));
   //Git().restore().files(['cument_5.txt']).call();
 
-  String _workDirectory = "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
-  String _host = "github.com";
-  String _pathDotGit = "tiagocasemiro/documentation.git";
-  String _username = "tiagocasemiro";
-  String _password = "";
+  String workDirectory = "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
+  String host = "github.com";
+  String pathDotGit = "tiagocasemiro/documentation.git";
+  String username = "tiagocasemiro";
+  String password = "";
 
-  StartRepositoryUseCase().startGitApplication();
-  Git().log().graph().pretty(Log.historyFormat).call().then((branches) => print(branches));
+  AddRepositoryUseCase().localRepository("Documentation", workDirectory).then((value) => print(value)); //TODO work on linux?
+//  StartRepositoryUseCase().startGitApplication(workDirectory, username, password).then((value) => print(value));
 }

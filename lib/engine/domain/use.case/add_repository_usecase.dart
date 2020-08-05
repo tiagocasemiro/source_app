@@ -10,7 +10,8 @@ class AddRepositoryUseCase {
     if(gitOutput.isSuccess()) {
       Repository repository = Repository(name, workDirectory);
       gitOutput.withObject(repository);
-      RepositoryDao().save(repository);
+      int id = await RepositoryDao().save(repository);
+      print("id -> " + id.toString());
     }
 
     return gitOutput;

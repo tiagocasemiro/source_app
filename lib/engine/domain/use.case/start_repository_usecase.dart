@@ -13,11 +13,13 @@ class StartRepositoryUseCase {
       gitOutput = await remoteCommand.show(gitRemote).call();
       if(gitOutput.isSuccess()) {
         gitRemote = gitOutput.object as GitRemote;
-        Git().startRepository(username, password, workDirectory, gitRemote.hostPush(), gitRemote.pathGitPush()).then((success) {
-          print("Application is started");
+        if(gitRemote.hasPushUrl()) {
+          return Git().startRepository(username, password, workDirectory, gitRemote.hostPush(), gitRemote.pathGitPush()).then((success) {
+            print("Application is started");
 
-          return true;
-        });
+            return true;
+          });
+        }
       }
     }
 
