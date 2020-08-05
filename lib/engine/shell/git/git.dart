@@ -101,4 +101,10 @@ class Git {
 
     return gitOutput.isSuccess();
   }
+
+  Future<GitOutput> checkWorkDirectory(String workDirectory) async {
+    GitOutput gitOutput = await Status(workDirectory).call();
+
+    return gitOutput;
+  }
 }

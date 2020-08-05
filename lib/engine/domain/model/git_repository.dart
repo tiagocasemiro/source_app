@@ -4,5 +4,5 @@ class Repository {
   String name;
   String workDirectory;
 
-  Repository(this.id, this.name, this.workDirectory);
+  Repository(this.name, this.workDirectory, {this.id});
 }

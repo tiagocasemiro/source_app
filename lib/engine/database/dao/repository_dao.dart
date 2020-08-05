@@ -40,9 +40,9 @@ class RepositoryDao {
     final List<Repository> repositories = List();
     for(Map<String, dynamic> map in result) {
       final Repository repository = Repository(
-          map[_id],
           map[_name],
-          map[_workDirectory]
+          map[_workDirectory],
+          id: map[_id]
       );
       repositories.add(repository);
     }

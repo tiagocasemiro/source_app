@@ -13,11 +13,8 @@ void main() {
   //Git().add().all().call().then((value) => print(value));
   //Git().checkout().branch("develop").call().then((value) => print(value));
   //Git().branch().delete("develop").call().then((branches) => print(branches));
-
   //Git().isGitDirectory().then((branches) => print(branches));
-
   //Git().log().graph().pretty(Log.historyFormat).call().then((branches) => print(branches));
-
   //Git().restore().files(['cument_5.txt']).call();
 
   InitialUseCase().startGitApplication();
