@@ -23,7 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  git: ^1.0.1
   sqflite:
   path:
 

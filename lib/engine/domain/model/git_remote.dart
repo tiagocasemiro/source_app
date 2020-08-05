@@ -5,4 +5,14 @@ class GitRemote {
   String pushUrl;
 
   GitRemote();
+
+  //https://github.com/tiagocasemiro/source_app.git
+
+  String hostPush(){
+    return ""; //TODO
+  }
+
+  String pathGitPush() {
+    return ""; //TODO
+  }
 }
