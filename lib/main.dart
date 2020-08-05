@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:source_app/engine/domain/use.case/initial_usecase.dart';
+import 'package:source_app/engine/domain/use.case/start_repository_usecase.dart';
 import 'engine/shell/git/command/log.dart';
 import 'engine/shell/git/git.dart';
 
@@ -17,7 +17,7 @@ void main() {
   //Git().log().graph().pretty(Log.historyFormat).call().then((branches) => print(branches));
   //Git().restore().files(['cument_5.txt']).call();
 
-  InitialUseCase().startGitApplication();
+  StartRepositoryUseCase().startGitApplication();
   Git().log().graph().pretty(Log.historyFormat).call().then((branches) => print(branches));
 }
 

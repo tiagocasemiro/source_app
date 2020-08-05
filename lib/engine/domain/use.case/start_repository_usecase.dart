@@ -1,17 +1,16 @@
-import 'package:source_app/engine/database/dao/repository_dao.dart';
-import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/shell/git/git.dart';
-import 'package:source_app/engine/shell/git/model/git_output.dart';
 
 class StartRepositoryUseCase {
 
-  Future<GitOutput> startRepository(String name, String workDirectory) async {
-    GitOutput gitOutput = await Git().checkWorkDirectory(workDirectory);
-    if(gitOutput.isSuccess()) {
-      Repository repository = Repository(name, workDirectory);
-      RepositoryDao().save(repository);
-    }
+  void startGitApplication() {
+    String _workDirectory = "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
+    String _host = "github.com";
+    String _pathDotGit = "tiagocasemiro/documentation.git";
+    String _username = "tiagocasemiro";
+    String _password = "";
 
-    return gitOutput;
+    Git().startRepository(_username, _password, _workDirectory, _host, _pathDotGit).then((success) {
+      print("Application is started");
+    });
   }
 }
