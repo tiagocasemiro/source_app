@@ -23,9 +23,9 @@ class RepositoryDao {
   Future<List<Repository>> findAll() async {
     final Database db = await getDatabase();
     final List<Map<String, dynamic>> result = await db.query(_tableName);
-    List<Repository> repositorys = _toList(result);
+    List<Repository> repositories = _toList(result);
 
-    return repositorys;
+    return repositories;
   }
 
   Map<String, dynamic> _toMap(Repository repository) {
@@ -37,16 +37,16 @@ class RepositoryDao {
   }
 
   List<Repository> _toList(List<Map<String, dynamic>> result) {
-    final List<Repository> repositorys = List();
+    final List<Repository> repositories = List();
     for(Map<String, dynamic> map in result) {
       final Repository repository = Repository(
           map[_id],
           map[_name],
           map[_workDirectory]
       );
-      repositorys.add(repository);
+      repositories.add(repository);
     }
 
-    return repositorys;
+    return repositories;
   }
 }
