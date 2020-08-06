@@ -17,18 +17,18 @@ import 'command/tag.dart';
 
 class Git {
   static String _workDirectory;
-  static String _host ;
-  static String _pathDotGit;
+  static String _scheme ;
+  static String _dotGit;
   static String _password;
   static String _username;
   static String _repository = "origin";
 
-  Future<bool> startRepository(String username, String password, String workDirectory, String host, String pathDotGit) async {
+  Future<bool> startRepository(String username, String password, String workDirectory, String scheme, String dotGit) async {
     _username = username;
     _password = password;
     _workDirectory = workDirectory;
-    _host = host;
-    _pathDotGit = pathDotGit;
+    _scheme = scheme;
+    _dotGit = dotGit;
     remote().call().then((GitOutput remote) => {
       _repository = (remote.object as GitRemote).name
     });
@@ -37,7 +37,7 @@ class Git {
   }
 
   String _originWithCredential() {
-    return "https://$_username:$_password@$_host/$_pathDotGit";
+    return "$_scheme//$_username:$_password@$_dotGit";
   }
 
   Branch branch() {

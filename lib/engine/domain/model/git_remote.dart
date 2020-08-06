@@ -4,32 +4,27 @@ class GitRemote {
   String fetchUrl;
   String pushUrl;
   String _schemaPush;
-  String _hostPush;
-  String _pathGitPush;
+  String _dotGitPush;
   
   GitRemote();
 
-  String hostPush() {
-    return _schemaPush != null && _hostPush != null ? _schemaPush  + "//" + _hostPush : null;
+  String schemePush() {
+    return _schemaPush != null ? _schemaPush : null;
   }
 
-  String pathGitPush() {
-    return _pathGitPush != null ? _pathGitPush : null;
+  String dotGitPush() {
+    return _dotGitPush != null ? _dotGitPush : null;
   }
 
   bool hasPushUrl() {
     if(pushUrl != null && pushUrl.startsWith("http")) {
       List<String> parts = pushUrl.split("//");
-      if(parts.length > 1) {
-        _schemaPush = parts[0];
-        List<String> parts2 = parts[1].split("/");
-        if(parts2.length > 1) {
-          _hostPush = parts2[0];
-          _pathGitPush = parts2[0];
-        }
-      }
+      if(parts.length == 2) {
+        _schemaPush = parts[0].trim();
+        _dotGitPush = parts[1].trim();
+      }      
     }
 
-    return _schemaPush != null && _hostPush != null && _pathGitPush != null;
+    return _schemaPush != null && _dotGitPush != null;
   }
 }

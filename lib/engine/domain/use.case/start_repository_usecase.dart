@@ -14,7 +14,7 @@ class StartRepositoryUseCase {
       if(gitOutput.isSuccess()) {
         gitRemote = gitOutput.object as GitRemote;
         if(gitRemote.hasPushUrl()) {
-          return Git().startRepository(username, password, workDirectory, gitRemote.hostPush(), gitRemote.pathGitPush()).then((success) {
+          return Git().startRepository(username, password, workDirectory, gitRemote.schemePush(), gitRemote.dotGitPush()).then((success) {
             print("Application is started");
 
             return true;
