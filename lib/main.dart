@@ -18,6 +18,7 @@ void main() {
   //Git().isGitDirectory().then((branches) => print(branches));
   //Git().log().graph().pretty(Log.historyFormat).call().then((branches) => print(branches));
   //Git().restore().files(['cument_5.txt']).call();
+  //StartRepositoryUseCase().startGitApplication(workDirectory, username, password).then((value) => print(value));
 
   String workDirectory = "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
   String host = "github.com";
@@ -25,6 +26,14 @@ void main() {
   String username = "tiagocasemiro";
   String password = "";
 
-  AddRepositoryUseCase().localRepository("Documentation", workDirectory).then((value) => print(value)); //TODO work on linux?
-//  StartRepositoryUseCase().startGitApplication(workDirectory, username, password).then((value) => print(value));
+  AddRepositoryUseCase().localRepository("Documentation", workDirectory).then((value) => print(value)); // SQLite dont work on desktop
+
+  //Alternatives
+
+  // NoSql key value storage
+  //https://github.com/tekartik/sembast.dart/blob/master/sembast/doc/open.md
+  //https://pub.dev/packages/sembast
+
+  // File
+  //https://flutter.dev/docs/cookbook/persistence/reading-writing-files
 }
