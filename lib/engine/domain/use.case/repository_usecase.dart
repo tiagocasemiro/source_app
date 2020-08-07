@@ -9,8 +9,8 @@ class RepositoryUseCase {
     GitOutput gitOutput = await Git().checkWorkDirectory(workDirectory);
     if(gitOutput.isSuccess()) {
       Repository repository = Repository(name, workDirectory);
-      int id = await RepositoryDao().save(repository);
-      if(id != null) {
+      bool isSaved = await RepositoryDao().save(repository);
+      if(isSaved) {
         gitOutput.withObject(repository);
       }
     }
@@ -24,9 +24,11 @@ class RepositoryUseCase {
     return repositories;
   }
 
-  Future<int> deleteLocalRepository(Repository repository) async {
+  Future<bool> deleteLocalRepository(Repository repository) async {
     int id = await RepositoryDao().delete(repository);
 
-    return id;
+    print(id);
+
+    return id > 0;
   }
 }

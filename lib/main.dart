@@ -27,7 +27,7 @@ void main() {
   String username = "tiagocasemiro";
   String password = "";*/
 
-  //RepositoryUseCase().addLocalRepository("Documentation", workDirectory).then((value) => print(value)); // SQLite dont work on desktop
+ // RepositoryUseCase().addLocalRepository("Documentation2", workDirectory).then((value) => print(value)); // SQLite dont work on desktop
 
   RepositoryUseCase().allLocalRepository().then((List<Repository> repositories) {
     repositories.forEach((element) {
@@ -37,7 +37,7 @@ void main() {
 
   var repository = Repository("Documentation", workDirectory);
 
-  //RepositoryUseCase().deleteLocalRepository(repository).then((value) => print(value));
+  RepositoryUseCase().deleteLocalRepository(repository).then((value) => print(value));
 
   //Alternatives
 

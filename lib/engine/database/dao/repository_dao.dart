@@ -9,11 +9,20 @@ class RepositoryDao {
   final String _name = "name";
   final StoreRef _store = intMapStoreFactory.store(tableName);
 
-  Future save(Repository repository) async {
-    final Database db = await getDatabase();
-    Map<String, dynamic> repositoryMap = _toMap(repository);
+  Future<bool> save(Repository repository) async {
+    bool exist = await _exist(repository);
+    if(!exist) {
+      final Database db = await getDatabase();
+      Map<String, dynamic> repositoryMap = _toMap(repository);
+      var saved =  await _store.add(db, repositoryMap);
 
-    return await _store.add(db, repositoryMap);
+      print("saved");
+      print(saved);
+
+      return saved != null;
+    }
+
+    return false;
   }
 
   Future<List<Repository>> findAll() async {
@@ -56,5 +65,18 @@ class RepositoryDao {
     }
 
     return repositories;
+  }
+
+  Future<bool> _exist(Repository repository) async {
+    final Database db = await getDatabase();
+    var filter = Filter.equals(_workDirectory, repository.workDirectory) &
+    Filter.equals(_name, repository.name);
+    var finder = Finder(filter: filter);
+    var result = await _store.findFirst(db, finder: finder);
+
+    print("exist");
+    print(result);
+
+    return result != null;
   }
 }
