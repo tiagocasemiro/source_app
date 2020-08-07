@@ -3,7 +3,7 @@ import 'package:source_app/engine/shell/git/command/remote.dart';
 import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 
-class StartRepositoryUseCase {
+class StartApplicationUseCase {
 
   Future<bool> startGitApplication(String workDirectory, String username, String password) async {
     Remote remoteCommand = Remote(workDirectory);

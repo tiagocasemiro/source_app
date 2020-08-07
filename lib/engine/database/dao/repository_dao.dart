@@ -3,25 +3,38 @@ import 'package:sembast/sembast.dart';
 import '../database.dart';
 
 class RepositoryDao {
-  static const String _tableName = "repository";
-  static const String _id = "id";
-  static const String _workDirectory = "workDirectory";
-  static const String _name = "name";
+  static const String tableName = "git_repositories";
+  final String _id = "id";
+  final String _workDirectory = "workDirectory";
+  final String _name = "name";
+  final StoreRef _store = intMapStoreFactory.store(tableName);
 
   Future save(Repository repository) async {
     final Database db = await getDatabase();
-    var table = intMapStoreFactory.store(_tableName);
     Map<String, dynamic> repositoryMap = _toMap(repository);
 
-    return await table.add(db, repositoryMap);
+    return await _store.add(db, repositoryMap);
   }
 
   Future<List<Repository>> findAll() async {
     final Database db = await getDatabase();
-    final List<Map<String, dynamic>> result = await db.query(_tableName);
-    List<Repository> repositories = _toList(result);
+    var records = await _store.find(db);
+    List<Repository> repositories = List();
+    records.forEach((item) {
+      final Repository repository = Repository(item[_name],item[_workDirectory]);
+      repositories.add(repository);
+    });
 
     return repositories;
+  }
+
+  Future<int> delete(Repository repository) async {
+    final Database db = await getDatabase();
+    var filter = Filter.equals(_workDirectory, repository.workDirectory) &
+      Filter.equals(_name, repository.name);
+    var finder = Finder(filter: filter);
+
+    return await _store.delete(db, finder: finder);
   }
 
   Map<String, dynamic> _toMap(Repository repository) {
@@ -37,8 +50,7 @@ class RepositoryDao {
     for(Map<String, dynamic> map in result) {
       final Repository repository = Repository(
           map[_name],
-          map[_workDirectory],
-          id: map[_id]
+          map[_workDirectory]
       );
       repositories.add(repository);
     }
