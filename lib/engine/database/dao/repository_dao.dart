@@ -1,23 +1,19 @@
 import 'package:source_app/engine/domain/model/git_repository.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:sembast/sembast.dart';
 import '../database.dart';
 
 class RepositoryDao {
-  static const String tableSql = "CREATE TABLE $_tableName("
-      "$_id INTEGER PRIMARY KEY, "
-      "$_name TEXT, "
-      "$_workDirectory TEXT)";
-
   static const String _tableName = "repository";
   static const String _id = "id";
   static const String _workDirectory = "workDirectory";
   static const String _name = "name";
 
-  Future<int> save(Repository repository) async {
+  Future save(Repository repository) async {
     final Database db = await getDatabase();
+    var table = intMapStoreFactory.store(_tableName);
     Map<String, dynamic> repositoryMap = _toMap(repository);
 
-    return db.insert(_tableName, repositoryMap);
+    return await table.add(db, repositoryMap);
   }
 
   Future<List<Repository>> findAll() async {
