@@ -4,7 +4,7 @@ class Repository {
   String workDirectory;
   State state;
 
-  Repository(this.name, this.workDirectory);
+  Repository(this.name, this.workDirectory, {this.state = State.allCommitted});
 
   @override
   String toString() {

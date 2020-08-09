@@ -7,6 +7,7 @@ class RepositoryDao {
   final String _id = "id";
   final String _workDirectory = "workDirectory";
   final String _name = "name";
+  final String _state = "state";
   final StoreRef _store = intMapStoreFactory.store(tableName);
 
   Future<bool> save(Repository repository) async {
@@ -30,7 +31,7 @@ class RepositoryDao {
     var records = await _store.find(db);
     List<Repository> repositories = List();
     records.forEach((item) {
-      final Repository repository = Repository(item[_name],item[_workDirectory]);
+      final Repository repository = Repository(item[_name],item[_workDirectory], state: item[_state]);
       repositories.add(repository);
     });
 
@@ -50,6 +51,7 @@ class RepositoryDao {
     final Map<String, dynamic> repositoryMap = Map();
     repositoryMap[_name] = repository.name;
     repositoryMap[_workDirectory] = repository.workDirectory;
+    repositoryMap[_state] = repository.state.toString();
 
     return repositoryMap;
   }
