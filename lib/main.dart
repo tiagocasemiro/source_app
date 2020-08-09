@@ -19,10 +19,6 @@ void main() {
   //StartRepositoryUseCase().startGitApplication(workDirectory, username, password).then((value) => print(value));
 
   String workDirectory = "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
-/*  String host = "github.com";
-  String pathDotGit = "tiagocasemiro/documentation.git";
-  String username = "tiagocasemiro";
-  String password = "";*/
 
  // RepositoryUseCase().addLocalRepository("Documentation2", workDirectory).then((value) => print(value)); // SQLite dont work on desktop
 
