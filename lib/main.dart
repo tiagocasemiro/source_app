@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:source_app/engine/domain/use.case/start_application_usecase.dart';
 import 'engine/domain/model/git_repository.dart';
 import 'engine/domain/use.case/repository_usecase.dart';
 import 'engine/presenter/view/main_view.dart';
-import 'engine/shell/git/command/log.dart';
-import 'engine/shell/git/git.dart';
 
 
 void main() {
