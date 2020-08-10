@@ -18,19 +18,19 @@ void main() {
   //Git().restore().files(['cument_5.txt']).call();
   //StartRepositoryUseCase().startGitApplication(workDirectory, username, password).then((value) => print(value));
 
-  String workDirectory = "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
+ // String workDirectory = "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
 
  // RepositoryUseCase().addLocalRepository("Documentation2", workDirectory).then((value) => print(value)); // SQLite dont work on desktop
 
-  RepositoryUseCase().allLocalRepository().then((List<Repository> repositories) {
+  /*RepositoryUseCase().allLocalRepository().then((List<Repository> repositories) {
     repositories.forEach((element) {
       print(element);
     });
-  });
+  });*/
 
-  var repository = Repository("Documentation", workDirectory);
+  //var repository = Repository("Documentation", workDirectory);
 
-  RepositoryUseCase().deleteLocalRepository(repository).then((value) => print(value));
+  //RepositoryUseCase().deleteLocalRepository(repository).then((value) => print(value));
 
   //Alternatives
 
