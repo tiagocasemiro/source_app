@@ -10,57 +10,53 @@ class MainView extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
-        body: Row(
-          children: [
+        body:  Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
               Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                        padding: EdgeInsets.all(8.0),
-                        width: 400,
-                        height: double.maxFinite,
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: ListView.builder(
-                                itemBuilder: (context, index) {
-                                  return  Container(
-                                    color: Colors.white,
-                                    width: double.maxFinite,
-                                    height: 100,
-                                    margin: const EdgeInsets.all(8.0),
-                                  );
-                                },
-                                itemCount: 3,
-                              )
-                            ),
-                          ],
-                        ),
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10)
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(10)
+                    padding: EdgeInsets.all(8.0),
+                    width: 400,
+                    height: double.maxFinite,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            itemBuilder: (context, index) {
+                              return  Container(
+                                color: Colors.white,
+                                width: double.maxFinite,
+                                height: 100,
+                                margin: const EdgeInsets.all(8.0),
+                              );
+                            },
+                            itemCount: 3,
+                          )
                         ),
-                        padding: EdgeInsets.all(8.0),
-                      ),
+                      ],
                     ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    padding: EdgeInsets.all(8.0),
                   ),
-                ],
-              ))
-          ],
-        ),
+                ),
+              ),
+            ],
+          ))
       ),
     );
   }
