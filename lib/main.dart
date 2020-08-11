@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'engine/domain/model/git_repository.dart';
-import 'engine/domain/use.case/repository_usecase.dart';
-import 'engine/ui/view/main_view.dart';
+
+import 'engine/ui/view/repository/list/select_repository_view.dart';
 
 
 void main() {
-  runApp(MainView());
+  runApp(SelectRepositoryView());
 
   //Git().add().all().call().then((branches) => print(branches));
   //Git().commit().message("commitado pelo app").call().then((branches) => print(branches));
