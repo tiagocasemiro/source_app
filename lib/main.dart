@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'engine/domain/model/git_repository.dart';
 import 'engine/domain/use.case/repository_usecase.dart';
-import 'engine/presenter/view/main_view.dart';
+import 'engine/ui/view/main_view.dart';
 
 
 void main() {
