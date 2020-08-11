@@ -9,6 +9,7 @@ class RepositoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.white,
       child: ListTile(
         title: Text(
           repository.name,
