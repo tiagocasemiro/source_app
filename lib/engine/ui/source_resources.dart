@@ -1,22 +1,13 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class SourceColors {
-  static const MaterialColor background_grey_light = MaterialColor(
-    _bluePrimaryValue,
+  static const MaterialColor background_grey = MaterialColor(0xFFE7E7E7,
     <int, Color>{
-      50: Color(0xFFE3F2FD),
-      100: Color(0xFFBBDEFB),
-      200: Color(0xFF90CAF9),
-      300: Color(0xFF64B5F6),
-      400: Color(0xFF42A5F5),
-      500: Color(_bluePrimaryValue),
-      600: Color(0xFF1E88E5),
-      700: Color(0xFF1976D2),
-      800: Color(0xFF1565C0),
-      900: Color(0xFF0D47A1),
+      1: Color(0xFFE7E7E7),
+      2: Color(0xFFF2F2F2),
+      3: Color(0x19E0E0E0)
     },
   );
-  static const int _bluePrimaryValue = 0xFF2196F3;
+  static const Color white = Color(0xFFFFFFFF);
 }

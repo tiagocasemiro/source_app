@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
+import 'package:source_app/engine/ui/source_resources.dart';
 
 class RepositoryItem extends StatelessWidget {
   final Repository repository;
@@ -10,7 +11,7 @@ class RepositoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.grey[300],
+          color: SourceColors.background_grey,
           borderRadius: BorderRadius.circular(10)
       ),
       child: ListTile(
