@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'engine/domain/model/git_repository.dart';
 
+import 'engine/domain/use.case/repository_usecase.dart';
 import 'engine/ui/view/repository/list/list_repositories_view.dart';
 
 
@@ -20,9 +21,9 @@ void main() {
 
  // String workDirectory = "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
 
- // RepositoryUseCase().addLocalRepository("Documentation2", workDirectory).then((value) => print(value)); // SQLite dont work on desktop
+ // RepositoryUseCase().addLocalRepository("Documentation", workDirectory).then((value) => print(value)); // SQLite dont work on desktop
 
-  /*RepositoryUseCase().allLocalRepository().then((List<Repository> repositories) {
+/*  RepositoryUseCase().allLocalRepository().then((List<Repository> repositories) {
     repositories.forEach((element) {
       print(element);
     });

@@ -9,13 +9,16 @@ class SelectRepositoryView extends StatelessWidget {
     return MaterialApp(
       title: 'Source',
       theme: ThemeData(
+        primaryColor: SourceColors.grey[4],
+        accentColor: SourceColors.blue,
+        fontFamily: 'Roboto',
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
         backgroundColor: SourceColors.white,
         body:  Container(
           decoration: BoxDecoration(
-              color: SourceColors.background_grey[3],
+              color: SourceColors.grey[3],
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -25,7 +28,7 @@ class SelectRepositoryView extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                       decoration: BoxDecoration(
-                          color: SourceColors.background_grey[2],
+                          color: SourceColors.grey[2],
                           borderRadius: BorderRadius.circular(10)
                       ),
                       padding: EdgeInsets.all(8.0),
@@ -52,7 +55,15 @@ class SelectRepositoryView extends StatelessWidget {
                 ),
               ],
             )),
-        )
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+
+          },
+          child: Icon(
+            Icons.add,
+          ),
+        ),
       ),
     );
   }

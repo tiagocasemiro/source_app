@@ -2,19 +2,11 @@
 class Repository {
   String name;
   String workDirectory;
-  State state;
 
-  Repository(this.name, this.workDirectory, {this.state = State.allCommitted});
+  Repository(this.name, this.workDirectory);
 
   @override
   String toString() {
-    return 'Repository{name: $name, workDirectory: $workDirectory, state: $state}';
+    return 'Repository{name: $name, workDirectory: $workDirectory}';
   }
 }
-
-enum State {
-  allCommitted,
-  toCommit,
-  needUpdate
-}
-

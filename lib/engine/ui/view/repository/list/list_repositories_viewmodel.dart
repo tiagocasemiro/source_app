@@ -4,6 +4,8 @@ import 'package:source_app/engine/domain/use.case/repository_usecase.dart';
 class SelectRepositoryViewModel {
 
   Future<List<Repository>> all() async {
-    return RepositoryUseCase().allLocalRepository();
+    return Future.delayed(const Duration(milliseconds: 1000), () {
+      return RepositoryUseCase().allLocalRepository();
+    });
   }
 }
