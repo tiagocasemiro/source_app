@@ -38,7 +38,7 @@ class SelectRepositoryView extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ContentRepository(),
+                  child: RepositoryDetails(),
                 ),
               ),
             ],
