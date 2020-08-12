@@ -8,8 +8,11 @@ class RepositoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(10)
+      ),
       child: ListTile(
         title: Text(
           repository.name,
