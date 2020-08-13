@@ -8,4 +8,8 @@ class SelectRepositoryViewModel {
       return RepositoryUseCase().allLocalRepository();
     });
   }
+
+  Future<String> status(Repository repository) async {
+    return await RepositoryUseCase().statusOfRepository(repository);
+  }
 }

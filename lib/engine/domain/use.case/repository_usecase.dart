@@ -1,5 +1,6 @@
 import 'package:source_app/engine/database/dao/repository_dao.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
+import 'package:source_app/engine/shell/git/command/status.dart';
 import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 
@@ -30,5 +31,11 @@ class RepositoryUseCase {
     print(id);
 
     return id > 0;
+  }
+
+  Future<String> statusOfRepository(Repository repository) async {
+    GitOutput gitOutput = await Status(repository.workDirectory).call();
+
+    return gitOutput.message;
   }
 }
