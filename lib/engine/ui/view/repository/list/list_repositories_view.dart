@@ -8,46 +8,46 @@ class SelectRepositoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: SourceColors.white,
-        body:  Container(
-          decoration: BoxDecoration(
-              color: SourceColors.grey[3],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: VerticalSplitView(
-              ratio: 0.4,
-              minRatio: 0.4,
-              left: Container(
-                decoration: BoxDecoration(
-                    color: SourceColors.grey[2],
-                    borderRadius: BorderRadius.circular(10)
-                ),
-                padding: EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 80.0, top: 40.0, left: 80.0, bottom: 40.0),
-                      child: Image.asset('images/source-logo.png', width: 300, height: 120),
-                    ),
-                    Expanded(
-                        child: ListRepositories()
-                    ),
-                  ],
-                ),
+      backgroundColor: SourceColors.white,
+      body:  Container(
+        decoration: BoxDecoration(
+            color: SourceColors.grey[3],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: VerticalSplitView(
+            ratio: 0.4,
+            minRatio: 0.4,
+            left: Container(
+              decoration: BoxDecoration(
+                  color: SourceColors.grey[2],
+                  borderRadius: BorderRadius.circular(10)
               ),
-              right: RepositoryDetails(),
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 80.0, top: 40.0, left: 80.0, bottom: 40.0),
+                    child: Image.asset('images/source-logo.png', width: 300, height: 120),
+                  ),
+                  Expanded(
+                      child: ListRepositories()
+                  ),
+                ],
+              ),
             ),
+            right: RepositoryDetails(),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print("click");
-          },
-          child: Icon(
-            Icons.add,
-          ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print("click");
+        },
+        child: Icon(
+          Icons.add,
         ),
-      );
+      ),
+    );
   }
 }

@@ -8,7 +8,7 @@ import 'engine/ui/view/repository/list/list_repositories_view.dart';
 
 void main() {
   runApp(MainWidget(SelectRepositoryView()));
-//https://medium.com/@maffan/how-to-create-a-side-menu-in-flutter-a2df7833fdfb
+//https://medium.com/@leonar.d/how-to-create-a-flutter-split-view-7e2ac700ea12
   //Git().add().all().call().then((branches) => print(branches));
   //Git().commit().message("commitado pelo app").call().then((branches) => print(branches));
   //Git().push("tiagocasemiro", "password").then((branches) => print(branches));
