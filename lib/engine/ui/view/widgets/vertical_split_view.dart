@@ -20,28 +20,18 @@ class VerticalSplitView extends StatefulWidget {
 
 class _VerticalSplitViewState extends State<VerticalSplitView> {
   final _dividerWidth = 16.0;
-
-  //from 0-1
-  double _ratio;
+  double _ratio; //from 0-1
   double _maxWidth;
   final double _minRatio;
-
   _VerticalSplitViewState(this._minRatio);
-
   get _width1 {
     double newWidth1 = _ratio * _maxWidth;
-
     return newWidth1 < _minWidth1? _minWidth1 : newWidth1;
   }
-
   get _width2 {
     double newWidth1 = _ratio * _maxWidth;
-
-
     return newWidth1 < _minWidth1? ( _maxWidth - _minWidth1 ) : (1 - _ratio) * _maxWidth;
   }
-
-
   get _minWidth1 => _minRatio * _maxWidth;
 
   @override

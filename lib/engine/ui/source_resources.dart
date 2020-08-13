@@ -17,6 +17,8 @@ class SourceColors {
       1: Color(0xFF0025EA),
       2: Color(0xFF172B4D),
       3: Color(0x1E172B4D),
+      4: Color(0x1411284F),
+      5: Color(0x140025EA),
     },
   );
 }

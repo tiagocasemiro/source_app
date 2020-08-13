@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/content_repository.dart';
+import 'package:source_app/engine/ui/view/repository/list/components/empty_content_repository.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/list_repositories.dart';
 import 'package:source_app/engine/ui/view/widgets/vertical_split_view.dart';
+import 'list_repositories_viewmodel.dart';
 
 class SelectRepositoryView extends StatelessWidget {
+  final SelectRepositoryViewModel _viewModel = SelectRepositoryViewModel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +40,7 @@ class SelectRepositoryView extends StatelessWidget {
                 ],
               ),
             ),
-            right: RepositoryDetails(),
+            right: EmptyContentRepository(_viewModel),
           ),
         ),
       ),
