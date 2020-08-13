@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'engine/domain/model/git_repository.dart';
 
 import 'engine/domain/use.case/repository_usecase.dart';
+import 'engine/ui/source_resources.dart';
 import 'engine/ui/view/repository/list/list_repositories_view.dart';
 
 
 void main() {
-  runApp(SelectRepositoryView());
+  runApp(MainWidget(SelectRepositoryView()));
 //https://medium.com/@maffan/how-to-create-a-side-menu-in-flutter-a2df7833fdfb
   //Git().add().all().call().then((branches) => print(branches));
   //Git().commit().message("commitado pelo app").call().then((branches) => print(branches));
@@ -42,4 +43,24 @@ void main() {
 
   // File
   //https://flutter.dev/docs/cookbook/persistence/reading-writing-files
+}
+
+class MainWidget extends StatelessWidget {
+  final Widget _page;
+
+  MainWidget(this._page);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Source',
+        theme: ThemeData(
+          primaryColor: SourceColors.grey[4],
+          accentColor: SourceColors.blue,
+          fontFamily: 'Roboto',
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+      home: _page,
+    );
+  }
 }

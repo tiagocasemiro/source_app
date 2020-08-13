@@ -6,15 +6,7 @@ import 'package:source_app/engine/ui/view/repository/list/components/list_reposi
 class SelectRepositoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Source',
-      theme: ThemeData(
-        primaryColor: SourceColors.grey[4],
-        accentColor: SourceColors.blue,
-        fontFamily: 'Roboto',
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: SourceColors.white,
         body:  Container(
           decoration: BoxDecoration(
@@ -64,7 +56,6 @@ class SelectRepositoryView extends StatelessWidget {
             Icons.add,
           ),
         ),
-      ),
-    );
+      );
   }
 }
