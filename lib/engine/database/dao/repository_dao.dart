@@ -15,9 +15,6 @@ class RepositoryDao {
       Map<String, dynamic> repositoryMap = _toMap(repository);
       var saved =  await _store.add(db, repositoryMap);
 
-      print("saved");
-      print(saved);
-
       return saved != null;
     }
 
@@ -72,9 +69,6 @@ class RepositoryDao {
     Filter.equals(_name, repository.name);
     var finder = Finder(filter: filter);
     var result = await _store.findFirst(db, finder: finder);
-
-    print("exist");
-    print(result);
 
     return result != null;
   }

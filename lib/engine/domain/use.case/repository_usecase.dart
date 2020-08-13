@@ -28,8 +28,6 @@ class RepositoryUseCase {
   Future<bool> deleteLocalRepository(Repository repository) async {
     int id = await RepositoryDao().delete(repository);
 
-    print(id);
-
     return id > 0;
   }
 

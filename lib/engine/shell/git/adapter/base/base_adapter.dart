@@ -23,7 +23,6 @@ abstract class BaseAdapter {
 
   GitOutput execute({GitOutput transform(GitOutput gitOutput)}) {
     try {
-      print("Terminal output: " + _terminalOutput.toString());
       var gitOutput = GitOutput(_terminalOutput.message);
       if (_terminalOutput.isFailure()) {
         return gitOutput.failure();

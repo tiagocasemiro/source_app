@@ -64,10 +64,10 @@ class RepositoryItem extends StatelessWidget {
               focusColor: SourceColors.blue[4],
               splashColor: SourceColors.blue[5],
               onTap: () {
-
+                _viewModel.status(repository);
               },
               onDoubleTap: () {
-
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Container()));
               },
             ),
           )

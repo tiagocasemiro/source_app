@@ -5,8 +5,9 @@ import 'package:source_app/engine/ui/view/repository/list/list_repositories_view
 
 class RepositoryDetails extends StatelessWidget {
   final SelectRepositoryViewModel _viewModel;
+  final String _content;
 
-  RepositoryDetails(this._viewModel);
+  RepositoryDetails(this._viewModel, this._content);
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class RepositoryDetails extends StatelessWidget {
           borderRadius: BorderRadius.circular(10)
       ),
       padding: EdgeInsets.all(8.0),
+      child: Text(_content),
     );
   }
 }
