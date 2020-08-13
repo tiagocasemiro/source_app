@@ -42,7 +42,7 @@ class SelectRepositoryView extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-
+            print("click");
           },
           child: Icon(
             Icons.add,
@@ -51,21 +51,3 @@ class SelectRepositoryView extends StatelessWidget {
       );
   }
 }
-
-
-//Repositories
-/*
-Column(
-children: [
-Padding(
-padding: const EdgeInsets.only(right: 80.0, top: 40.0, left: 80.0, bottom: 40.0),
-child: Image.asset('images/source-logo.png'),
-),
-Expanded(
-child: ListRepositories()
-),
-],
-),*/
-
-// //Details
-//RepositoryDetails(),
