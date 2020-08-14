@@ -41,14 +41,14 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
                     child: Image.asset('images/source-logo.png', width: 300, height: 120),
                   ),
                   Expanded(
-                      child: ListRepositories()
+                      child: ListRepositories(_viewModel)
                   ),
                 ],
               ),
             ),
             right: StreamBuilder<String>(
               initialData: "",
-              stream: _viewModel.output,
+              stream: _viewModel.statusOutput,
               builder: (context, snapshot) {
                 final String content = snapshot.data != null? snapshot.data: "";
 
@@ -71,6 +71,12 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose(){
+    _viewModel.dispose();
+    super.dispose();
   }
 }
 

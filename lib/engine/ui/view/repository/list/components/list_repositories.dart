@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
-import '../list_repositories_viewmodel.dart';
+import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
 import 'item_list_repository.dart';
 
 class ListRepositories extends StatelessWidget {
-  final SelectRepositoryViewModel _viewModel = SelectRepositoryViewModel();
+  final SelectRepositoryViewModel _viewModel;
+
+  ListRepositories(this._viewModel);
 
   @override
   Widget build(BuildContext context) {

@@ -3,10 +3,9 @@ import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/domain/use.case/repository_usecase.dart';
 
 class SelectRepositoryViewModel {
-  // ignore: close_sinks
-  final StreamController<Repository> _streamController = StreamController<Repository>.broadcast();
-  Sink<Repository> get input => _streamController.sink;
-  Stream<String> get output => _streamController.stream.asyncMap((repository) => _status(repository));
+  final StreamController<Repository> _statusController = StreamController<Repository>.broadcast();
+  Sink<Repository> get statusInput => _statusController.sink;
+  Stream<String> get statusOutput => _statusController.stream.asyncMap((repository) => _status(repository));
 
   Future<List<Repository>> all() async {
     return Future.delayed(const Duration(milliseconds: 100), () {
@@ -24,7 +23,6 @@ class SelectRepositoryViewModel {
   }
 
   void dispose() {
-    _streamController.close();
-    input.close();
+    _statusController.close();
   }
 }
