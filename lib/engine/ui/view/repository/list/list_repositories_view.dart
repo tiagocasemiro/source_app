@@ -26,7 +26,7 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: VerticalSplitView(
-            ratio: 0.4,
+            ratio: 0.49,
             minRatio: 0.4,
             left: Container(
               decoration: BoxDecoration(
@@ -37,7 +37,7 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 80.0, top: 40.0, left: 80.0, bottom: 40.0),
+                    padding: const EdgeInsets.only(right: 45.0, top: 8.0, left: 45.0, bottom: 8.0),
                     child: Image.asset('images/source-logo.png', width: 300, height: 120),
                   ),
                   Expanded(

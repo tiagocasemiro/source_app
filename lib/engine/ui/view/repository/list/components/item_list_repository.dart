@@ -25,8 +25,12 @@ class RepositoryItem extends StatelessWidget {
           Row(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Image.asset("images/logo-grey.png"),
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  width: 38,
+                  height: 38,
+                  child: Image.asset("images/logo-grey.png"),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
@@ -42,17 +46,23 @@ class RepositoryItem extends StatelessWidget {
                     style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w900,
                       color: SourceColors.blue[2],
-                      fontSize: 18.0,
+                      fontSize: 15.0,
                     ),
                   ),
                   subtitle: Text(
                     repository.workDirectory,
                     style: GoogleFonts.roboto(
                       color: SourceColors.blue[2],
-                      fontSize: 14.0,
+                      fontSize: 13.0,
                     ),
                   ),
                 ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(15),
+                width: 50,
+                height: 50,
+                child: Image.asset("images/delete-repository.png"),
               ),
             ],
           ),
@@ -69,6 +79,33 @@ class RepositoryItem extends StatelessWidget {
               onDoubleTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => Container()));
               },
+            ),
+          ),
+          Container(
+            width: double.maxFinite,
+            height: double.maxFinite,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 32,
+                  height: 32,
+                  margin: const EdgeInsets.all(9),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      hoverColor: SourceColors.blue[4],
+                      focusColor: SourceColors.blue[4],
+                      splashColor: SourceColors.blue[5],
+                      onTap: () {
+                        print("close repository");
+                      },
+                    ),
+                  ),
+                )
+              ],
             ),
           )
         ]

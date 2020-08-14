@@ -11,6 +11,7 @@ class SourceColors {
     },
   );
   static const Color white = Color(0xFFFFFFFF);
+  static const Color black = Color(0xFF000000);
 
   static const MaterialColor blue = MaterialColor(0xFF0025EA,
     <int, Color>{

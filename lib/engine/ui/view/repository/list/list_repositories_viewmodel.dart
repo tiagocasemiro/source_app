@@ -13,8 +13,11 @@ class SelectRepositoryViewModel {
     });
   }
 
-  Future<String> _status(Repository repository) {
-    return RepositoryUseCase().statusOfRepository(repository);
+  Future<String> _status(Repository repository) async {
+    String co = await RepositoryUseCase().statusOfRepository(repository);
+
+
+    return co ;
   }
 
   Future newRepository() async {
