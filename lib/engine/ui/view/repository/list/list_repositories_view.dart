@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
+import 'package:source_app/engine/ui/view/repository/list/components/content_repository.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/empty_content_repository.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/list_repositories.dart';
 import 'package:source_app/engine/ui/view/widgets/vertical_split_view.dart';
 import 'list_repositories_viewmodel.dart';
 
-class SelectRepositoryView extends StatelessWidget {
+class SelectRepositoryView extends StatefulWidget {
+  @override
+  _SelectRepositoryViewState createState() => _SelectRepositoryViewState();
+}
+
+class _SelectRepositoryViewState extends State<SelectRepositoryView> {
   final SelectRepositoryViewModel _viewModel = SelectRepositoryViewModel();
 
   @override
@@ -14,7 +20,7 @@ class SelectRepositoryView extends StatelessWidget {
       backgroundColor: SourceColors.white,
       body:  Container(
         decoration: BoxDecoration(
-            color: SourceColors.grey[3],
+          color: SourceColors.grey[3],
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -39,7 +45,19 @@ class SelectRepositoryView extends StatelessWidget {
                 ],
               ),
             ),
-            right: EmptyContentRepository(_viewModel),
+            right: StreamBuilder<String>(
+              initialData: "",
+              stream: _viewModel.output,
+              builder: (context, snapshot) {
+                final String content = snapshot.data != null? snapshot.data: "";
+
+                return Visibility(
+                  visible: content.isNotEmpty,
+                  replacement: EmptyContentRepository(_viewModel),
+                  child: RepositoryDetails(_viewModel, content),
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -54,4 +72,5 @@ class SelectRepositoryView extends StatelessWidget {
     );
   }
 }
+
 
