@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class VerticalSplitView extends StatefulWidget {
   final Widget left;
@@ -59,21 +60,25 @@ class _VerticalSplitViewState extends State<VerticalSplitView> {
               child: widget.left,
             ),
             GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              child: SizedBox(
-                width: _dividerWidth,
-                height: constraints.maxHeight,
+                behavior: HitTestBehavior.translucent,
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.resizeLeftRight,
+                  child: SizedBox(
+                  width: _dividerWidth,
+                  height: constraints.maxHeight,
+                ),
+                ),
+                onPanUpdate: (DragUpdateDetails details) {
+                  setState(() {
+                    _ratio += details.delta.dx / _maxWidth;
+                    if (_ratio > 1)
+                      _ratio = 1;
+                    else if (_ratio < 0.0)
+                      _ratio = 0.0;
+                  });
+                },
               ),
-              onPanUpdate: (DragUpdateDetails details) {
-                setState(() {
-                  _ratio += details.delta.dx / _maxWidth;
-                  if (_ratio > 1)
-                    _ratio = 1;
-                  else if (_ratio < 0.0)
-                    _ratio = 0.0;
-                });
-              },
-            ),
+
             SizedBox(
               width: _width2,
               child: widget.right,
