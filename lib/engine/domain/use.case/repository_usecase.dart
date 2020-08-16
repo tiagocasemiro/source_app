@@ -31,9 +31,10 @@ class RepositoryUseCase {
     return id > 0;
   }
 
-  Future<String> statusOfRepository(Repository repository) async {
+  Future<Repository> statusOfRepository(Repository repository) async {
     GitOutput gitOutput = await Status(repository.workDirectory).call();
+    repository.status = gitOutput.message;
 
-    return gitOutput.message;
+    return repository;
   }
 }
