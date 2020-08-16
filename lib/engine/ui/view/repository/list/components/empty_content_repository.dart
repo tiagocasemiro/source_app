@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
-
-import '../../../../source_resources.dart';
 
 class EmptyContentRepository extends StatelessWidget {
   final SelectRepositoryViewModel _viewModel;
