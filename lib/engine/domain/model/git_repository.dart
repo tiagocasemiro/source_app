@@ -2,6 +2,7 @@
 class Repository {
   String name;
   String workDirectory;
+  String status;
 
   Repository(this.name, this.workDirectory);
 

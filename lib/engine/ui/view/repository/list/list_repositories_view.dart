@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/content_repository.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/empty_content_repository.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/list_repositories.dart';
 import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
 import 'package:source_app/engine/ui/view/widgets/vertical_split_view.dart';
-
 
 class SelectRepositoryView extends StatefulWidget {
   @override
@@ -46,16 +46,16 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
                 ],
               ),
             ),
-            right: StreamBuilder<String>(
-              initialData: "",
+            right: StreamBuilder<Repository>(
+              initialData: null,
               stream: _viewModel.statusOutput,
               builder: (context, snapshot) {
-                final String content = snapshot.data != null? snapshot.data: "";
+                final Repository repository = snapshot.data;
 
                 return Visibility(
-                  visible: content.isNotEmpty,
+                  visible: repository != null,
                   replacement: EmptyContentRepository(_viewModel),
-                  child: RepositoryDetails(_viewModel, content),
+                  child: RepositoryDetails(repository),
                 );
               },
             ),
