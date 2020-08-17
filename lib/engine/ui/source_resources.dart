@@ -8,6 +8,7 @@ class SourceColors {
       2: Color(0xFFF2F2F2),
       3: Color(0x19E0E0E0),
       4: Color(0xFF000000),
+      5: Color(0xFFC4C4C4),
     },
   );
   static const Color white = Color(0xFFFFFFFF);

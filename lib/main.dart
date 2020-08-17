@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:source_app/sample_test.dart';
 import 'engine/domain/model/git_repository.dart';
 
 import 'engine/domain/use.case/repository_usecase.dart';
@@ -8,6 +9,9 @@ import 'engine/ui/view/repository/list/list_repositories_view.dart';
 
 void main() {
   runApp(MainWidget(SelectRepositoryView()));
+
+  //runApp(AnimatedListSample());
+
 //https://medium.com/@leonar.d/how-to-create-a-flutter-split-view-7e2ac700ea12
   //Git().add().all().call().then((branches) => print(branches));
   //Git().commit().message("commitado pelo app").call().then((branches) => print(branches));
@@ -21,8 +25,9 @@ void main() {
   //StartRepositoryUseCase().startGitApplication(workDirectory, username, password).then((value) => print(value));
 
  // String workDirectory = "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
+  String workDirectorySalesman = "/home/tiagocasemiro/Documentos/projetos/ayla/ayla-package-application-salesman";
 
- // RepositoryUseCase().addLocalRepository("Documentation", workDirectory).then((value) => print(value)); // SQLite dont work on desktop
+  RepositoryUseCase().addLocalRepository("Salesman", workDirectorySalesman).then((value) => print(value)); // SQLite dont work on desktop
 
 /*  RepositoryUseCase().allLocalRepository().then((List<Repository> repositories) {
     repositories.forEach((element) {
