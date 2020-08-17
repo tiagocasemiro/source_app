@@ -100,6 +100,7 @@ class RepositoryItem extends StatelessWidget {
                       focusColor: SourceColors.blue[4],
                       splashColor: SourceColors.blue[5],
                       onTap: () {
+                        print("Delete repository " + repository.name);
                         _viewModel.deleteInput.add(repository);
                       },
                     ),

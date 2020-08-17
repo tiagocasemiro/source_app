@@ -41,7 +41,12 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
                     child: Image.asset('images/source-logo.png', width: 300, height: 120),
                   ),
                   Expanded(
-                      child: ListRepositories(_viewModel)
+                    child: StreamBuilder(
+                      stream: _viewModel.deleteOutput,
+                      builder: (_, __) {
+                        _viewModel.statusInput.add(null);
+                        return ListRepositories(_viewModel);
+                      })
                   ),
                 ],
               ),
