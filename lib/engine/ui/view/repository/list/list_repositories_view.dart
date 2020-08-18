@@ -70,7 +70,7 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          addLocalRepositoryAlert(context);
+          AddLocalRepository().displayAlert(context);
         },
         child: Icon(
           Icons.add,
