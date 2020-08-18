@@ -65,8 +65,7 @@ class RepositoryDao {
 
   Future<bool> _exist(Repository repository) async {
     final Database db = await getDatabase();
-    var filter = Filter.equals(_workDirectory, repository.workDirectory) &
-    Filter.equals(_name, repository.name);
+    var filter = Filter.equals(_workDirectory, repository.workDirectory);
     var finder = Finder(filter: filter);
     var result = await _store.findFirst(db, finder: finder);
 
