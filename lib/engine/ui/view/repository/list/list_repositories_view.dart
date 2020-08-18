@@ -43,11 +43,17 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
                   ),
                   Expanded(
                     child: StreamBuilder(
-                      stream: _viewModel.deleteOutput,
+                      stream: _viewModel.saveOutput,
                       builder: (_, __) {
-                        _viewModel.statusInput.add(null);
-                        return ListRepositories(_viewModel);
-                      })
+                        return StreamBuilder(
+                          stream: _viewModel.deleteOutput,
+                          builder: (_, __) {
+                            _viewModel.statusInput.add(null);
+                            return ListRepositories(_viewModel);
+                          }
+                        );
+                      }
+                    ),
                   ),
                 ],
               ),
@@ -70,7 +76,7 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          AddLocalRepository().displayAlert(context);
+          AddLocalRepository(_viewModel).displayAlert(context);
         },
         child: Icon(
           Icons.add,

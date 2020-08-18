@@ -6,10 +6,9 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 
 class RepositoryUseCase {
 
-  Future<GitOutput> addLocalRepository(String name, String workDirectory) async {
-    GitOutput gitOutput = await Git().checkWorkDirectory(workDirectory);
+  Future<GitOutput> addLocalRepository(Repository repository) async {
+    GitOutput gitOutput = await Git().checkWorkDirectory(repository.workDirectory);
     if(gitOutput.isSuccess()) {
-      Repository repository = Repository(name, workDirectory);
       bool isSaved = await RepositoryDao().save(repository);
       if(isSaved) {
         gitOutput.withObject(repository);

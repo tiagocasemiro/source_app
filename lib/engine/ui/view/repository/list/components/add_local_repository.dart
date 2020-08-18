@@ -1,12 +1,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
+import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
 
 class AddLocalRepository {
   final _nameController = TextEditingController();
   final _workDirController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  final SelectRepositoryViewModel _viewModel;
+
+  AddLocalRepository(this._viewModel);
 
   displayAlert(BuildContext context) {
     Widget createButton = RaisedButton(
@@ -20,7 +26,7 @@ class AddLocalRepository {
         ),
       ),
       onPressed: () {
-        if (_validateNewRepo()) {
+        if (_formKey.currentState.validate()) {
           saveRepository();
           Navigator.of(context, rootNavigator: true).pop('dialog');
         }
@@ -65,6 +71,7 @@ class AddLocalRepository {
                   child: TextFormField(
                     controller: _nameController,
                     cursorColor: SourceColors.blue[2],
+                    enableInteractiveSelection : true,
                     autofocus: true,
                     validator: (value) {
                       if (value.isEmpty) {
@@ -86,7 +93,7 @@ class AddLocalRepository {
                         fontSize: 16,
                       ),
                       labelStyle: TextStyle(
-                          fontSize: 22,
+                          fontSize: 20,
                           color: SourceColors.blue[2]
                       ),
                       border: OutlineInputBorder(
@@ -94,7 +101,7 @@ class AddLocalRepository {
                           const Radius.circular(5),
                         ),
                         borderSide: new BorderSide(
-                          color: SourceColors.blue[2],
+                          color: SourceColors.blue[6],
                           width: 1.0,
                         ),
                       ),
@@ -106,6 +113,7 @@ class AddLocalRepository {
                   child: TextFormField(
                     controller: _workDirController,
                     cursorColor: SourceColors.blue[2],
+                    enableInteractiveSelection : true,
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Inform the work directory of repository';
@@ -117,12 +125,20 @@ class AddLocalRepository {
                       focusColor: SourceColors.blue[3],
                       contentPadding: EdgeInsets.all(16),
                       labelText: 'Work directory',
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.folder,
+                          color: SourceColors.blue[6],
+                        ),
+                        onPressed: () {
+                          _workDirController.text = "/home/tiagocasemiro/Documentos/projetos/ayla/ayla-package-application-salesman";
+                        },
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(
                           const Radius.circular(5),
                         ),
                         borderSide: new BorderSide(
-                          color: SourceColors.blue[2],
+                          color: SourceColors.blue[6],
                           width: 1.0,
                         ),
                       ),
@@ -131,7 +147,7 @@ class AddLocalRepository {
                         fontSize: 16,
                       ),
                       labelStyle: TextStyle(
-                        fontSize: 22,
+                        fontSize: 20,
                         color: SourceColors.blue[2]
                       ),
                     ),
@@ -169,11 +185,9 @@ class AddLocalRepository {
     );
   }
 
-  bool _validateNewRepo() {
-    return _formKey.currentState.validate();
-  }
-
   void saveRepository() {
-
+    String name = _nameController.text;
+    String workDirectory = _workDirController.text;
+    _viewModel.saveInput.add(Repository(name, workDirectory));
   }
 }
