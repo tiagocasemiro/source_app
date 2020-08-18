@@ -6,6 +6,7 @@ import 'package:source_app/engine/ui/source_resources.dart';
 class AddLocalRepository {
   final _nameController = TextEditingController();
   final _workDirController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   displayAlert(BuildContext context) {
     Widget createButton = RaisedButton(
@@ -51,63 +52,97 @@ class AddLocalRepository {
       actionsPadding: const EdgeInsets.all(16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       content: Container(
-        width: 500,
-        height: 150,
-        child: Container(
-          width: double.maxFinite,
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(3.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(
-                        color: SourceColors.blue[6],
-                        width: 2.5
-                    )
-                ),
-                child: TextFormField(
-                  controller: _nameController,
-                  cursorColor: SourceColors.blue[2],
-                  autofocus: true,
-                  decoration: InputDecoration(
+        width: 650,
+        height: 180,
+        child: Form(
+          key: _formKey,
+          child: Container(
+            width: double.maxFinite,
+            child: Column(
+              children: [
+                Container(
+                  height: 80,
+                  child: TextFormField(
+                    controller: _nameController,
+                    cursorColor: SourceColors.blue[2],
+                    autofocus: true,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Inform the name of repository';
+                      }
+                      return null;
+                    },
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: SourceColors.blue[2],
+                    ),
+                    decoration: InputDecoration(
                       fillColor: SourceColors.grey,
                       focusColor: SourceColors.blue[3],
-                      contentPadding: EdgeInsets.all(5),
+                      contentPadding: EdgeInsets.all(16),
                       labelText: 'Name',
-                      border: InputBorder.none,
                       hintStyle: TextStyle(
-                          color: SourceColors.blue[6]
-                      )
+                        color: SourceColors.blue[2],
+                        fontSize: 16,
+                      ),
+                      labelStyle: TextStyle(
+                          fontSize: 22,
+                          color: SourceColors.blue[2]
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(5),
+                        ),
+                        borderSide: new BorderSide(
+                          color: SourceColors.blue[2],
+                          width: 1.0,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 16),
-                padding: const EdgeInsets.all(3.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(
-                        color: SourceColors.blue[6],
-                        width: 2.5
-                    )
-                ),
-                child: TextFormField(
-                  controller: _workDirController,
-                  cursorColor: SourceColors.blue[2],
-                  decoration: InputDecoration(
+                Container(
+                  height: 80,
+                  child: TextFormField(
+                    controller: _workDirController,
+                    cursorColor: SourceColors.blue[2],
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Inform the work directory of repository';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
                       fillColor: SourceColors.grey,
                       focusColor: SourceColors.blue[3],
-                      contentPadding: EdgeInsets.all(5),
+                      contentPadding: EdgeInsets.all(16),
                       labelText: 'Work directory',
-                      border: InputBorder.none,
+                      border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(5),
+                        ),
+                        borderSide: new BorderSide(
+                          color: SourceColors.blue[2],
+                          width: 1.0,
+                        ),
+                      ),
                       hintStyle: TextStyle(
-                          color: SourceColors.blue[6]
-                      )
+                        color: SourceColors.blue[2],
+                        fontSize: 16,
+                      ),
+                      labelStyle: TextStyle(
+                        fontSize: 22,
+                        color: SourceColors.blue[2]
+                      ),
+                    ),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: SourceColors.blue[2],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -135,8 +170,7 @@ class AddLocalRepository {
   }
 
   bool _validateNewRepo() {
-
-    return true;
+    return _formKey.currentState.validate();
   }
 
   void saveRepository() {
