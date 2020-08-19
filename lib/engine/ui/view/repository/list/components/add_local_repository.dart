@@ -1,9 +1,13 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
+import 'package:source_app/engine/ui/utils/file_choose.dart';
 import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
+import 'package:file_chooser/file_chooser.dart';
 
 class AddLocalRepository {
   final _nameController = TextEditingController();
@@ -135,7 +139,9 @@ class AddLocalRepository {
                           color: SourceColors.blue[6],
                         ),
                         onPressed: () {
-                          _workDirController.text = "/home/tiagocasemiro/Documentos/projetos/ayla/ayla-package-application-salesman";
+                          pickImage().then((value) {
+                            _workDirController.text = value.toString();
+                          });
                         },
                       ),
                       border: OutlineInputBorder(
