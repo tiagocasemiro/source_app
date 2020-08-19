@@ -27,7 +27,7 @@ abstract class BaseGitCommand {
     print("Command : " + _git + allParameters);
   }
 
-  Future<GitOutput> call();
+  Future<GitOutput> call(); //todo add try catch to all
 }
 
 class NoParameterException implements Exception {
