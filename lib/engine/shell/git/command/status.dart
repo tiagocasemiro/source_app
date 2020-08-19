@@ -10,8 +10,13 @@ class Status extends BaseGitCommand {
 
   @override
   Future<GitOutput> call() async {
-    TerminalOutput terminalOutput = await super.execute(parameters: parameters);
+    try {
+      TerminalOutput terminalOutput = await super.execute(
+          parameters: parameters);
 
-    return StatusAdapter(terminalOutput).confirm();
+      return StatusAdapter(terminalOutput).confirm();
+    } on Exception {
+      return GitOutput("").failure();
+    }
   }
 }
