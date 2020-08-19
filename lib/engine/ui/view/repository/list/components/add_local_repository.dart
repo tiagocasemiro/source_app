@@ -9,6 +9,9 @@ class AddLocalRepository {
   final _nameController = TextEditingController();
   final _workDirController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _isWorkDirInvalid = true;
+  bool _isWorkDirEmpty = true;
+  bool _isNameEmpty = true;
 
   final SelectRepositoryViewModel _viewModel;
 
@@ -26,10 +29,7 @@ class AddLocalRepository {
         ),
       ),
       onPressed: () {
-        if (_formKey.currentState.validate()) {
-          saveRepository();
-          Navigator.of(context, rootNavigator: true).pop('dialog');
-        }
+        saveRepository(context);
       },
     );
     Widget cancelButton = RaisedButton(
@@ -74,7 +74,7 @@ class AddLocalRepository {
                     enableInteractiveSelection : true,
                     autofocus: true,
                     validator: (value) {
-                      if (value.isEmpty) {
+                      if (_isNameEmpty) {
                         return 'Inform the name of repository';
                       }
                       return null;
@@ -94,7 +94,8 @@ class AddLocalRepository {
                       ),
                       labelStyle: TextStyle(
                           fontSize: 20,
-                          color: SourceColors.blue[2]
+                          color: SourceColors.blue[2],
+                          height: 0.8,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(
@@ -115,9 +116,13 @@ class AddLocalRepository {
                     cursorColor: SourceColors.blue[2],
                     enableInteractiveSelection : true,
                     validator: (value) {
-                      if (value.isEmpty) {
+                      if (_isWorkDirEmpty) {
                         return 'Inform the work directory of repository';
                       }
+                      if(_isWorkDirInvalid) {
+                        return 'Is not valid directory';
+                      }
+
                       return null;
                     },
                     decoration: InputDecoration(
@@ -148,7 +153,8 @@ class AddLocalRepository {
                       ),
                       labelStyle: TextStyle(
                         fontSize: 20,
-                        color: SourceColors.blue[2]
+                        color: SourceColors.blue[2],
+                        height: 0.8,
                       ),
                     ),
                     style: TextStyle(
@@ -185,9 +191,24 @@ class AddLocalRepository {
     );
   }
 
-  void saveRepository() {
+  void saveRepository(BuildContext context) {
     String name = _nameController.text;
     String workDirectory = _workDirController.text;
-    _viewModel.saveInput.add(Repository(name, workDirectory));
+    Repository repository = Repository(name, workDirectory);
+    _isNameEmpty = name.isEmpty;
+    _isWorkDirEmpty = workDirectory.isEmpty;
+
+    if(_isNameEmpty == false && _isWorkDirEmpty == false) {
+      _viewModel.save(repository).then((bool success) {
+        if (success) {
+          _viewModel.statusInput.add(null);
+          Navigator.of(context, rootNavigator: true).pop('dialog');
+        } else {
+          _formKey.currentState.validate();
+        }
+      });
+    } else {
+      _formKey.currentState.validate();
+    }
   }
 }
