@@ -25,9 +25,9 @@ void main() {
   //StartRepositoryUseCase().startGitApplication(workDirectory, username, password).then((value) => print(value));
 
  // String workDirectory = "/home/tiagocasemiro/Documentos/projetos/pessoal/documentation";
-  String workDirectorySalesman = "/home/tiagocasemiro/Documentos/projetos/ayla/ayla-package-application-salesman";
+  //String workDirectorySalesman = "/home/tiagocasemiro/Documentos/projetos/ayla/ayla-package-application-salesman";
 
-  RepositoryUseCase().addLocalRepository(Repository("Salesman", workDirectorySalesman)).then((value) => print(value)); // SQLite dont work on desktop
+ // RepositoryUseCase().addLocalRepository(Repository("Salesman", workDirectorySalesman)).then((value) => print(value)); // SQLite dont work on desktop
 
 /*  RepositoryUseCase().allLocalRepository().then((List<Repository> repositories) {
     repositories.forEach((element) {

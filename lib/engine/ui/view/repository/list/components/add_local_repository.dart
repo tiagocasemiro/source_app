@@ -201,7 +201,6 @@ class AddLocalRepository {
     if(_isNameEmpty == false && _isWorkDirEmpty == false) {
       _viewModel.save(repository).then((bool success) {
         if (success) {
-          _viewModel.statusInput.add(null);
           Navigator.of(context, rootNavigator: true).pop('dialog');
         } else {
           _formKey.currentState.validate();

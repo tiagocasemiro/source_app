@@ -12,14 +12,8 @@ class SelectRepositoryViewModel {
   Sink<Repository> get statusInput => _statusController.sink;
   Stream<Repository> get statusOutput => _statusController.stream.asyncMap((repository) => status(repository));
 
-  final StreamController<Repository> _saveController = StreamController<Repository>.broadcast();
-  Sink<Repository> get saveInput => _saveController.sink;
-  Stream<bool> get saveOutput => _saveController.stream.asyncMap((repository) => save(repository));
-
   Future<List<Repository>> all() async {
-    return Future.delayed(const Duration(milliseconds: 100), () {
-      return RepositoryUseCase().allLocalRepository();
-    });
+    return RepositoryUseCase().allLocalRepository();
   }
 
   Future<Repository> status(Repository _repository) async {
@@ -29,7 +23,15 @@ class SelectRepositoryViewModel {
   }
 
   Future<bool> save(Repository repository) async {
+    if(repository == null)
+      return false;
+
     GitOutput gitOutput = await RepositoryUseCase().addLocalRepository(repository);
+
+    if(gitOutput.isSuccess()) {
+      deleteInput.add(null);
+      statusInput.add(repository);
+    }
 
     return gitOutput.isSuccess();
   }
@@ -37,12 +39,12 @@ class SelectRepositoryViewModel {
   void dispose() {
     _statusController.close();
     _deleteController.close();
-    _saveController.close();
   }
 
-  Future<bool> delete(Repository repository) {
-    return Future.delayed(const Duration(milliseconds: 1000), () {
-      return RepositoryUseCase().deleteLocalRepository(repository);
-    });
+  Future<bool> delete(Repository repository) async {
+    if(repository == null)
+      return false;
+
+    return RepositoryUseCase().deleteLocalRepository(repository);
   }
 }
