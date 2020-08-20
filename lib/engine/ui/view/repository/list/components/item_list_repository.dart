@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:source_app/engine/ui/view/repository/dashiboard/dashboard_view.dart';
 import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
 
 class RepositoryItem extends StatelessWidget {
@@ -77,7 +78,7 @@ class RepositoryItem extends StatelessWidget {
                 _viewModel.statusInput.add(repository);
               },
               onDoubleTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Container()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard()));
               },
             ),
           ),
