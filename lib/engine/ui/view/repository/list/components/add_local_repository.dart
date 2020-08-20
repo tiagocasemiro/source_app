@@ -7,7 +7,6 @@ import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/file_choose.dart';
 import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
-import 'package:file_chooser/file_chooser.dart';
 
 class AddLocalRepository {
   final _nameController = TextEditingController();
@@ -33,7 +32,9 @@ class AddLocalRepository {
         ),
       ),
       onPressed: () {
-        saveRepository(context);
+        validateRepository(onValidate: (repository) {
+          saveRepository(context, repository);
+        });
       },
     );
     Widget cancelButton = RaisedButton(
@@ -87,6 +88,9 @@ class AddLocalRepository {
                       fontSize: 20,
                       color: SourceColors.blue[2],
                     ),
+                    onChanged:(value) {
+                      validateRepository();
+                    },
                     decoration: InputDecoration(
                       fillColor: SourceColors.grey,
                       focusColor: SourceColors.blue[3],
@@ -128,6 +132,9 @@ class AddLocalRepository {
                       }
 
                       return null;
+                    },
+                    onChanged:(value) {
+                      validateRepository();
                     },
                     decoration: InputDecoration(
                       fillColor: SourceColors.grey,
@@ -197,23 +204,26 @@ class AddLocalRepository {
     );
   }
 
-  void saveRepository(BuildContext context) {
+  void validateRepository({void onValidate(Repository repository)}) async {
     String name = _nameController.text;
     String workDirectory = _workDirController.text;
     Repository repository = Repository(name, workDirectory);
     _isNameEmpty = name.isEmpty;
     _isWorkDirEmpty = workDirectory.isEmpty;
+    Repository repoValidate = await _viewModel.status(repository);
 
-    if(_isNameEmpty == false && _isWorkDirEmpty == false) {
-      _viewModel.save(repository).then((bool success) {
-        if (success) {
-          Navigator.of(context, rootNavigator: true).pop('dialog');
-        } else {
-          _formKey.currentState.validate();
-        }
-      });
-    } else {
-      _formKey.currentState.validate();
+    _isWorkDirInvalid = repoValidate.status.isEmpty;
+
+    if(_isNameEmpty == false && _isWorkDirEmpty == false && _isWorkDirInvalid == false) {
+      if(onValidate != null) {
+        onValidate(repository);
+      }
     }
+    _formKey.currentState.validate();
+  }
+
+  void saveRepository(BuildContext context, Repository repository) {
+    _viewModel.save(repository).then((_)
+    => Navigator.of(context, rootNavigator: true).pop('dialog'));
   }
 }
