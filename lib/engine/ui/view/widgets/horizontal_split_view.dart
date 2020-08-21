@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:source_app/engine/ui/utils/default_values.dart';
 
 class HorizontalSplitView extends StatefulWidget {
   final Widget up;
@@ -20,7 +21,7 @@ class HorizontalSplitView extends StatefulWidget {
 }
 
 class _HorizontalSplitViewState extends State<HorizontalSplitView> {
-  final _dividerHeight = 16.0;
+  final _dividerHeight = defaultDivisorSize;
   double _ratio; //from 0-1
   double _maxHeight;
   final double _minRatio;

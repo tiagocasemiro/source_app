@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:source_app/engine/ui/utils/default_values.dart';
 
 class VerticalSplitView extends StatefulWidget {
   final Widget left;
@@ -20,7 +21,7 @@ class VerticalSplitView extends StatefulWidget {
 }
 
 class _VerticalSplitViewState extends State<VerticalSplitView> {
-  final _dividerWidth = 16.0;
+  final _dividerWidth = defaultDivisorSize;
   double _ratio; //from 0-1
   double _maxWidth;
   final double _minRatio;

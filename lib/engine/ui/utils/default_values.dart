@@ -1,0 +1,1 @@
+const double defaultDivisorSize = 8;
