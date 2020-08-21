@@ -147,7 +147,10 @@ class AddLocalRepository {
                         ),
                         onPressed: () {
                           pickImage().then((value) {
-                            _workDirController.text = value.toString();
+                            String path = value.toString();
+                            if(path != null && path.isNotEmpty && path != "null") {
+                              _workDirController.text = value.toString();
+                            }
                           });
                         },
                       ),
