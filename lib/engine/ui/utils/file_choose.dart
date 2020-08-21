@@ -3,7 +3,15 @@ import 'package:file_chooser/file_chooser.dart';
 
 Future<String> pickImage() async {
   String confirmText = "Select";
-  String initialPath = Directory("/home").path;
+  String path = "/";
+  if(Platform.isLinux) {
+    path = "/home";
+  } else if(Platform.isMacOS) {
+    path = "/Users";
+  } else if(Platform.isWindows) {
+    path = "c:\\";
+  }
+  String initialPath = Directory(path).path;
 
   final result = await showOpenPanel(
     initialDirectory: initialPath,
@@ -11,7 +19,6 @@ Future<String> pickImage() async {
     canSelectDirectories: true,
     confirmButtonText: confirmText,
   );
-
   if (result.canceled || result.paths.isEmpty) {
     return null;
   }
