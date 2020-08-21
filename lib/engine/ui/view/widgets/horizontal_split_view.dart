@@ -78,7 +78,6 @@ class _HorizontalSplitViewState extends State<HorizontalSplitView> {
                   });
                 },
               ),
-
             SizedBox(
               height: _height2,
               child: widget.down,
