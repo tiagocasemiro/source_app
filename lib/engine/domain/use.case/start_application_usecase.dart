@@ -16,7 +16,7 @@ class StartApplicationUseCase {
         if(gitRemote.hasPushUrl()) {
           return Git().startRepository(username, password, workDirectory, gitRemote.schemePush(), gitRemote.dotGitPush()).then((success) {
 
-            return true;
+            return success;
           });
         }
       }

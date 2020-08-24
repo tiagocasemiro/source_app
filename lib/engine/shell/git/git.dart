@@ -29,11 +29,11 @@ class Git {
     _workDirectory = workDirectory;
     _scheme = scheme;
     _dotGit = dotGit;
-    remote().call().then((GitOutput remote) => {
-      _repository = (remote.object as GitRemote).name
-    });
+    return remote().call().then((GitOutput remote) {
+      _repository = (remote.object as GitRemote).name;
 
-    return true;
+      return true;
+    });
   }
 
   String _originWithCredential() {

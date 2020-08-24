@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/default_values.dart';
-import 'package:source_app/engine/ui/view/repository/dashboard/components/body_left_dashboard.dart';
+import 'package:source_app/engine/ui/view/repository/dashboard/components/body-left/body_left_dashboard.dart';
 import 'package:source_app/engine/ui/view/repository/dashboard/components/body_right_dashboard.dart';
 import 'package:source_app/engine/ui/view/repository/dashboard/components/footer_dashboard.dart';
 import 'package:source_app/engine/ui/view/repository/dashboard/components/footer_left_dashboard.dart';
