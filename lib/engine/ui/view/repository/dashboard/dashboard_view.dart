@@ -12,6 +12,10 @@ import 'package:source_app/engine/ui/view/widgets/vertical_split_view.dart';
 
 
 class Dashboard extends StatelessWidget {
+
+  final double _leftRation = 0.25;
+  final double _minLeftRation = 0.20;
+  //width:  _ratio * (constraints.maxWidth - defaultDivisorSize)),
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,29 +23,32 @@ class Dashboard extends StatelessWidget {
       color: SourceColors.grey[6],
       child: Column(
         children: [
-          Container(
-            height: 100,
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  width:350,
-                  height: 150,
-                  child: Image.asset("images/logo-horizontal.png"),
-                ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(defaultPaddingSize),
-                    child: HeaderDashboard(),
+          LayoutBuilder( builder: (context, BoxConstraints constraints) {
+            return  Container(
+              height: 100,
+              width: constraints.maxWidth - defaultDivisorSize,
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    width: _leftRation * (constraints.maxWidth - defaultDivisorSize),
+                    height: 150,
+                    child: Image.asset("images/logo-horizontal.png"),
                   ),
-                ),
-              ],
-            ),
-          ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(defaultPaddingSize),
+                      child: HeaderDashboard(),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
           Expanded(
             child: VerticalSplitView(
-              minRatio: 0.25,
-              ratio: 0.25,
+              minRatio: _minLeftRation,
+              ratio: _leftRation,
               left: Container(
                 padding: const EdgeInsets.only(left: defaultPaddingSize, top: defaultPaddingSize),
                 child: BodyLeftDashboard(),
