@@ -11,8 +11,14 @@ class Branch extends BaseGitCommand {
   }
 
   Branch remote() {
-    _variant = _Variant.remote;
+    _variant = _Variant.branches;
     parameters.add('-r');
+
+    return this;
+  }
+
+  Branch local() {
+    _variant = _Variant.branches;
 
     return this;
   }
@@ -52,7 +58,7 @@ class Branch extends BaseGitCommand {
     switch (_variant) {
       case _Variant.current:
         return BranchAdapter(terminalOutput).toBranch();
-      case _Variant.remote:
+      case _Variant.branches:
         return BranchAdapter(terminalOutput).toBranches();
       default:
         return BranchAdapter(terminalOutput).execute();
@@ -60,4 +66,4 @@ class Branch extends BaseGitCommand {
   }
 }
 
-enum _Variant { current, remote }
+enum _Variant { current, branches }
