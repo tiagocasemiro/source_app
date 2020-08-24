@@ -13,9 +13,14 @@ class BranchAdapter extends BaseAdapter {
       List<GitBranch> branches = List();
       gitOutput.lines.forEach((line) {
         if (line.isNotEmpty) {
-          branches.add(GitBranch(clean(line)));
+          if(line.startsWith("*")) {
+            branches.add(GitBranch(clean(line), current: true));
+          } else {
+            branches.add(GitBranch(clean(line)));
+          }
         }
       });
+      branches.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
       return gitOutput.withObject(branches);
     });
