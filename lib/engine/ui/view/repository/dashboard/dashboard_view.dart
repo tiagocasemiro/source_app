@@ -12,10 +12,9 @@ import 'package:source_app/engine/ui/view/widgets/vertical_split_view.dart';
 
 
 class Dashboard extends StatelessWidget {
-
   final double _leftRation = 0.25;
   final double _minLeftRation = 0.20;
-  //width:  _ratio * (constraints.maxWidth - defaultDivisorSize)),
+
   @override
   Widget build(BuildContext context) {
     return Container(
