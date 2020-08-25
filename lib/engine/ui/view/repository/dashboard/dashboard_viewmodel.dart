@@ -1,8 +1,5 @@
-
 import 'dart:async';
-
 import 'package:source_app/engine/domain/model/git_repository.dart';
-import 'package:source_app/engine/domain/use.case/repository_usecase.dart';
 import 'package:source_app/engine/domain/use.case/start_application_usecase.dart';
 import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
