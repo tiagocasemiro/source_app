@@ -9,6 +9,8 @@ class AuthenticationRepositoryAlert {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _failureOnStartRepository = false;
+
 
   final Repository _repository;
 
@@ -26,9 +28,7 @@ class AuthenticationRepositoryAlert {
         ),
       ),
       onPressed: () {
-
-        // todo click
-
+        open(context);
       },
     );
     Widget cancelButton = RaisedButton(
@@ -119,6 +119,9 @@ class AuthenticationRepositoryAlert {
                       if (value.isEmpty) {
                         return 'Inform the password to selected repository';
                       }
+                      if(_failureOnStartRepository) {
+                        return 'Falha ao tentar inciar repositório. Verifique todas as informações deste repositório';
+                      }
 
                       return null;
                     },
@@ -181,15 +184,19 @@ class AuthenticationRepositoryAlert {
   }
 
   void open(BuildContext context) async {
-    String name = _usernameController.text;
+    String username = _usernameController.text;
     String password = _passwordController.text;
-
+    _failureOnStartRepository = false;
     if(_formKey.currentState.validate()) {
       DashboardViewModel dashboardViewModel = DashboardViewModel();
-
-      // todo start repository  wirh username and password before open dashboard
-
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard(dashboardViewModel)));
+      dashboardViewModel.initRepository(_repository, username, password).then((success) {
+        if(success) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard(dashboardViewModel)));
+        } else {
+          _failureOnStartRepository = true;
+          _formKey.currentState.validate();
+        }
+      });
     }
   }
 }
