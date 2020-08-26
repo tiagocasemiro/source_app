@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/default_values.dart';
 import 'package:source_app/engine/ui/view/repository/dashboard/components/body-left/body_left_dashboard.dart';
@@ -7,6 +8,7 @@ import 'package:source_app/engine/ui/view/repository/dashboard/components/footer
 import 'package:source_app/engine/ui/view/repository/dashboard/components/footer_left_dashboard.dart';
 import 'package:source_app/engine/ui/view/repository/dashboard/components/footer_right_dashboard.dart';
 import 'package:source_app/engine/ui/view/repository/dashboard/components/header_dashboard.dart';
+import 'package:source_app/engine/ui/view/repository/dashboard/dashboard_viewmodel.dart';
 import 'package:source_app/engine/ui/view/widgets/horizontal_split_view.dart';
 import 'package:source_app/engine/ui/view/widgets/vertical_split_view.dart';
 
@@ -14,6 +16,9 @@ import 'package:source_app/engine/ui/view/widgets/vertical_split_view.dart';
 class Dashboard extends StatelessWidget {
   final double _leftRation = 0.25;
   final double _minLeftRation = 0.20;
+  final DashboardViewModel _dashboardViewModel;
+
+  Dashboard(this._dashboardViewModel);
 
   @override
   Widget build(BuildContext context) {
