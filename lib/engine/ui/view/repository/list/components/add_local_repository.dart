@@ -1,6 +1,3 @@
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
@@ -24,7 +21,7 @@ class AddLocalRepository {
     Widget createButton = RaisedButton(
       color: SourceColors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Text("Create",
+      child: Text("create",
         style: GoogleFonts.roboto(
           fontWeight: FontWeight.w300,
           color: SourceColors.white,
@@ -40,7 +37,7 @@ class AddLocalRepository {
     Widget cancelButton = RaisedButton(
       color: SourceColors.grey[5],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Text("Cancel",
+      child: Text("cancel",
         style: GoogleFonts.roboto(
           fontWeight: FontWeight.w300,
           color: SourceColors.white,
