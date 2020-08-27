@@ -13,7 +13,7 @@ abstract class BaseGitCommand {
 
   Future<TerminalOutput> execute({List<String> parameters = const []}) async {
     //_printCommand(parameters);
-    TerminalOutput gitOutput = await Terminal(_workDirectory).run(_git, parameters: parameters, environment: _language);
+    TerminalOutput gitOutput = await Terminal(_workDirectory).runWithGitCredentials(_git, parameters: parameters, environment: _language);
 
     return gitOutput;
   }
