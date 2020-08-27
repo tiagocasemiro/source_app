@@ -19,13 +19,13 @@ class Git {
   static String _workDirectory;
   static String _scheme ;
   static String _dotGit;
-  static String _password;
-  static String _username;
+  static String password;
+  static String username;
   static String _repository = "origin";
 
   Future<bool> startRepository(String username, String password, String workDirectory, String scheme, String dotGit) async {
-    _username = username;
-    _password = password;
+    username = username;
+    password = password;
     _workDirectory = workDirectory;
     _scheme = scheme;
     _dotGit = dotGit;
@@ -37,7 +37,7 @@ class Git {
   }
 
   String _originWithCredential() {
-    return "$_scheme//$_username:$_password@$_dotGit";
+    return "$_scheme//$username:$password@$_dotGit";
   }
 
   Branch branch() {
