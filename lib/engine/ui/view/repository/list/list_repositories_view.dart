@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
-import 'package:source_app/engine/ui/view/repository/list/components/add_local_repository.dart';
+import 'package:source_app/engine/ui/view/repository/list/components/add/add_local_repository.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/details_repository.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/empty_content_repository.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/list_repositories.dart';
