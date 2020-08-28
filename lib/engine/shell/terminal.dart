@@ -11,7 +11,6 @@ class Terminal {
 
   Future<TerminalOutput> run(String command, {List<String> parameters = const [], Map<String, String> environment}) {
     return Process.run(command, parameters, workingDirectory: _workDirectory, environment: environment).then((processResult) {
-      //_printOutput(processResult);
       String stderr = processResult.stderr.toString();
       String stdout = processResult.stdout.toString();
       String message = (stdout != null && stdout.isNotEmpty)? stdout : stderr;
