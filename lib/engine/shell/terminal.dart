@@ -20,24 +20,60 @@ class Terminal {
   }
 
   Future<TerminalOutput> runWithGitCredentials(String command, {List<String> parameters = const [], Map<String, String> environment}) async {
-    Process process = await Process.start(command, parameters, workingDirectory: _workDirectory, environment: environment);
-    var completer = new Completer<TerminalOutput>();
+
+
+
+    Process process = await Process.start(command, parameters, workingDirectory: _workDirectory, environment: environment, runInShell: true);
+    var _completer = new Completer<TerminalOutput>();
+
+    var message = "";
+    int exitCode = -1;
+
+
     process.stdout.transform(utf8.decoder).listen((data) {
       if(data.toLowerCase().contains("username")) {
-        process.stdin.writeln(Git.username);
+        process.stdin.write(Git.username);
       } else if(data.toLowerCase().contains("password")) {
-        process.stdin.writeln(Git.password);
+        process.stdin.write(Git.password);
       } else {
-        _printOutput(data, exitCode.toString(), command, parameters: parameters);
-        completer.complete(TerminalOutput(data, 0));
+        message += data;
+        TerminalOutput terminalOutput = _build(message, exitCode);
+        if(terminalOutput != null) {
+          print("success: \n");
+          _printOutput(message, exitCode.toString(), command, parameters: parameters);
+          _completer.complete(terminalOutput);
+        }
       }
     });
     process.stderr.transform(utf8.decoder).listen((data) {
-      _printOutput( data.toString(), exitCode.toString(), command, parameters: parameters);
-      completer.complete(TerminalOutput(data, 1));
+      message += data;
+      TerminalOutput terminalOutput = _build(message, exitCode);
+      if(terminalOutput != null) {
+        print("erro: \n");
+        _printOutput(message, exitCode.toString(), command, parameters: parameters);
+        _completer.complete(terminalOutput);
+      }
     });
 
-    return completer.future;
+    process.exitCode.then((value) {
+      exitCode = value;
+      TerminalOutput terminalOutput = _build(message, value);
+      if(terminalOutput != null) {
+        print("exitcode: \n");
+        _printOutput(message, value.toString(), command, parameters: parameters);
+        _completer.complete(terminalOutput);
+      }
+    });
+
+    return _completer.future;
+  }
+
+  TerminalOutput _build(String message, int exitCode) {
+    if(message.isNotEmpty && exitCode >= 0) {
+      return TerminalOutput(message, exitCode);
+    }
+
+    return null;
   }
 
   void _printOutput(String message, String exitCode, String command, {List<String> parameters = const []}) {
