@@ -19,22 +19,17 @@ class Terminal {
     });
   }
 
-  Future<TerminalOutput> runWithGitCredentials(String command, {List<String> parameters = const [], Map<String, String> environment}) async {
-
-
-
+  Future<TerminalOutput> runWithGitCredentials(String command, String username, String password, {List<String> parameters = const [], Map<String, String> environment}) async {
     Process process = await Process.start(command, parameters, workingDirectory: _workDirectory, environment: environment, runInShell: true);
     var _completer = new Completer<TerminalOutput>();
-
     var message = "";
     int exitCode = -1;
 
-
     process.stdout.transform(utf8.decoder).listen((data) {
       if(data.toLowerCase().contains("username")) {
-        process.stdin.write(Git.username);
+        process.stdin.write(username);
       } else if(data.toLowerCase().contains("password")) {
-        process.stdin.write(Git.password);
+        process.stdin.write(password);
       } else {
         message += data;
         TerminalOutput terminalOutput = _build(message, exitCode);
