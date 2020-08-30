@@ -9,8 +9,8 @@ import 'package:source_app/engine/ui/view/repository/dashboard/components/footer
 import 'package:source_app/engine/ui/view/repository/dashboard/components/footer_right_dashboard.dart';
 import 'package:source_app/engine/ui/view/repository/dashboard/components/header_dashboard.dart';
 import 'package:source_app/engine/ui/view/repository/dashboard/dashboard_viewmodel.dart';
-import 'package:source_app/engine/ui/view/widgets/horizontal_split_view.dart';
-import 'package:source_app/engine/ui/view/widgets/vertical_split_view.dart';
+import 'package:source_app/engine/ui/widgets/horizontal_split_view.dart';
+import 'package:source_app/engine/ui/widgets/vertical_split_view.dart';
 
 
 class Dashboard extends StatelessWidget {
