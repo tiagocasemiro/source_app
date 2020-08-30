@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:source_app/engine/domain/model/git_remote.dart';
 import 'package:source_app/engine/shell/git/command/checkout.dart';
+import 'package:source_app/engine/shell/git/command/credentials.dart';
 import 'package:source_app/engine/shell/git/command/pull.dart';
 import 'package:source_app/engine/shell/git/command/remote.dart';
 import 'package:source_app/engine/shell/git/command/restore.dart';
@@ -17,27 +19,49 @@ import 'command/tag.dart';
 
 class Git {
   static String _workDirectory;
-  static String _scheme ;
-  static String _dotGit;
-  static String password;
-  static String username;
   static String _repository = "origin";
+  bool _passwordStarted = false;
+  bool _usernameStarted = false;
+  bool _repositoryStarted = false;
 
-  Future<bool> startRepository(String username, String password, String workDirectory, String scheme, String dotGit) async {
-    username = username;
-    password = password;
+  Future<bool> startRepository(String username, String password, String workDirectory) async {
+    Completer<bool> _completer = new Completer<bool>();
     _workDirectory = workDirectory;
-    _scheme = scheme;
-    _dotGit = dotGit;
-    return remote().call().then((GitOutput remote) {
-      _repository = (remote.object as GitRemote).name;
 
-      return true;
-    });
+    await credentials().store().call();
+
+    Function onError = (e) {
+      _completer.complete(false);
+    };
+
+    remote().call().then((GitOutput remote) {
+      _repository = (remote.object as GitRemote).name;
+      _repositoryStarted = true;
+      if(isAllStarted()) {
+        _completer.complete(true);
+      }
+    }, onError: onError);
+
+    credentials().username(username).call().then((GitOutput gitOutput) {
+      _usernameStarted = true;
+      if(isAllStarted()) {
+        _completer.complete(true);
+      }
+    }, onError: onError);
+
+    credentials().password(password).call().then((GitOutput gitOutput) {
+      _passwordStarted = true;
+      if(isAllStarted()) {
+        _completer.complete(true);
+      }
+    }, onError: onError);
+
+    return _completer.future;
   }
 
-  String _originWithCredential() {
-    return "$_scheme//$username:$password@$_dotGit";
+
+  bool isAllStarted() {
+    return _passwordStarted && _usernameStarted && _repositoryStarted;
   }
 
   Branch branch() {
@@ -61,7 +85,7 @@ class Git {
   }
 
   Push push(String username, String password) {
-    return Push(_workDirectory, _originWithCredential(), _repository);
+    return Push(_workDirectory, _repository);
   }
 
   Pull pull() {
@@ -94,6 +118,10 @@ class Git {
 
   Remote remote() {
     return Remote(_workDirectory);
+  }
+
+  Credentials credentials() {
+    return Credentials(_workDirectory);
   }
 
   Future<bool> isGitDirectory() async {

@@ -4,10 +4,10 @@ import 'package:source_app/engine/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Push extends BaseGitCommand {
-  final String _credentials;
+
   final String _repository;
 
-  Push(workDirectory, this._credentials, this._repository) : super(workDirectory) {
+  Push(workDirectory, this._repository) : super(workDirectory) {
     parameters.add('push');
   }
 
@@ -43,7 +43,6 @@ class Push extends BaseGitCommand {
 
   @override
   Future<GitOutput> call() async {
-    parameters.add(_credentials);
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
     return PushAdapter(terminalOutput).execute();

@@ -6,8 +6,6 @@ class GitRemote {
   String _schemaPush;
   String _dotGitPush;
   
-  GitRemote();
-
   String schemePush() {
     return _schemaPush != null ? _schemaPush : null;
   }
