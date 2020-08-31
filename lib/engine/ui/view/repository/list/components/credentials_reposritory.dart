@@ -189,9 +189,10 @@ class AuthenticationRepositoryAlert {
     _failureOnStartRepository = false;
     if(_formKey.currentState.validate()) {
       DashboardViewModel dashboardViewModel = DashboardViewModel();
-      dashboardViewModel.initRepository(_repository, username, password).then((success) {
-        if(success) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard(dashboardViewModel)));
+      dashboardViewModel.checkCredentialAndInitRepository(_repository, username, password).then((value) {
+        if(value) {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => Dashboard(dashboardViewModel)));
         } else {
           _failureOnStartRepository = true;
           _formKey.currentState.validate();
