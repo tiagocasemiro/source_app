@@ -17,4 +17,10 @@ class StartApplicationUseCase {
 
     return false;
   }
+
+  Future<bool> checkCredentials(String workDirectory, GitRemote gitRemote) async {
+      GitOutput gitOutput = await Remote(workDirectory).show(gitRemote).call();
+
+      return gitOutput.isSuccess();
+  }
 }
