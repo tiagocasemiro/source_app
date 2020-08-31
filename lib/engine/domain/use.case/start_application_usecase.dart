@@ -6,21 +6,22 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 class StartApplicationUseCase {
 
   Future<bool> startGitApplication(String workDirectory, String username, String password) async {
+    return Git().startRepository(username, password, workDirectory).then((success) {
+
+      return success;
+    });
+  }
+
+  Future<bool> checkCredentials(String workDirectory) async {
     Remote remoteCommand = Remote(workDirectory);
     GitOutput gitOutput = await remoteCommand.call();
     if(gitOutput.isSuccess()) {
-      return Git().startRepository(username, password, workDirectory).then((success) {
+      GitRemote gitRemote = gitOutput.object as GitRemote;
+      gitOutput = await remoteCommand.show(gitRemote).call();
 
-        return success;
-      });
+      return gitOutput.isSuccess();
     }
 
     return false;
-  }
-
-  Future<bool> checkCredentials(String workDirectory, GitRemote gitRemote) async {
-      GitOutput gitOutput = await Remote(workDirectory).show(gitRemote).call();
-
-      return gitOutput.isSuccess();
   }
 }
