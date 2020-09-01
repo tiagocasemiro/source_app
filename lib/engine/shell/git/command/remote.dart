@@ -19,6 +19,14 @@ class Remote extends BaseGitCommand {
     return this;
   }
 
+  Remote showWithCredentials(GitRemote gitRemote) {
+    parameters.add('show');
+    parameters.add(gitRemote.url);
+    _variant = _Variant.show;
+
+    return this;
+  }
+
   @override
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
