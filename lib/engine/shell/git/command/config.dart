@@ -3,34 +3,24 @@ import 'package:source_app/engine/shell/git/command/base/base_command.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/shell/model/terminal_output.dart';
 
-class Credentials extends BaseGitCommand {
-  Credentials(workDirectory) : super(workDirectory) {
+class Config extends BaseGitCommand {
+  Config(workDirectory) : super(workDirectory) {
     parameters.add('config');
   }
 
-  Credentials username(String value) {
-    parameters.add('user.name');
-    parameters.add(value);
-
-    return this;
-  }
-
-  Credentials password(String value) {
-    parameters.add('user.password');
-    parameters.add(value);
-
-    return this;
-  }
-
-  Credentials store() {
+  Config store() {
     parameters.add('credential.helper');
     parameters.add('store');
 
     return this;
   }
 
-  //git config --get remote.origin.url
+  Config url() {
+    parameters.add('--get');
+    parameters.add('remote.origin.url');
 
+    return this;
+  }
 
   @override
   Future<GitOutput> call() async {
