@@ -29,6 +29,8 @@ class Credentials extends BaseGitCommand {
     return this;
   }
 
+  //git config --get remote.origin.url
+
 
   @override
   Future<GitOutput> call() async {
