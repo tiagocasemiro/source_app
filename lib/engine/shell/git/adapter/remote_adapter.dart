@@ -24,12 +24,6 @@ class RemoteAdapter extends BaseAdapter {
         if(line.trim().startsWith("* remote")) {
           gitRemote.name = _extractRemoteName(line);
         }
-        if(line.trim().startsWith("Fetch")) {
-          gitRemote.fetchUrl = _extractFetchUrl(line);
-        }
-        if(line.trim().startsWith("Push")) {
-          gitRemote.pushUrl = _extractPushUrl(line);
-        }
       });
       gitOutput.withObject(gitRemote);
 
@@ -39,13 +33,5 @@ class RemoteAdapter extends BaseAdapter {
   
   String _extractRemoteName(String line) {
     return line.replaceAll("* remote", "").trim();
-  }
-
-  String _extractFetchUrl(String line) {
-    return line.replaceAll("Fetch URL:", "").trim();
-  }
-
-  String _extractPushUrl(String line) {
-    return line.replaceAll("Push  URL:", "").trim();
   }
 }
