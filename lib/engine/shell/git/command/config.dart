@@ -26,6 +26,6 @@ class Config extends BaseGitCommand {
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
 
-    return CredentialsAdapter(terminalOutput).execute();
+    return ConfigAdapter(terminalOutput).execute();
   }
 }
