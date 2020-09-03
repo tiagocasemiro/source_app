@@ -1,4 +1,4 @@
-import 'package:source_app/engine/shell/git/adapter/credentials_adapter.dart';
+import 'package:source_app/engine/shell/git/adapter/config_adapter.dart';
 import 'package:source_app/engine/shell/git/command/base/base_command.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/shell/model/terminal_output.dart';
