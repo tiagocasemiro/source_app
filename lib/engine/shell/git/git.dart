@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:source_app/engine/domain/model/git_remote.dart';
 import 'package:source_app/engine/shell/git/command/checkout.dart';
-import 'package:source_app/engine/shell/git/command/credentials.dart';
+import 'package:source_app/engine/shell/git/command/config.dart';
 import 'package:source_app/engine/shell/git/command/pull.dart';
 import 'package:source_app/engine/shell/git/command/remote.dart';
 import 'package:source_app/engine/shell/git/command/restore.dart';
@@ -20,48 +20,18 @@ import 'command/tag.dart';
 class Git {
   static String _workDirectory;
   static String _repository = "origin";
-  bool _passwordStarted = false;
-  bool _usernameStarted = false;
-  bool _repositoryStarted = false;
 
   Future<bool> startRepository(String username, String password, String workDirectory) async {
     Completer<bool> _completer = new Completer<bool>();
     _workDirectory = workDirectory;
-
-    await credentials().store().call();
-
-    Function onError = (e) {
-      _completer.complete(false);
-    };
-
-    remote().call().then((GitOutput remote) {
+    await config().store().call();
+    GitOutput gitOutput = await config().url().call();
+    remote().showWithCredentials(gitOutput.object, username, password).call().then((GitOutput remote) {
       _repository = (remote.object as GitRemote).name;
-      _repositoryStarted = true;
-      if(isAllStarted()) {
-        _completer.complete(true);
-      }
-    }, onError: onError);
-
-    credentials().username(username).call().then((GitOutput gitOutput) {
-      _usernameStarted = true;
-      if(isAllStarted()) {
-        _completer.complete(true);
-      }
-    }, onError: onError);
-
-    credentials().password(password).call().then((GitOutput gitOutput) {
-      _passwordStarted = true;
-      if(isAllStarted()) {
-        _completer.complete(true);
-      }
-    }, onError: onError);
+      _completer.complete(remote.isSuccess());
+    }, onError: (e) => _completer.complete(false));
 
     return _completer.future;
-  }
-
-
-  bool isAllStarted() {
-    return _passwordStarted && _usernameStarted && _repositoryStarted;
   }
 
   Branch branch() {
@@ -120,8 +90,8 @@ class Git {
     return Remote(_workDirectory);
   }
 
-  Credentials credentials() {
-    return Credentials(_workDirectory);
+  Config config() {
+    return Config(_workDirectory);
   }
 
   Future<bool> isGitDirectory() async {
