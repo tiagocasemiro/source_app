@@ -27,7 +27,9 @@ class Git {
     await config().store().call();
     GitOutput gitOutput = await config().url().call();
     remote().showWithCredentials(gitOutput.object, username, password).call().then((GitOutput remote) {
-      _repository = (remote.object as GitRemote).name;
+      if(remote.isSuccess()) {
+        _repository = (remote.object as GitRemote).name;
+      }
       _completer.complete(remote.isSuccess());
     }, onError: (e) => _completer.complete(false));
 
