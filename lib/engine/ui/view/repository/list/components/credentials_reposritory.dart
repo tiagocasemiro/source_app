@@ -11,7 +11,6 @@ class AuthenticationRepositoryAlert {
   final _formKey = GlobalKey<FormState>();
   bool _failureOnStartRepository = false;
 
-
   final Repository _repository;
 
   AuthenticationRepositoryAlert(this._repository);

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/domain/use.case/repository_usecase.dart';
+import 'package:source_app/engine/domain/use.case/start_application_usecase.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 
 class SelectRepositoryViewModel {
@@ -11,6 +12,10 @@ class SelectRepositoryViewModel {
   final StreamController<Repository> _statusController = StreamController<Repository>.broadcast();
   Sink<Repository> get statusInput => _statusController.sink;
   Stream<Repository> get statusOutput => _statusController.stream.asyncMap((repository) => status(repository));
+
+  Future<bool> hasCredential(Repository _repository) async {
+    return await StartApplicationUseCase().checkCredentials(_repository.workDirectory);
+  }
 
   Future<List<Repository>> all() async {
     return RepositoryUseCase().allLocalRepository();
