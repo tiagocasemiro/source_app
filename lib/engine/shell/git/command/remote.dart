@@ -19,9 +19,9 @@ class Remote extends BaseGitCommand {
     return this;
   }
 
-  Remote showWithCredentials(GitRemote gitRemote) {
+  Remote showWithCredentials(GitRemote gitRemote, String username, String password) {
     parameters.add('show');
-    parameters.add(gitRemote.url);
+    parameters.add(gitRemote.urlWithCredentials(username, password));
     _variant = _Variant.show;
 
     return this;
