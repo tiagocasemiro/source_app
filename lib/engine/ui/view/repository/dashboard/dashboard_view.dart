@@ -37,7 +37,7 @@ class Dashboard extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     width: _leftRation * (constraints.maxWidth - defaultDivisorSize),
                     height: 150,
-                    child: Image.asset("images/logo-horizontal.png"),
+                    child: Image.asset("images/source-logo.png"),
                   ),
                   Expanded(
                     child: Container(
