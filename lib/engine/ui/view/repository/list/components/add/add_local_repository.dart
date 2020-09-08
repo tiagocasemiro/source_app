@@ -143,7 +143,7 @@ class AddLocalRepository {
                           color: SourceColors.blue[6],
                         ),
                         onPressed: () {
-                          pickImage().then((value) {
+                          pickDirectory().then((value) {
                             String path = value.toString();
                             if(path != null && path.isNotEmpty && path != "null") {
                               _workDirController.text = value.toString();

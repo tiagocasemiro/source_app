@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:file_chooser/file_chooser.dart';
 
-Future<String> pickImage() async {
+Future<String> pickDirectory() async {
   String confirmText = "Select";
   String path = "/";
   if(Platform.isLinux) {
