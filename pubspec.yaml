@@ -37,9 +37,7 @@ dependencies:
       url: git://github.com/google/flutter-desktop-embedding.git
       path: plugins/flutter_plugins/path_provider_fde
       ref: b0794faf2c000576515aee56ca6bb5bee64cece4
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.3
+  unicorndial: ^1.1.5
 
 dev_dependencies:
   flutter_test:
