@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/add/add_local_repository.dart';
+import 'package:source_app/engine/ui/view/repository/list/components/add/add_remote_repository.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/details_repository.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/empty_content_repository.dart';
 import 'package:source_app/engine/ui/view/repository/list/components/list_repositories.dart';
 import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
 import 'package:source_app/engine/ui/widgets/vertical_split_view.dart';
+import 'package:unicorndial/unicorndial.dart';
 
 class SelectRepositoryView extends StatefulWidget {
   @override
@@ -18,6 +20,35 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
 
   @override
   Widget build(BuildContext context) {
+    var childButtons = List<UnicornButton>();
+
+    childButtons.add(UnicornButton(
+        hasLabel: true,
+        labelText: "Remote",
+        currentButton: FloatingActionButton(
+          heroTag: "remote",
+          backgroundColor: SourceColors.blue,
+          mini: true,
+          child: Icon(Icons.cloud),
+          onPressed: () {
+            AddRemoteRepository(_viewModel).displayAlert(context);
+          },
+        )));
+
+    childButtons.add(UnicornButton(
+        hasLabel: true,
+        labelText: "Local",
+        currentButton: FloatingActionButton(
+          heroTag: "local",
+          backgroundColor: SourceColors.blue,
+          mini: true,
+          child: Icon(Icons.folder),
+          onPressed: () {
+            AddLocalRepository(_viewModel).displayAlert(context);
+          },
+        )));
+
+
     return Scaffold(
       backgroundColor: SourceColors.white,
       body:  Container(
@@ -69,13 +100,12 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          AddLocalRepository(_viewModel).displayAlert(context);
-        },
-        child: Icon(
-          Icons.add,
-        ),
+      floatingActionButton: UnicornDialer(
+          backgroundColor: Color.fromRGBO(0, 0, 0, 0.6),
+          parentButtonBackground: SourceColors.blue,
+          orientation: UnicornOrientation.VERTICAL,
+          parentButton: Icon(Icons.add),
+          childButtons: childButtons
       ),
     );
   }
