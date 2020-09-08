@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/default_values.dart';
 import 'package:source_app/engine/ui/view/repository/dashboard/components/body-left/body_left_dashboard.dart';
