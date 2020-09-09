@@ -3,8 +3,9 @@ class Repository {
   String name;
   String workDirectory;
   String status;
+  String url;
 
-  Repository(this.name, this.workDirectory);
+  Repository(this.name, this.workDirectory, {this.url});
 
   @override
   String toString() {
