@@ -27,6 +27,10 @@ class SelectRepositoryViewModel {
     return repository;
   }
 
+  Future<bool> clone(Repository _repository) async {
+
+  }
+
   Future<bool> save(Repository repository) async {
     if(repository == null)
       return false;
