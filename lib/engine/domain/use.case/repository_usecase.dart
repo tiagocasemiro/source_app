@@ -1,5 +1,6 @@
 import 'package:source_app/engine/database/dao/repository_dao.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
+import 'package:source_app/engine/shell/git/command/clone.dart';
 import 'package:source_app/engine/shell/git/command/status.dart';
 import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
@@ -35,5 +36,12 @@ class RepositoryUseCase {
     repository.status = gitOutput.message;
 
     return repository;
+  }
+
+  Future<GitOutput> clone(Repository repository) async {
+    GitOutput gitOutput = await Clone(repository.workDirectory)
+        .directory(repository.workDirectory).repo(repository.url).call();
+
+    return gitOutput;
   }
 }
