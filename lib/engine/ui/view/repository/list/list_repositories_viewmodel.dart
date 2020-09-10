@@ -27,8 +27,10 @@ class SelectRepositoryViewModel {
     return repository;
   }
 
-  Future<bool> clone(Repository _repository) async {
+  Future<GitOutput> clone(Repository _repository) async {
+    GitOutput gitOutput = await RepositoryUseCase().clone(_repository);
 
+    return gitOutput;
   }
 
   Future<bool> save(Repository repository) async {
