@@ -40,7 +40,7 @@ class RepositoryUseCase {
 
   Future<GitOutput> clone(Repository repository) async {
     GitOutput gitOutput = await Clone(repository.workDirectory)
-        .directory(repository.workDirectory).repo(repository.url).call();
+        .repo(repository.url).directory(repository.workDirectory).call();
 
     return gitOutput;
   }
