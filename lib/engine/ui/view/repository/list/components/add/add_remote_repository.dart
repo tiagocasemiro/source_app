@@ -14,6 +14,7 @@ class AddRemoteRepository {
   bool _isWorkDirEmpty = true;
   bool _isNameEmpty = true;
   bool _isUrlEmpty = true;
+  bool _commandFailure = false;
 
   final SelectRepositoryViewModel _viewModel;
 
@@ -36,7 +37,8 @@ class AddRemoteRepository {
             saveRepository(context, repository);
           },
           () {
-            // Failure
+            _commandFailure = true;
+            _formKey.currentState.validate();
           });
         });
       },
@@ -131,6 +133,9 @@ class AddRemoteRepository {
                       if (_isWorkDirEmpty) {
                         return 'Inform the work directory of repository';
                       }
+                      if(_commandFailure) {
+                        return 'Verify work directory';
+                      }
 
                       return null;
                     },
@@ -191,6 +196,10 @@ class AddRemoteRepository {
                       if (_isUrlEmpty) {
                         return 'Inform the url of repository';
                       }
+                      if(_commandFailure) {
+                        return 'Verify url, put credentials on url if need';
+                      }
+
                       return null;
                     },
                     style: TextStyle(
@@ -263,6 +272,7 @@ class AddRemoteRepository {
   }
 
   void validateRepository({void onValidate(Repository repository)}) async {
+    _commandFailure = false;
     String name = _nameController.text;
     String workDirectory = _workDirController.text;
     String url = _urlController.text;
