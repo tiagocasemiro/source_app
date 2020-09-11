@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
+import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/file_choose.dart';
 import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
@@ -8,10 +9,11 @@ import 'package:source_app/engine/ui/view/repository/list/list_repositories_view
 class AddRemoteRepository {
   final _nameController = TextEditingController();
   final _workDirController = TextEditingController();
+  final _urlController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool _isWorkDirInvalid = true;
   bool _isWorkDirEmpty = true;
   bool _isNameEmpty = true;
+  bool _isUrlEmpty = true;
 
   final SelectRepositoryViewModel _viewModel;
 
@@ -30,7 +32,12 @@ class AddRemoteRepository {
       ),
       onPressed: () {
         validateRepository(onValidate: (repository) {
-          saveRepository(context, repository);
+          cloneRepository(repository, (repository) {
+            saveRepository(context, repository);
+          },
+          () {
+            // Failure
+          });
         });
       },
     );
@@ -124,9 +131,6 @@ class AddRemoteRepository {
                       if (_isWorkDirEmpty) {
                         return 'Inform the work directory of repository';
                       }
-                      if(_isWorkDirInvalid) {
-                        return 'Is not valid directory';
-                      }
 
                       return null;
                     },
@@ -179,12 +183,12 @@ class AddRemoteRepository {
                 Container(
                   height: 80,
                   child: TextFormField(
-                    controller: _nameController,
+                    controller: _urlController,
                     cursorColor: SourceColors.blue[2],
                     enableInteractiveSelection : true,
                     autofocus: true,
                     validator: (value) {
-                      if (_isNameEmpty) {
+                      if (_isUrlEmpty) {
                         return 'Inform the url of repository';
                       }
                       return null;
@@ -249,18 +253,25 @@ class AddRemoteRepository {
       barrierDismissible: false,
     );
   }
+  void cloneRepository(Repository repository, void onClone(Repository repository), void onFailure()) async {
+    GitOutput gitOutput = await _viewModel.clone(repository);
+    if(gitOutput.isSuccess()) {
+      onClone(repository);
+    } else {
+      onFailure();
+    }
+  }
 
   void validateRepository({void onValidate(Repository repository)}) async {
     String name = _nameController.text;
     String workDirectory = _workDirController.text;
-    Repository repository = Repository(name, workDirectory);
+    String url = _urlController.text;
+    Repository repository = Repository(name, workDirectory, url: url);
     _isNameEmpty = name.isEmpty;
     _isWorkDirEmpty = workDirectory.isEmpty;
-    Repository repoValidate = await _viewModel.status(repository);
+    _isUrlEmpty = url.isEmpty;
 
-    _isWorkDirInvalid = repoValidate.status.isEmpty;
-
-    if(_isNameEmpty == false && _isWorkDirEmpty == false && _isWorkDirInvalid == false) {
+    if(_isNameEmpty == false && _isWorkDirEmpty == false && _isUrlEmpty == false) {
       if(onValidate != null) {
         onValidate(repository);
       }
