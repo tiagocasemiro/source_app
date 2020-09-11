@@ -13,9 +13,16 @@ abstract class BaseGitCommand {
 
   Future<TerminalOutput> execute({List<String> parameters = const []}) async {
     //_printCommand(parameters);
-    TerminalOutput gitOutput = await Terminal(_workDirectory).run(_git, parameters: parameters, environment: _language);
+    try {
+      TerminalOutput gitOutput = await Terminal(_workDirectory).run(
+          _git, parameters: parameters, environment: _language);
 
-    return gitOutput;
+      return gitOutput;
+    } catch (e) {
+      TerminalOutput gitOutput = TerminalOutput(e.toString(), 1);
+
+      return gitOutput;
+    }
   }
 
   void _printCommand(List<String> parameters) {
