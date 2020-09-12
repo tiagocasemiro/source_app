@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
-import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
+import 'package:source_app/engine/ui/screen/repository/list/list_repositories_viewmodel.dart';
 import 'item_list_repository.dart';
 
 class ListRepositories extends StatelessWidget {

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:source_app/engine/ui/view/repository/dashboard/dashboard_view.dart';
-import 'package:source_app/engine/ui/view/repository/dashboard/dashboard_viewmodel.dart';
-import 'package:source_app/engine/ui/view/repository/list/components/credentials_reposritory.dart';
-import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_view.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_viewmodel.dart';
+import 'package:source_app/engine/ui/screen/repository/list/components/credentials_reposritory.dart';
+import 'package:source_app/engine/ui/screen/repository/list/list_repositories_viewmodel.dart';
 
 class RepositoryItem extends StatelessWidget {
   final Repository repository;
