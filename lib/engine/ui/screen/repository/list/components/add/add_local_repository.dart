@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
-import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/file_choose.dart';
-import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
+import 'package:source_app/engine/ui/screen/repository/list/list_repositories_viewmodel.dart';
 
-class AddRemoteRepository {
+class AddLocalRepository {
   final _nameController = TextEditingController();
   final _workDirController = TextEditingController();
-  final _urlController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _isWorkDirInvalid = true;
   bool _isWorkDirEmpty = true;
   bool _isNameEmpty = true;
-  bool _isUrlEmpty = true;
-  bool _commandFailure = false;
 
   final SelectRepositoryViewModel _viewModel;
 
-  AddRemoteRepository(this._viewModel);
+  AddLocalRepository(this._viewModel);
 
   displayAlert(BuildContext context) {
-    Widget cloneButton = RaisedButton(
+    Widget createButton = RaisedButton(
       color: SourceColors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Text("clone",
+      child: Text("create",
         style: GoogleFonts.roboto(
           fontWeight: FontWeight.w300,
           color: SourceColors.white,
@@ -33,13 +30,7 @@ class AddRemoteRepository {
       ),
       onPressed: () {
         validateRepository(onValidate: (repository) {
-          cloneRepository(repository, (repository) {
-            saveRepository(context, repository);
-          },
-          () {
-            _commandFailure = true;
-            _formKey.currentState.validate();
-          });
+          saveRepository(context, repository);
         });
       },
     );
@@ -59,7 +50,7 @@ class AddRemoteRepository {
     );
 
     AlertDialog alertDialog = AlertDialog(
-      title: Text("Clone repository",
+      title: Text("New repository",
         style: GoogleFonts.balooBhai(
           fontWeight: FontWeight.w300,
           color: SourceColors.blue[2],
@@ -70,7 +61,7 @@ class AddRemoteRepository {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       content: Container(
         width: 650,
-        height: 250,
+        height: 180,
         child: Form(
           key: _formKey,
           child: Container(
@@ -107,9 +98,9 @@ class AddRemoteRepository {
                         fontSize: 16,
                       ),
                       labelStyle: TextStyle(
-                        fontSize: 20,
-                        color: SourceColors.blue[2],
-                        height: 0.8,
+                          fontSize: 20,
+                          color: SourceColors.blue[2],
+                          height: 0.8,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(
@@ -133,8 +124,8 @@ class AddRemoteRepository {
                       if (_isWorkDirEmpty) {
                         return 'Inform the work directory of repository';
                       }
-                      if(_commandFailure) {
-                        return 'Verify work directory';
+                      if(_isWorkDirInvalid) {
+                        return 'Is not valid directory';
                       }
 
                       return null;
@@ -185,56 +176,6 @@ class AddRemoteRepository {
                     ),
                   ),
                 ),
-                Container(
-                  height: 80,
-                  child: TextFormField(
-                    controller: _urlController,
-                    cursorColor: SourceColors.blue[2],
-                    enableInteractiveSelection : true,
-                    autofocus: true,
-                    validator: (value) {
-                      if (_isUrlEmpty) {
-                        return 'Inform the url of repository';
-                      }
-                      if(_commandFailure) {
-                        return 'Verify url, put credentials on url if need';
-                      }
-
-                      return null;
-                    },
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: SourceColors.blue[2],
-                    ),
-                    onChanged:(value) {
-                      validateRepository();
-                    },
-                    decoration: InputDecoration(
-                      fillColor: SourceColors.grey,
-                      focusColor: SourceColors.blue[3],
-                      contentPadding: EdgeInsets.all(16),
-                      labelText: 'Url',
-                      hintStyle: TextStyle(
-                        color: SourceColors.blue[2],
-                        fontSize: 16,
-                      ),
-                      labelStyle: TextStyle(
-                        fontSize: 20,
-                        color: SourceColors.blue[2],
-                        height: 0.8,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(5),
-                        ),
-                        borderSide: new BorderSide(
-                          color: SourceColors.blue[6],
-                          width: 1.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -249,7 +190,7 @@ class AddRemoteRepository {
         SizedBox(
           width: 150,
           height: 40,
-          child: cloneButton,
+          child: createButton,
         ),
       ],
     );
@@ -262,26 +203,18 @@ class AddRemoteRepository {
       barrierDismissible: false,
     );
   }
-  void cloneRepository(Repository repository, void onClone(Repository repository), void onFailure()) async {
-    GitOutput gitOutput = await _viewModel.clone(repository);
-    if(gitOutput.isSuccess()) {
-      onClone(repository);
-    } else {
-      onFailure();
-    }
-  }
 
   void validateRepository({void onValidate(Repository repository)}) async {
-    _commandFailure = false;
     String name = _nameController.text;
     String workDirectory = _workDirController.text;
-    String url = _urlController.text;
-    Repository repository = Repository(name, workDirectory, url: url);
+    Repository repository = Repository(name, workDirectory);
     _isNameEmpty = name.isEmpty;
     _isWorkDirEmpty = workDirectory.isEmpty;
-    _isUrlEmpty = url.isEmpty;
+    Repository repoValidate = await _viewModel.status(repository);
 
-    if(_isNameEmpty == false && _isWorkDirEmpty == false && _isUrlEmpty == false) {
+    _isWorkDirInvalid = repoValidate.status.isEmpty;
+
+    if(_isNameEmpty == false && _isWorkDirEmpty == false && _isWorkDirInvalid == false) {
       if(onValidate != null) {
         onValidate(repository);
       }

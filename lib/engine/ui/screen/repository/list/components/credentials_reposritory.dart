@@ -2,26 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
-import 'package:source_app/engine/ui/utils/file_choose.dart';
-import 'package:source_app/engine/ui/view/repository/list/list_repositories_viewmodel.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_view.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_viewmodel.dart';
 
-class AddLocalRepository {
-  final _nameController = TextEditingController();
-  final _workDirController = TextEditingController();
+class AuthenticationRepositoryAlert {
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool _isWorkDirInvalid = true;
-  bool _isWorkDirEmpty = true;
-  bool _isNameEmpty = true;
+  bool _failureOnStartRepository = false;
 
-  final SelectRepositoryViewModel _viewModel;
+  final Repository _repository;
 
-  AddLocalRepository(this._viewModel);
+  AuthenticationRepositoryAlert(this._repository);
 
   displayAlert(BuildContext context) {
     Widget createButton = RaisedButton(
       color: SourceColors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Text("create",
+      child: Text("open",
         style: GoogleFonts.roboto(
           fontWeight: FontWeight.w300,
           color: SourceColors.white,
@@ -29,9 +27,7 @@ class AddLocalRepository {
         ),
       ),
       onPressed: () {
-        validateRepository(onValidate: (repository) {
-          saveRepository(context, repository);
-        });
+        open(context);
       },
     );
     Widget cancelButton = RaisedButton(
@@ -50,7 +46,7 @@ class AddLocalRepository {
     );
 
     AlertDialog alertDialog = AlertDialog(
-      title: Text("New repository",
+      title: Text("Authentication",
         style: GoogleFonts.balooBhai(
           fontWeight: FontWeight.w300,
           color: SourceColors.blue[2],
@@ -71,13 +67,13 @@ class AddLocalRepository {
                 Container(
                   height: 80,
                   child: TextFormField(
-                    controller: _nameController,
+                    controller: _usernameController,
                     cursorColor: SourceColors.blue[2],
                     enableInteractiveSelection : true,
                     autofocus: true,
                     validator: (value) {
-                      if (_isNameEmpty) {
-                        return 'Inform the name of repository';
+                      if (value.isEmpty) {
+                        return 'Inform your username to selected repository';
                       }
                       return null;
                     },
@@ -85,22 +81,19 @@ class AddLocalRepository {
                       fontSize: 20,
                       color: SourceColors.blue[2],
                     ),
-                    onChanged:(value) {
-                      validateRepository();
-                    },
                     decoration: InputDecoration(
                       fillColor: SourceColors.grey,
                       focusColor: SourceColors.blue[3],
                       contentPadding: EdgeInsets.all(16),
-                      labelText: 'Name',
+                      labelText: 'Username or email',
                       hintStyle: TextStyle(
                         color: SourceColors.blue[2],
                         fontSize: 16,
                       ),
                       labelStyle: TextStyle(
-                          fontSize: 20,
-                          color: SourceColors.blue[2],
-                          height: 0.8,
+                        fontSize: 20,
+                        color: SourceColors.blue[2],
+                        height: 0.8,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(
@@ -117,40 +110,25 @@ class AddLocalRepository {
                 Container(
                   height: 80,
                   child: TextFormField(
-                    controller: _workDirController,
+                    controller: _passwordController,
                     cursorColor: SourceColors.blue[2],
                     enableInteractiveSelection : true,
+                    keyboardType : TextInputType.visiblePassword,
                     validator: (value) {
-                      if (_isWorkDirEmpty) {
-                        return 'Inform the work directory of repository';
+                      if (value.isEmpty) {
+                        return 'Inform the password to selected repository';
                       }
-                      if(_isWorkDirInvalid) {
-                        return 'Is not valid directory';
+                      if(_failureOnStartRepository) {
+                        return 'Falha ao tentar inciar repositório. Verifique todas as informações deste repositório';
                       }
 
                       return null;
-                    },
-                    onChanged:(value) {
-                      validateRepository();
                     },
                     decoration: InputDecoration(
                       fillColor: SourceColors.grey,
                       focusColor: SourceColors.blue[3],
                       contentPadding: EdgeInsets.all(16),
-                      labelText: 'Work directory',
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.folder,
-                          color: SourceColors.blue[6],
-                        ),
-                        onPressed: () {
-                          pickDirectory().then((value) {
-                            String path = value.toString();
-                            if(path != null && path.isNotEmpty && path != "null") {
-                              _workDirController.text = value.toString();
-                            }
-                          });
-                        },
-                      ),
+                      labelText: 'Password',
                       border: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(
                           const Radius.circular(5),
@@ -204,26 +182,21 @@ class AddLocalRepository {
     );
   }
 
-  void validateRepository({void onValidate(Repository repository)}) async {
-    String name = _nameController.text;
-    String workDirectory = _workDirController.text;
-    Repository repository = Repository(name, workDirectory);
-    _isNameEmpty = name.isEmpty;
-    _isWorkDirEmpty = workDirectory.isEmpty;
-    Repository repoValidate = await _viewModel.status(repository);
-
-    _isWorkDirInvalid = repoValidate.status.isEmpty;
-
-    if(_isNameEmpty == false && _isWorkDirEmpty == false && _isWorkDirInvalid == false) {
-      if(onValidate != null) {
-        onValidate(repository);
-      }
+  void open(BuildContext context) async {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+    _failureOnStartRepository = false;
+    if(_formKey.currentState.validate()) {
+      DashboardViewModel dashboardViewModel = DashboardViewModel();
+      dashboardViewModel.checkCredentialAndInitRepository(_repository, username, password).then((value) {
+        if(value) {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => Dashboard(dashboardViewModel)));
+        } else {
+          _failureOnStartRepository = true;
+          _formKey.currentState.validate();
+        }
+      });
     }
-    _formKey.currentState.validate();
-  }
-
-  void saveRepository(BuildContext context, Repository repository) {
-    _viewModel.save(repository).then((_)
-    => Navigator.of(context, rootNavigator: true).pop('dialog'));
   }
 }
