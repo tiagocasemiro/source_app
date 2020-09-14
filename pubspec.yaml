@@ -59,6 +59,8 @@ flutter:
     - images/source-logo.png
     - images/logo-grey.png
     - images/delete-repository.png
+    - images/branch-local.png
+    - images/down-indicator.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
