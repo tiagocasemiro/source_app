@@ -21,7 +21,7 @@ class Git {
   static String _workDirectory;
   static String _repository = "origin";
 
-  Future<bool> startRepository(String username, String password, String workDirectory) async {
+  Future<bool> startRepositoryWithCredentials(String username, String password, String workDirectory) async {
     Completer<bool> _completer = new Completer<bool>();
     _workDirectory = workDirectory;
     await config().store().call();
@@ -35,6 +35,14 @@ class Git {
 
     return _completer.future;
   }
+
+  Future<bool> startRepository(String workDirectory) async {
+    Completer<bool> _completer = new Completer<bool>();
+    _workDirectory = workDirectory;
+    _completer.complete(true);
+    return _completer.future;
+  }
+
 
   Branch branch() {
     return Branch(_workDirectory);
