@@ -3,7 +3,7 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 
 class BranchesUseCase {
   Future<GitOutput> local() async {
-    return Git().branch().call();
+    return Git().branch().local().call();
   }
 
   Future<GitOutput> remote() async {
