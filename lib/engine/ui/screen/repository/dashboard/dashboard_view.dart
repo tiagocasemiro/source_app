@@ -55,7 +55,7 @@ class Dashboard extends StatelessWidget {
                 ratio: _leftRation,
                 left: Container(
                   padding: const EdgeInsets.only(left: defaultPaddingSize, top: defaultPaddingSize),
-                  child: BodyLeftDashboard(_dashboardViewModel),
+                  child: SingleChildScrollView(child: BodyLeftDashboard(_dashboardViewModel)),
                 ),
                 right: Container(
                   child: HorizontalSplitView(
