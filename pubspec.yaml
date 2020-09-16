@@ -60,6 +60,7 @@ flutter:
     - images/logo-grey.png
     - images/delete-repository.png
     - images/branch-local.png
+    - images/branch-remote.png
     - images/down-indicator.png
     - images/ic-folder.png
 
