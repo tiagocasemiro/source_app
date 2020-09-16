@@ -20,4 +20,16 @@ class GitBranch {
 
   @override
   int get hashCode => name.hashCode ^ current.hashCode;
+
+  bool hasFolder() {
+    return name.contains("/") ?? null;
+  }
+
+  String pureName() {
+    return name.split("/").last;
+  }
+
+  String folder() {
+    return name.split("/").removeLast().toString();
+  }
 }
