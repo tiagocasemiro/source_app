@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
+import 'package:source_app/engine/domain/use.case/start_application_usecase.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_view.dart';
@@ -82,9 +83,14 @@ class RepositoryItem extends StatelessWidget {
               onDoubleTap: () {
                 _viewModel.hasCredential(repository).then((hasCredential) {
                   if(hasCredential) {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return Dashboard(DashboardViewModel());
-                    }));
+                    StartApplicationUseCase().startGitApplication(repository.workDirectory).then((isSuccess) {
+                      if(isSuccess) {
+                        Navigator.push(
+                            context, MaterialPageRoute(builder: (context) {
+                          return Dashboard(DashboardViewModel());
+                        }));
+                      }
+                    });
                   } else {
                     AuthenticationRepositoryAlert(repository).displayAlert(context);
                   }
