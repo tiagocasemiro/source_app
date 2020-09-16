@@ -4,8 +4,15 @@ import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 
 class StartApplicationUseCase {
-  Future<bool> startGitApplication(String workDirectory, String username, String password) async {
-    return Git().startRepository(username, password, workDirectory).then((success) {
+  Future<bool> startGitApplicationWithCredentials(String workDirectory, String username, String password) async {
+    return Git().startRepositoryWithCredentials(username, password, workDirectory).then((success) {
+
+      return success;
+    });
+  }
+
+  Future<bool> startGitApplication(String workDirectory) async {
+    return Git().startRepository(workDirectory).then((success) {
 
       return success;
     });
