@@ -17,4 +17,14 @@ class BranchesUseCase {
   Future<GitOutput> mergeWith(String branchName) async {
     return Git().merge().branch(branchName).call();
   }
+
+  Future<GitOutput> checkoutLocalBranch(String branchName) async {
+    return Git().checkout().localBranch(branchName).call();
+  }
+
+  Future<GitOutput> checkoutRemoteBranch(String branchName) async {
+    String repository = Git().repository();
+
+    return Git().checkout().remoteBranch(branchName.replaceAll("$repository/", ""), branchName).call();
+  }
 }

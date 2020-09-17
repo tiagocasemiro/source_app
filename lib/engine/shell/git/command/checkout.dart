@@ -10,7 +10,7 @@ class Checkout extends BaseGitCommand {
     parameters.add('checkout');
   }
 
-  Checkout branch(String name) {
+  Checkout localBranch(String name) {
     parameters.add(name);
 
     return this;
@@ -25,7 +25,7 @@ class Checkout extends BaseGitCommand {
   Checkout remoteBranch(String localName, String remoteName) {
     parameters.add('-b');
     parameters.add(localName);
-    parameters.add('$_repository/$remoteName');
+    parameters.add(remoteName);
 
     return this;
   }
