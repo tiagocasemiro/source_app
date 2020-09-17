@@ -36,6 +36,34 @@ class DashboardViewModel {
     return null;
   }
 
+  Future<List<GitBranch>> remoteBranches() async {
+    GitOutput gitOutput = await BranchesUseCase().remote();
+    if(gitOutput.isSuccess()) {
+      return gitOutput.object as List<GitBranch>;
+    }
+
+    return null;
+  }
+
+
+  Future<GitOutput> checkoutLocalBranch(String name) async {
+    GitOutput gitOutput = await BranchesUseCase().checkoutLocalBranch(name);
+    if(gitOutput.isSuccess()) {
+      refreshLocalBranches();
+    }
+
+    return gitOutput;
+  }
+
+  Future<GitOutput> checkoutRemoteBranch(String name) async {
+    GitOutput gitOutput = await BranchesUseCase().checkoutRemoteBranch(name);
+    if(gitOutput.isSuccess()) {
+      refreshLocalBranches();
+    }
+
+    return gitOutput;
+  }
+
   void dispose() {
     _localBranchesController.close();
   }
