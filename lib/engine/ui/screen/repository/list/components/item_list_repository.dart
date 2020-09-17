@@ -85,8 +85,7 @@ class RepositoryItem extends StatelessWidget {
                   if(hasCredential) {
                     StartApplicationUseCase().startGitApplication(repository.workDirectory).then((isSuccess) {
                       if(isSuccess) {
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return Dashboard(DashboardViewModel());
                         }));
                       }

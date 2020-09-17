@@ -30,6 +30,13 @@ class GitBranch {
   }
 
   String folder() {
-    return name.split("/").removeLast().toString();
+    List<String> temp = name.split("/");
+    temp.removeLast();
+
+    return hasFolder() ? temp.toString().replaceAll("[", "").replaceAll("]", "") : "";
+  }
+
+  String fullName() {
+    return name;
   }
 }
