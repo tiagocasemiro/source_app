@@ -35,6 +35,10 @@ class Git {
 
     return _completer.future;
   }
+  
+  String repository() {
+    return _repository;  
+  }
 
   Future<bool> startRepository(String workDirectory) async {
     Completer<bool> _completer = new Completer<bool>();
