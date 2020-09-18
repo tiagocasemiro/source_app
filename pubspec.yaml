@@ -63,6 +63,9 @@ flutter:
     - images/branch-remote.png
     - images/down-indicator.png
     - images/ic-folder.png
+    - images/ic_stash.png
+    - images/ic_tags.png
+    - images/ic_menu_close.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
