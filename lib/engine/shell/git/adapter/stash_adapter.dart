@@ -18,6 +18,7 @@ class StashAdapter extends BaseAdapter {
             parts[2].trim()
         ));
       });
+      gitOutput.withObject(stashes);
 
       return gitOutput;
     });
