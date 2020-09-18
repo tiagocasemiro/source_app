@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/domain/model/git_branch.dart';
+import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_viewmodel.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 
@@ -42,7 +43,7 @@ class _RemoteBranchesState extends State<RemoteBranches> {
                 title:Align(
                   child: Transform(
                     transform: Matrix4.translationValues(-26, -8, 0.0),
-                    child: Text("Branches remote", style: GoogleFonts.roboto(
+                    child: Text("Branch remote", style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w700,
                       color: SourceColors.blue[2],
                       fontSize: 16.0,
@@ -61,11 +62,22 @@ class _RemoteBranchesState extends State<RemoteBranches> {
                 initialData: [],
                 future: _dashboardViewModel.remoteBranches(),
                 builder: (context, snapshot) {
-                  final List<GitBranch> branches = snapshot.data is List<GitBranch> && snapshot.data != null? snapshot.data: List<GitBranch>();
+                  List<GitBranch> branches = List<GitBranch>();
+                  if (snapshot.data is GitOutput) {
+                    GitOutput gitOutput = snapshot.data;
+                    branches = gitOutput.isSuccess() &&
+                      gitOutput.object != null &&
+                      gitOutput.object is List<GitBranch> ? gitOutput.object: List<GitBranch>();
+                  }
+
                   return Visibility(
                     visible: branches.isNotEmpty,
-                    replacement: Center(child: snapshot.connectionState != ConnectionState.done? CircularProgressIndicator(): Text("No branches")),
-                    child: new Column(
+                    replacement: Center(child: snapshot.connectionState != ConnectionState.done? CircularProgressIndicator(): Text("No branches", style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w300,
+                      color: SourceColors.blue[2],
+                      fontSize: 14.0,
+                    ),)),
+                    child: Column(
                       children: _buildExpandableContent(branches),
                     ),
                   );
@@ -73,14 +85,14 @@ class _RemoteBranchesState extends State<RemoteBranches> {
               ),
             ],
             trailing: Image.asset("images/down-indicator.png", width: 15.5, height: 8),
-            initiallyExpanded: true,
+            initiallyExpanded: false,
           ),
         ),
       ),
     );
   }
 
-  _buildExpandableContent(List<GitBranch> branches) {
+  List<Widget> _buildExpandableContent(List<GitBranch> branches) {
     List<Widget> columnContent = [];
     String lastFolder = "";
 
