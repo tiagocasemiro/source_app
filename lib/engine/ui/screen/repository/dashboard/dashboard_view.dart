@@ -42,7 +42,7 @@ class Dashboard extends StatelessWidget {
                     Expanded(
                       child: Container(
                         padding: const EdgeInsets.all(defaultPaddingSize),
-                        child: HeaderDashboard(),
+                        child: HeaderDashboard(_dashboardViewModel),
                       ),
                     ),
                   ],

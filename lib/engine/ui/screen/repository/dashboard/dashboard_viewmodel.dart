@@ -1,7 +1,9 @@
-import 'package:source_app/engine/domain/model/git_branch.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
+import 'package:source_app/engine/domain/model/git_stash.dart';
 import 'package:source_app/engine/domain/use.case/branches_usecase.dart';
 import 'package:source_app/engine/domain/use.case/start_application_usecase.dart';
+import 'package:source_app/engine/domain/use.case/stashes_usecase.dart';
+import 'package:source_app/engine/domain/use.case/tags_usecase.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'dart:async';
 
@@ -27,24 +29,18 @@ class DashboardViewModel {
     _localBranchesController.sink.add(true);
   }
 
-  Future<List<GitBranch>> localBranches() async {
+  Future<GitOutput> localBranches() async {
     GitOutput gitOutput = await BranchesUseCase().local();
-    if(gitOutput.isSuccess()) {
-      return gitOutput.object as List<GitBranch>;
-    }
 
-    return null;
+
+    return gitOutput;
   }
 
-  Future<List<GitBranch>> remoteBranches() async {
+  Future<GitOutput> remoteBranches() async {
     GitOutput gitOutput = await BranchesUseCase().remote();
-    if(gitOutput.isSuccess()) {
-      return gitOutput.object as List<GitBranch>;
-    }
 
-    return null;
+    return gitOutput;
   }
-
 
   Future<GitOutput> checkoutLocalBranch(String name) async {
     GitOutput gitOutput = await BranchesUseCase().checkoutLocalBranch(name);
@@ -60,6 +56,24 @@ class DashboardViewModel {
     if(gitOutput.isSuccess()) {
       refreshLocalBranches();
     }
+
+    return gitOutput;
+  }
+
+  Future<GitOutput> tags() async {
+    GitOutput gitOutput = await TagsUseCase().all();
+
+    return gitOutput;
+  }
+
+  Future<GitOutput> stashs() async {
+    GitOutput gitOutput = await StashesUseCase().all();
+
+    return gitOutput;
+  }
+
+  Future<GitOutput> apply(GitStash stash) async {
+    GitOutput gitOutput = await StashesUseCase().apply(stash);
 
     return gitOutput;
   }
