@@ -16,6 +16,8 @@ class RepositoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _State state = _State.free;
+
     return Container(
       width: double.maxFinite,
       height: 86,
@@ -81,19 +83,24 @@ class RepositoryItem extends StatelessWidget {
                 _viewModel.statusInput.add(repository);
               },
               onDoubleTap: () {
-                _viewModel.hasCredential(repository).then((hasCredential) {
-                  if(hasCredential) {
-                    StartApplicationUseCase().startGitApplication(repository.workDirectory).then((isSuccess) {
-                      if(isSuccess) {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return Dashboard(DashboardViewModel());
-                        }));
-                      }
-                    });
-                  } else {
-                    AuthenticationRepositoryAlert(repository).displayAlert(context);
-                  }
-                });
+                if(state == _State.free) {
+                  state = _State.wait;
+                  _viewModel.hasCredential(repository).then((hasCredential) {
+                    if (hasCredential) {
+                      StartApplicationUseCase().startGitApplication(repository.workDirectory).then((isSuccess) {
+                        if (isSuccess) {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return Dashboard(DashboardViewModel());
+                          }));
+                        }
+                        state = _State.free;
+                      });
+                    } else {
+                      AuthenticationRepositoryAlert(repository).displayAlert(context);
+                      state = _State.free;
+                    }
+                  });
+                }
               },
             ),
           ),
@@ -130,3 +137,5 @@ class RepositoryItem extends StatelessWidget {
     );
   }
 }
+
+enum _State { wait, free }
