@@ -66,6 +66,13 @@ flutter:
     - images/ic_stash.png
     - images/ic_tags.png
     - images/ic_menu_close.png
+    - images/ic_menu_branch.png
+    - images/ic_menu_commit.png
+    - images/ic_menu_stash.png
+    - images/ic_menu_fetch.png
+    - images/ic_menu_merge.png
+    - images/ic_menu_pull.png
+    - images/ic_menu_push.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
