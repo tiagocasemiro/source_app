@@ -3,10 +3,10 @@ import 'package:source_app/engine/ui/screen/repository/dashboard/components/body
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/remote_branches.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/stashs.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/tags.dart';
-import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_viewmodel.dart';
+import 'body_left_viewmodel.dart';
 
 class BodyLeftDashboard extends StatelessWidget {
-  final DashboardViewModel _dashboardViewModel;
+  final BodyLeftViewModel _dashboardViewModel;
 
   BodyLeftDashboard(this._dashboardViewModel);
 
