@@ -28,27 +28,36 @@ class RepositoryDetails extends StatelessWidget {
             ),
           ),
         ),
-        SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("\n\$ git status",
-                style: GoogleFonts.robotoMono(
-                  fontWeight: FontWeight.w700,
-                  color: SourceColors.blue[2],
-                  fontSize: 20.0,
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("\n\$ git status",
+                  style: GoogleFonts.robotoMono(
+                    fontWeight: FontWeight.w700,
+                    color: SourceColors.blue[2],
+                    fontSize: 20.0,
+                  ),
                 ),
-              ),
-              Text(_repository.status,
-                style: GoogleFonts.robotoMono(
-                  fontWeight: FontWeight.w400,
-                  color: SourceColors.blue[2],
-                  fontSize: 16.0,
+                Container(height: 8,),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.only(bottom: 50),
+                    child: Text(_repository.status,
+                      style: GoogleFonts.robotoMono(
+                        fontWeight: FontWeight.w400,
+                        color: SourceColors.blue[2],
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
+
         ),
       ],
     );
