@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:source_app/engine/domain/model/git_tag.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
-import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_viewmodel.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'body_left_viewmodel.dart';
+
 class TagsDashboard extends StatefulWidget {
-  final DashboardViewModel _dashboardViewModel;
+  final BodyLeftViewModel _dashboardViewModel;
 
   TagsDashboard(this._dashboardViewModel);
 
@@ -17,7 +18,7 @@ class TagsDashboard extends StatefulWidget {
 }
 
 class _TagsState extends State<TagsDashboard> {
-  final DashboardViewModel _dashboardViewModel;
+  final BodyLeftViewModel _dashboardViewModel;
 
   _TagsState(this._dashboardViewModel);
 

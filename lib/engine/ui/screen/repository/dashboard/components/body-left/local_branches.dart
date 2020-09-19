@@ -6,8 +6,10 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_viewmodel.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 
+import 'body_left_viewmodel.dart';
+
 class LocalBranches extends StatefulWidget {
-  final DashboardViewModel _dashboardViewModel;
+  final BodyLeftViewModel _dashboardViewModel;
 
   LocalBranches(this._dashboardViewModel);
 
@@ -16,7 +18,7 @@ class LocalBranches extends StatefulWidget {
 }
 
 class _LocalBranchesState extends State<LocalBranches> {
-  final DashboardViewModel _dashboardViewModel;
+  final BodyLeftViewModel _dashboardViewModel;
 
   _LocalBranchesState(this._dashboardViewModel);
 
