@@ -90,7 +90,7 @@ class RepositoryItem extends StatelessWidget {
                       StartApplicationUseCase().startGitApplication(repository.workDirectory).then((isSuccess) {
                         if (isSuccess) {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return Dashboard(DashboardViewModel());
+                            return Dashboard();
                           }));
                         }
                         state = _State.free;
