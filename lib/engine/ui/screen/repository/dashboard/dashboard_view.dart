@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/body_left_viewmodel.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/header/header_viewmodel.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/default_values.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/body_left_dashboard.dart';
@@ -7,7 +9,6 @@ import 'package:source_app/engine/ui/screen/repository/dashboard/components/foot
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/footer_left_dashboard.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/footer_right_dashboard.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/header/header_dashboard.dart';
-import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_viewmodel.dart';
 import 'package:source_app/engine/ui/widgets/horizontal_split_view.dart';
 import 'package:source_app/engine/ui/widgets/vertical_split_view.dart';
 
@@ -15,9 +16,8 @@ import 'package:source_app/engine/ui/widgets/vertical_split_view.dart';
 class Dashboard extends StatelessWidget {
   final double _leftRation = 0.25;
   final double _minLeftRation = 0.20;
-  final DashboardViewModel _dashboardViewModel;
-
-  Dashboard(this._dashboardViewModel);
+  final BodyLeftViewModel _bodyLeftViewModel = BodyLeftViewModel();
+  final HeaderViewModel _headerViewModel = HeaderViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class Dashboard extends StatelessWidget {
                     Expanded(
                       child: Container(
                         padding: const EdgeInsets.all(defaultPaddingSize),
-                        child: HeaderDashboard(_dashboardViewModel),
+                        child: HeaderDashboard(_headerViewModel),
                       ),
                     ),
                   ],
@@ -56,7 +56,7 @@ class Dashboard extends StatelessWidget {
                 left: Container(
                   height: double.maxFinite,
                   padding: const EdgeInsets.only(left: defaultPaddingSize, top: defaultPaddingSize),
-                  child:  BodyLeftDashboard(_dashboardViewModel),
+                  child:  BodyLeftDashboard(_bodyLeftViewModel),
                 ),
                 right: Container(
                   child: HorizontalSplitView(
