@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/body_left_viewmodel.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/local_branches.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/remote_branches.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/stashs.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/tags.dart';
-import 'body_left_viewmodel.dart';
+
 
 class BodyLeftDashboard extends StatelessWidget {
   final BodyLeftViewModel _dashboardViewModel;
