@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:source_app/engine/domain/model/git_remote.dart';
+import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/shell/git/command/checkout.dart';
 import 'package:source_app/engine/shell/git/command/config.dart';
 import 'package:source_app/engine/shell/git/command/pull.dart';
@@ -20,18 +21,22 @@ import 'command/tag.dart';
 class Git {
   static String _workDirectory;
   static String _repository = "origin";
+  static String _credentials;
 
-  Future<bool> startRepositoryWithCredentials(String username, String password, String workDirectory) async {
-    Completer<bool> _completer = new Completer<bool>();
+  Future<String> startRepositoryWithCredentials(String username, String password, String workDirectory) async {
+    Completer<String> _completer = new Completer<String>();
     _workDirectory = workDirectory;
     await config().store().call();
-    GitOutput gitOutput = await config().url().call();
-    remote().showWithCredentials(gitOutput.object, username, password).call().then((GitOutput remote) {
-      if(remote.isSuccess()) {
-        _repository = (remote.object as GitRemote).name;
+    GitOutput gitOutputRemote = await config().url().call();
+    _credentials = (gitOutputRemote.object as GitRemote).urlWithCredentials(username, password);
+    remote().showWithCredentials(gitOutputRemote.object, username, password).call().then((GitOutput gitOutput) {
+      if(gitOutput.isSuccess()) {
+        _repository = (gitOutput.object as GitRemote).name;
+        _completer.complete(_credentials);
+      } else {
+        _completer.complete(null);
       }
-      _completer.complete(remote.isSuccess());
-    }, onError: (e) => _completer.complete(false));
+    }, onError: (e) => _completer.complete(null));
 
     return _completer.future;
   }
@@ -40,10 +45,17 @@ class Git {
     return _repository;  
   }
 
-  Future<bool> startRepository(String workDirectory) async {
+  Future<bool> startRepository(Repository repository) async {
     Completer<bool> _completer = new Completer<bool>();
-    _workDirectory = workDirectory;
-    _completer.complete(true);
+    _workDirectory = repository.workDirectory;
+    _credentials = repository.credentials;
+    remote().call().then((GitOutput remote) {
+      if(remote.isSuccess()) {
+        _repository = (remote.object as GitRemote).name;
+      }
+      _completer.complete(remote.isSuccess());
+    }, onError: (e) => _completer.complete(false));
+
     return _completer.future;
   }
 
@@ -68,8 +80,8 @@ class Git {
     return Commit(_workDirectory);
   }
 
-  Push push(String username, String password) {
-    return Push(_workDirectory, _repository);
+  Push push() {
+    return Push(_workDirectory, _repository, _credentials);
   }
 
   Pull pull() {
@@ -85,7 +97,7 @@ class Git {
   }
 
   Checkout checkout() {
-    return Checkout(_workDirectory, _repository);
+    return Checkout(_workDirectory);
   }
 
   Log log() {

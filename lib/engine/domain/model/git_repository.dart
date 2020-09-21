@@ -4,12 +4,17 @@ class Repository {
   String workDirectory;
   String status;
   String url;
+  String credentials;
 
   Repository(this.name, this.workDirectory, {this.url});
 
   @override
   String toString() {
     return 'Repository{name: $name, workDirectory: $workDirectory}';
+  }
+
+  bool hasCredentials() {
+    return credentials != null && credentials.isNotEmpty;
   }
 
   @override

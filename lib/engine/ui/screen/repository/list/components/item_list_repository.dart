@@ -4,7 +4,6 @@ import 'package:source_app/engine/domain/use.case/start_application_usecase.dart
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_view.dart';
-import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_viewmodel.dart';
 import 'package:source_app/engine/ui/screen/repository/list/components/credentials_reposritory.dart';
 import 'package:source_app/engine/ui/screen/repository/list/list_repositories_viewmodel.dart';
 
@@ -85,21 +84,19 @@ class RepositoryItem extends StatelessWidget {
               onDoubleTap: () {
                 if(state == _State.free) {
                   state = _State.wait;
-                  _viewModel.hasCredential(repository).then((hasCredential) {
-                    if (hasCredential) {
-                      StartApplicationUseCase().startGitApplication(repository.workDirectory).then((isSuccess) {
-                        if (isSuccess) {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return Dashboard();
-                          }));
-                        }
-                        state = _State.free;
-                      });
-                    } else {
-                      AuthenticationRepositoryAlert(repository).displayAlert(context);
+                  if(repository.hasCredentials()) {
+                    _viewModel.startGitApplication(repository).then((isSuccess) {
+                      if (isSuccess) {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return Dashboard();
+                        }));
+                      }
                       state = _State.free;
-                    }
-                  });
+                    });
+                  } else {
+                    AuthenticationRepositoryAlert(repository).displayAlert(context);
+                    state = _State.free;
+                  }
                 }
               },
             ),

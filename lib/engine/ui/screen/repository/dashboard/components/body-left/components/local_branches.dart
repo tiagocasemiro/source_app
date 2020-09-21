@@ -4,8 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/domain/model/git_branch.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
+import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
 
-import 'body_left_viewmodel.dart';
+import '../body_left_viewmodel.dart';
 
 class LocalBranches extends StatefulWidget {
   final BodyLeftViewModel _dashboardViewModel;
@@ -177,7 +178,11 @@ class _LocalBranchesState extends State<LocalBranches> {
             ),
           ),
           onDoubleTap: () {
-            _dashboardViewModel.checkoutLocalBranch(branch.name);
+            _dashboardViewModel.checkoutLocalBranch(branch.name).then((GitOutput gitOutput) {
+              if(gitOutput.isFailure()) {
+                GitOutputErrorAlert(gitOutput).displayAlert(context);
+              }
+            });
           },
         ),
       ),

@@ -4,10 +4,10 @@ import 'package:source_app/engine/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Push extends BaseGitCommand {
-
   final String _repository;
+  final String _credentials;
 
-  Push(workDirectory, this._repository) : super(workDirectory) {
+  Push(workDirectory, this._repository, this._credentials) : super(workDirectory) {
     parameters.add('push');
   }
 
@@ -37,6 +37,12 @@ class Push extends BaseGitCommand {
     parameters.add('--set-upstream');
     parameters.add(_repository);
     parameters.add(name);
+
+    return this;
+  }
+
+  Push withCredentials() {
+    parameters.add(_credentials);
 
     return this;
   }

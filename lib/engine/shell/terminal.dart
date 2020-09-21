@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
-import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/model/terminal_output.dart';
 
 class Terminal {
@@ -14,6 +13,8 @@ class Terminal {
       String stderr = processResult.stderr.toString();
       String stdout = processResult.stdout.toString();
       String message = (stdout != null && stdout.isNotEmpty)? stdout : stderr;
+
+      _printOutput(message, processResult.exitCode.toString(), command, parameters: parameters);
 
       return TerminalOutput(message, processResult.exitCode);
     });

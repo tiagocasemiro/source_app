@@ -17,6 +17,10 @@ class SelectRepositoryViewModel {
     return await StartApplicationUseCase().checkCredentials(_repository.workDirectory);
   }
 
+  Future<bool> startGitApplication(Repository repository) async {
+    return await StartApplicationUseCase().startGitApplication(repository);
+  }
+
   Future<List<Repository>> all() async {
     return RepositoryUseCase().allLocalRepository();
   }

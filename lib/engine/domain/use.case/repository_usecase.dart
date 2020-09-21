@@ -19,6 +19,15 @@ class RepositoryUseCase {
     return gitOutput;
   }
 
+  Future<bool> updateLocalRepository(Repository repository) async {
+    int totalChanged = await RepositoryDao().update(repository);
+    if(totalChanged == 1 ) {
+      return true;
+    }
+
+    return false;
+  }
+
   Future<List<Repository>> allLocalRepository() async {
     List<Repository> repositories = await RepositoryDao().findAll();
 

@@ -11,9 +11,9 @@ class Remote extends BaseGitCommand {
     parameters.add('remote');
   }
 
-  Remote show(GitRemote gitRemote) {
+  Remote show(String origin) {
     parameters.add('show');
-    parameters.add(gitRemote.name);
+    parameters.add(origin);
     _variant = _Variant.show;
 
     return this;

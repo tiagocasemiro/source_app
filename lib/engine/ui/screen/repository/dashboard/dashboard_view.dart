@@ -24,7 +24,7 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(defaultPaddingSize),
-        color: SourceColors.grey[6],
+        color: SourceColors.grey[610],
         child: Column(
           children: [
             LayoutBuilder( builder: (context, BoxConstraints constraints) {

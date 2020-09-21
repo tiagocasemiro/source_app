@@ -5,6 +5,7 @@ import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
 
 
 class TagsDashboard extends StatefulWidget {
@@ -17,9 +18,9 @@ class TagsDashboard extends StatefulWidget {
 }
 
 class _TagsState extends State<TagsDashboard> {
-  final BodyLeftViewModel _dashboardViewModel;
+  final BodyLeftViewModel _bodyLeftViewModel;
 
-  _TagsState(this._dashboardViewModel);
+  _TagsState(this._bodyLeftViewModel);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,7 @@ class _TagsState extends State<TagsDashboard> {
            children: <Widget>[
              FutureBuilder(
                initialData: [],
-               future: _dashboardViewModel.tags(),
+               future: _bodyLeftViewModel.tags(),
                builder: (context, snapshot) {
                  List<GitTag> tags = List<GitTag>();
                  if (snapshot.data is GitOutput) {
@@ -138,7 +139,11 @@ class _TagsState extends State<TagsDashboard> {
             ),
           ),
           onDoubleTap: () {
-            print("Double click on tag " + tag.name );
+            _bodyLeftViewModel.checkoutTag(tag).then((GitOutput gitOutput) {
+              if(gitOutput.isFailure()) {
+                GitOutputErrorAlert(gitOutput).displayAlert(context);
+              }
+            });
           },
         ),
       ),

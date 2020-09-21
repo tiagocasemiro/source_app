@@ -22,6 +22,10 @@ class BranchesUseCase {
     return Git().checkout().localBranch(branchName).call();
   }
 
+  Future<GitOutput> checkoutTag(String name) async {
+    return Git().checkout().tag(name).call();
+  }
+
   Future<GitOutput> checkoutRemoteBranch(String branchName) async {
     String repository = Git().repository();
 

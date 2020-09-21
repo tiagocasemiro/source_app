@@ -6,6 +6,7 @@ class RepositoryDao {
   static const String tableName = "git_repositories";
   final String _workDirectory = "workDirectory";
   final String _name = "name";
+  final String _credentials = "credentials";
   final StoreRef _store = intMapStoreFactory.store(tableName);
 
   Future<bool> save(Repository repository) async {
@@ -21,12 +22,28 @@ class RepositoryDao {
     return false;
   }
 
+  Future<int> update(Repository repository) async {
+    bool exist = await _exist(repository);
+    if(exist) {
+      var filter = Filter.equals(_workDirectory, repository.workDirectory);
+      var finder = Finder(filter: filter);
+      final Database db = await getDatabase();
+      Map<String, dynamic> repositoryMap = _toMap(repository);
+      var saved =  await _store.update(db, repositoryMap, finder: finder);
+
+      return saved;
+    }
+
+    return 0;
+  }
+
   Future<List<Repository>> findAll() async {
     final Database db = await getDatabase();
     var records = await _store.find(db);
     List<Repository> repositories = List();
     records.forEach((item) {
       final Repository repository = Repository(item[_name],item[_workDirectory]);
+      repository.credentials = item[_credentials];
       repositories.add(repository);
     });
 
@@ -46,6 +63,7 @@ class RepositoryDao {
     final Map<String, dynamic> repositoryMap = Map();
     repositoryMap[_name] = repository.name;
     repositoryMap[_workDirectory] = repository.workDirectory;
+    repositoryMap[_credentials] = repository.credentials;
 
     return repositoryMap;
   }
@@ -57,6 +75,7 @@ class RepositoryDao {
           map[_name],
           map[_workDirectory]
       );
+      repository.credentials = map[_credentials];
       repositories.add(repository);
     }
 

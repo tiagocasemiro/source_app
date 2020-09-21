@@ -5,8 +5,7 @@ import 'package:source_app/engine/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Checkout extends BaseGitCommand {
-  final String _repository;
-  Checkout(String workDirectory, this._repository) : super(workDirectory) {
+  Checkout(String workDirectory) : super(workDirectory) {
     parameters.add('checkout');
   }
 
@@ -26,6 +25,12 @@ class Checkout extends BaseGitCommand {
     parameters.add('-b');
     parameters.add(localName);
     parameters.add(remoteName);
+
+    return this;
+  }
+
+  Checkout tag(String name) {
+    parameters.add(name);
 
     return this;
   }
