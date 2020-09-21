@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:source_app/engine/domain/model/git_stash.dart';
+import 'package:source_app/engine/domain/model/git_tag.dart';
 import 'package:source_app/engine/domain/use.case/branches_usecase.dart';
 import 'package:source_app/engine/domain/use.case/stashes_usecase.dart';
 import 'package:source_app/engine/domain/use.case/tags_usecase.dart';
@@ -40,6 +41,12 @@ class BodyLeftViewModel {
     if(gitOutput.isSuccess()) {
       refreshLocalBranches();
     }
+
+    return gitOutput;
+  }
+
+  Future<GitOutput> checkoutTag(GitTag tag) async {
+    GitOutput gitOutput = await BranchesUseCase().checkoutTag(tag.name);
 
     return gitOutput;
   }
