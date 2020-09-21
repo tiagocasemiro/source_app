@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/header/header_viewmodel.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/header/widget/menu_button.dart';
 
 class MenuPushButton extends StatelessWidget {
-  final HeaderViewModel _dashboardViewModel;
+  final HeaderViewModel _headerViewModell;
 
-  MenuPushButton(this._dashboardViewModel);
+  MenuPushButton(this._headerViewModell);
 
   @override
   Widget build(BuildContext context) {
     return MenuButton("push", "images/ic_menu_push.png", (){
-      print("push");
+      _headerViewModell.push().then((GitOutput gitOutput) {
+        print("sucess on push");
+      });
     });
   }
 }
