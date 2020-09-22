@@ -9,7 +9,7 @@ class MenuFetchButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MenuButton("fetch", "images/ic_menu_fetch.png", (){
+    return MenuButton("fetch", "images/ic_menu_fetch.svg", (){
       print("fetch");
     });
   }

@@ -11,7 +11,7 @@ class MenuCloseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 8),
-      child: MenuButton("close", "images/ic_menu_close.png", (){
+      child: MenuButton("close", "images/ic_menu_close.svg", (){
         Navigator.pop(context);
       }),
     );

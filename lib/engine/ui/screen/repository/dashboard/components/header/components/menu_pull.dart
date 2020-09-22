@@ -10,7 +10,7 @@ class MenuPullButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MenuButton("pull", "images/ic_menu_pull.png", () {
+    return MenuButton("pull", "images/ic_menu_pull.svg", () {
     });
   }
 }

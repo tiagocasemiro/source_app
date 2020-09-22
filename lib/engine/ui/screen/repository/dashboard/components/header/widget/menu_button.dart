@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 class MenuButton extends StatelessWidget {
   final String _label;
@@ -15,7 +17,7 @@ class MenuButton extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 8),
       child: Column(children: [
         Stack(children: [
-          Image.asset(_icon, width: 36, height: 36),
+          SvgPicture.asset(_icon, width: 36, height: 36),
           Material(
               color: Colors.transparent,
               child: InkWell(

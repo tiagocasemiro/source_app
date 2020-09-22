@@ -13,7 +13,7 @@ class MenuPushButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MenuButton("push", "images/ic_menu_push.png", () {
+    return MenuButton("push", "images/ic_menu_push.svg", () {
       Load.show();
       _headerViewModell.push().then((GitOutput gitOutput) {
         if(gitOutput.isFailure()) {

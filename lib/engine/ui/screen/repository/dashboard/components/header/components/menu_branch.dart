@@ -9,7 +9,7 @@ class MenuBranchButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MenuButton("branch","images/ic_menu_branch.png", () {
+    return MenuButton("branch","images/ic_menu_branch.svg", () {
       print("branch");
     });
   }

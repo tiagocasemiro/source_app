@@ -10,7 +10,7 @@ class MenuMergeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MenuButton("merge", "images/ic_menu_merge.png", (){
+    return MenuButton("merge", "images/ic_menu_merge.svg", (){
       print("merge");
     });
   }

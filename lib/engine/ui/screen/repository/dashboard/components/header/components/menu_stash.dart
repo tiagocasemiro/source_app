@@ -9,7 +9,7 @@ class MenuStashButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MenuButton("stash", "images/ic_menu_stash.png", (){
+    return MenuButton("stash", "images/ic_menu_stash.svg", (){
       print("stash");
     });
   }
