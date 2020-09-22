@@ -33,4 +33,10 @@ class SourceColors {
       1: Color(0xFFB90000),
     },
   );
+
+  static const MaterialColor green = MaterialColor(0xFF24922F,
+    <int, Color>{
+      1: Color(0xFF24922F),
+    },
+  );
 }
