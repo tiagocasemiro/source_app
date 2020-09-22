@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
+import 'package:source_app/engine/ui/widgets/gitoutput_success_snackbar.dart';
 
 
 class StashDashboard extends StatefulWidget {
@@ -141,6 +142,8 @@ class _StashState extends State<StashDashboard> {
             _dashboardViewModel.apply(stash).then((GitOutput gitOutput) {
               if(gitOutput.isFailure()) {
                 GitOutputErrorAlert(gitOutput).displayAlert(context);
+              } else {
+                GitOutputSuccessSnackBar(context).showWithMessage(gitOutput);
               }
             });
           },
