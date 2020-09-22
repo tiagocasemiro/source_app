@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/domain/model/git_branch.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
+import 'package:source_app/engine/ui/widgets/application_load.dart';
 import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
 import 'package:source_app/engine/ui/widgets/gitoutput_success_snackbar.dart';
 
@@ -179,12 +180,14 @@ class _LocalBranchesState extends State<LocalBranches> {
             ),
           ),
           onDoubleTap: () {
+            Load.show();
             _dashboardViewModel.checkoutLocalBranch(branch.name).then((GitOutput gitOutput) {
               if(gitOutput.isFailure()) {
                 GitOutputErrorAlert(context).displayAlert(gitOutput);
               } else {
                 GitOutputSuccessSnackBar(context).showWithMessage(gitOutput);
               }
+              Load.hide();
             });
           },
         ),

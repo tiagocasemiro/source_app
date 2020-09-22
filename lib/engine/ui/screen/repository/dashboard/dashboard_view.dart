@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:load/load.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/body_left_viewmodel.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/header/header_viewmodel.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
@@ -21,60 +22,62 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(defaultPaddingSize),
-        color: SourceColors.grey[610],
-        child: Column(
-          children: [
-            LayoutBuilder( builder: (context, BoxConstraints constraints) {
-              return  Container(
-                height: 100,
-                width: constraints.maxWidth - defaultDivisorSize,
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      width: _leftRation * (constraints.maxWidth - defaultDivisorSize),
-                      height: 150,
-                      child: Image.asset("images/source-logo.png"),
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.all(defaultPaddingSize),
-                        child: HeaderDashboard(_headerViewModel),
+    return LoadingProvider(
+      child: Scaffold(
+        body: Container(
+          padding: const EdgeInsets.all(defaultPaddingSize),
+          color: SourceColors.grey[610],
+          child: Column(
+            children: [
+              LayoutBuilder( builder: (context, BoxConstraints constraints) {
+                return  Container(
+                  height: 100,
+                  width: constraints.maxWidth - defaultDivisorSize,
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        width: _leftRation * (constraints.maxWidth - defaultDivisorSize),
+                        height: 150,
+                        child: Image.asset("images/source-logo.png"),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            }),
-            Expanded(
-              child: VerticalSplitView(
-                minRatio: _minLeftRation,
-                ratio: _leftRation,
-                left: Container(
-                  height: double.maxFinite,
-                  padding: const EdgeInsets.only(left: defaultPaddingSize, top: defaultPaddingSize),
-                  child:  BodyLeftDashboard(_bodyLeftViewModel),
-                ),
-                right: Container(
-                  child: HorizontalSplitView(
-                    ratio: 0.60,
-                    up: Container(
-                      padding: const EdgeInsets.only(right: defaultPaddingSize, top: defaultPaddingSize),
-                      child: BodyRightDashboard(),
-                    ),
-                    down: Container(
-                      child: FooterDashboard(
-                        VerticalSplitView(
-                          left: Container(
-                            padding: const EdgeInsets.only(bottom: defaultPaddingSize),
-                            child: FooterLeftDashboard(),
-                          ),
-                          right: Container(
-                            padding: const EdgeInsets.only(right: defaultPaddingSize, bottom: defaultPaddingSize),
-                            child: FooterRightDashboard(),
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.all(defaultPaddingSize),
+                          child: HeaderDashboard(_headerViewModel),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+              Expanded(
+                child: VerticalSplitView(
+                  minRatio: _minLeftRation,
+                  ratio: _leftRation,
+                  left: Container(
+                    height: double.maxFinite,
+                    padding: const EdgeInsets.only(left: defaultPaddingSize, top: defaultPaddingSize),
+                    child:  BodyLeftDashboard(_bodyLeftViewModel),
+                  ),
+                  right: Container(
+                    child: HorizontalSplitView(
+                      ratio: 0.60,
+                      up: Container(
+                        padding: const EdgeInsets.only(right: defaultPaddingSize, top: defaultPaddingSize),
+                        child: BodyRightDashboard(),
+                      ),
+                      down: Container(
+                        child: FooterDashboard(
+                          VerticalSplitView(
+                            left: Container(
+                              padding: const EdgeInsets.only(bottom: defaultPaddingSize),
+                              child: FooterLeftDashboard(),
+                            ),
+                            right: Container(
+                              padding: const EdgeInsets.only(right: defaultPaddingSize, bottom: defaultPaddingSize),
+                              child: FooterRightDashboard(),
+                            ),
                           ),
                         ),
                       ),
@@ -82,8 +85,8 @@ class Dashboard extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
