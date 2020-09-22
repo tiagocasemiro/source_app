@@ -6,6 +6,7 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/body_left_viewmodel.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
+import 'package:source_app/engine/ui/widgets/gitoutput_success_snackbar.dart';
 
 
 class RemoteBranches extends StatefulWidget {
@@ -184,6 +185,8 @@ class _RemoteBranchesState extends State<RemoteBranches> {
             _dashboardViewModel.checkoutRemoteBranch(branch.name).then((GitOutput gitOutput) {
               if(gitOutput.isFailure()) {
                 GitOutputErrorAlert(gitOutput).displayAlert(context);
+              } else {
+                GitOutputSuccessSnackBar(context).showWithMessage(gitOutput);
               }
             });
           },

@@ -5,6 +5,7 @@ import 'package:source_app/engine/domain/model/git_branch.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
+import 'package:source_app/engine/ui/widgets/gitoutput_success_snackbar.dart';
 
 import '../body_left_viewmodel.dart';
 
@@ -181,6 +182,8 @@ class _LocalBranchesState extends State<LocalBranches> {
             _dashboardViewModel.checkoutLocalBranch(branch.name).then((GitOutput gitOutput) {
               if(gitOutput.isFailure()) {
                 GitOutputErrorAlert(gitOutput).displayAlert(context);
+              } else {
+                GitOutputSuccessSnackBar(context).showWithMessage(gitOutput);
               }
             });
           },

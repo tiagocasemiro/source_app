@@ -21,7 +21,8 @@ import 'command/tag.dart';
 class Git {
   static String _workDirectory;
   static String _repository = "origin";
-  static String _credentials;
+  static String _credentials = "";
+  static String _privateCredentials = "";
 
   Future<String> startRepositoryWithCredentials(String username, String password, String workDirectory) async {
     Completer<String> _completer = new Completer<String>();
@@ -29,6 +30,7 @@ class Git {
     await config().store().call();
     GitOutput gitOutputRemote = await config().url().call();
     _credentials = (gitOutputRemote.object as GitRemote).urlWithCredentials(username, password);
+    _privateCredentials = (gitOutputRemote.object as GitRemote).url;
     remote().showWithCredentials(gitOutputRemote.object, username, password).call().then((GitOutput gitOutput) {
       if(gitOutput.isSuccess()) {
         _repository = (gitOutput.object as GitRemote).name;
@@ -41,14 +43,23 @@ class Git {
     return _completer.future;
   }
   
-  String repository() {
+  static String repository() {
     return _repository;  
+  }
+
+  static String credentials() {
+    return _credentials;
+  }
+
+  static String privateCredentials() {
+    return _privateCredentials;
   }
 
   Future<bool> startRepository(Repository repository) async {
     Completer<bool> _completer = new Completer<bool>();
     _workDirectory = repository.workDirectory;
     _credentials = repository.credentials;
+    _privateCredentials = repository.hidePasswordCredentials();
     remote().call().then((GitOutput remote) {
       if(remote.isSuccess()) {
         _repository = (remote.object as GitRemote).name;
