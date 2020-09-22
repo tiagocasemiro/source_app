@@ -184,7 +184,7 @@ class _RemoteBranchesState extends State<RemoteBranches> {
           onDoubleTap: () {
             _dashboardViewModel.checkoutRemoteBranch(branch.name).then((GitOutput gitOutput) {
               if(gitOutput.isFailure()) {
-                GitOutputErrorAlert(gitOutput).displayAlert(context);
+                GitOutputErrorAlert(context).displayAlert(gitOutput);
               } else {
                 GitOutputSuccessSnackBar(context).showWithMessage(gitOutput);
               }

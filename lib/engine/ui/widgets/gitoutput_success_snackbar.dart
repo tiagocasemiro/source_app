@@ -4,15 +4,15 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 
 class GitOutputSuccessSnackBar {
-  BuildContext _context;
+  BuildContext context;
   final String _defaultMessage =  "Command successfully executed";
 
-  GitOutputSuccessSnackBar(this._context);
+  GitOutputSuccessSnackBar(this.context);
 
   void showWithMessage(GitOutput gitOutput) {
     String message = gitOutput != null && gitOutput.message != null && gitOutput.message.isNotEmpty ? gitOutput.message.trim() : _defaultMessage;
 
-    Scaffold.of(_context).showSnackBar(
+    Scaffold.of(context).showSnackBar(
         new SnackBar(
           content: Text(message, style: GoogleFonts.roboto(
             fontWeight: FontWeight.w500,
@@ -25,7 +25,7 @@ class GitOutputSuccessSnackBar {
   }
 
   void showDefaultMessage() {
-    Scaffold.of(_context).showSnackBar(
+    Scaffold.of(context).showSnackBar(
         new SnackBar(
           content: Text(_defaultMessage, style: GoogleFonts.roboto(
             fontWeight: FontWeight.w500,

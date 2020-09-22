@@ -4,11 +4,10 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 
 class GitOutputErrorAlert {
-  final GitOutput _gitOutput;
+  final BuildContext context;
+  GitOutputErrorAlert(this.context);
 
-  GitOutputErrorAlert(this._gitOutput);
-
-  displayAlert(BuildContext context) {
+  displayAlert(GitOutput gitOutput) {
     Widget closeButton = RaisedButton(
       color: SourceColors.red,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -37,7 +36,7 @@ class GitOutputErrorAlert {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       content: Container(
         width: 650,
-        child: Text(_gitOutput.message, style: GoogleFonts.roboto(
+        child: Text(gitOutput.message, style: GoogleFonts.roboto(
           fontWeight: FontWeight.w400,
           color: SourceColors.blue[2],
           fontSize: 16.0,

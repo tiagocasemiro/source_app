@@ -141,7 +141,7 @@ class _StashState extends State<StashDashboard> {
           onDoubleTap: () {
             _dashboardViewModel.apply(stash).then((GitOutput gitOutput) {
               if(gitOutput.isFailure()) {
-                GitOutputErrorAlert(gitOutput).displayAlert(context);
+                GitOutputErrorAlert(context).displayAlert(gitOutput);
               } else {
                 GitOutputSuccessSnackBar(context).showWithMessage(gitOutput);
               }

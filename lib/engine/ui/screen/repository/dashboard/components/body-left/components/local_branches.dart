@@ -181,7 +181,7 @@ class _LocalBranchesState extends State<LocalBranches> {
           onDoubleTap: () {
             _dashboardViewModel.checkoutLocalBranch(branch.name).then((GitOutput gitOutput) {
               if(gitOutput.isFailure()) {
-                GitOutputErrorAlert(gitOutput).displayAlert(context);
+                GitOutputErrorAlert(context).displayAlert(gitOutput);
               } else {
                 GitOutputSuccessSnackBar(context).showWithMessage(gitOutput);
               }
