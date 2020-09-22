@@ -3,6 +3,8 @@ import 'package:source_app/engine/domain/use.case/repository_usecase.dart';
 import 'package:source_app/engine/domain/use.case/start_application_usecase.dart';
 import 'dart:async';
 
+import 'package:source_app/engine/ui/widgets/application_load.dart';
+
 class DashboardViewModel {
   Future<bool> initRepository(Repository repository, String username, String password) async {
     StartApplicationUseCase startApplicationUseCase = StartApplicationUseCase();
@@ -14,8 +16,6 @@ class DashboardViewModel {
 
     return false;
   }
-
-
 
   Future<bool> checkCredentials(Repository repository) async {
     return await StartApplicationUseCase().checkCredentials(repository.workDirectory);

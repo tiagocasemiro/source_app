@@ -5,8 +5,9 @@ import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:source_app/engine/ui/widgets/application_load.dart';
 import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
-import 'package:source_app/engine/ui/widgets/gitoutput_success_snackbar.dart';
+import 'package:source_app/engine/ui/widgets/notify.dart';
 
 
 class TagsDashboard extends StatefulWidget {
@@ -140,13 +141,15 @@ class _TagsState extends State<TagsDashboard> {
             ),
           ),
           onDoubleTap: () {
+            Load.show();
             _bodyLeftViewModel.checkoutTag(tag).then((GitOutput gitOutput) {
               if(gitOutput.isFailure()) {
                 GitOutputErrorAlert(context).displayAlert(gitOutput);
               } else {
-                GitOutputSuccessSnackBar(context).showWithMessage(gitOutput);
+                Notify(context).showSuccessWithMessage(gitOutput);
               }
-            });
+              Load.hide();
+            }, onError: (e) => Load.hide());
           },
         ),
       ),
