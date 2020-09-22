@@ -30,7 +30,7 @@ class MenuButton extends StatelessWidget {
         ],),
         Container(height: 5,),
         Text( _label, style: GoogleFonts.roboto(
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w500,
           color: SourceColors.blue[2],
           fontSize: 14.5, ),
         )],

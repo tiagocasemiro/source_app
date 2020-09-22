@@ -7,7 +7,6 @@ import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/widgets/application_load.dart';
 import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
 import 'package:source_app/engine/ui/widgets/notify.dart';
-
 import '../body_left_viewmodel.dart';
 
 class LocalBranches extends StatefulWidget {
