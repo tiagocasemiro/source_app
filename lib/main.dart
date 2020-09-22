@@ -45,6 +45,8 @@ void main() {
   //Git().log().graph().pretty(Log.historyFormat).call().then((branches) => print(branches));
   //Git().restore().files(['cument_5.txt']).call();
 
+  //context menu
+  //https://pub.dev/packages/bot_toast
 
   //gitclone
   //https://www.atlassian.com/br/git/tutorials/setting-up-a-repository/git-clone
