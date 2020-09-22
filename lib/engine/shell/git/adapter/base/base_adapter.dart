@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/shell/model/terminal_output.dart';
 
@@ -23,7 +23,8 @@ abstract class BaseAdapter {
 
   GitOutput execute({GitOutput transform(GitOutput gitOutput)}) {
     try {
-      var gitOutput = GitOutput(_terminalOutput.message);
+
+      var gitOutput = GitOutput(removePassword(_terminalOutput.message));
       if (_terminalOutput.isFailure()) {
         return gitOutput.failure();
       }
@@ -37,5 +38,15 @@ abstract class BaseAdapter {
     } catch (e) {
       return GitOutput(_terminalOutput.message).failure();
     }
+  }
+
+  String removePassword(String message) {
+    if(message != null && message.isNotEmpty && message.contains(Git.credentials())) {
+      String credentials = Git.credentials();
+      String privateCredentials = Git.privateCredentials();
+      message =  message.replaceAll(credentials, privateCredentials);
+    }
+
+    return message;
   }
 }
