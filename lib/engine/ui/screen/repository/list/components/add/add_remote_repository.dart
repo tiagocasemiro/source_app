@@ -5,11 +5,14 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/file_choose.dart';
 import 'package:source_app/engine/ui/screen/repository/list/list_repositories_viewmodel.dart';
+import 'package:source_app/engine/ui/widgets/application_load.dart';
 
 class AddRemoteRepository {
   final _nameController = TextEditingController();
   final _workDirController = TextEditingController();
   final _urlController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isWorkDirEmpty = true;
   bool _isNameEmpty = true;
@@ -32,8 +35,8 @@ class AddRemoteRepository {
         ),
       ),
       onPressed: () {
-        validateRepository(onValidate: (repository) {
-          cloneRepository(repository, (repository) {
+        validateRepository(onValidate: (repository, username, password) {
+          cloneRepository(repository, username, password, (repository) {
             saveRepository(context, repository);
           },
           () {
@@ -70,7 +73,7 @@ class AddRemoteRepository {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       content: Container(
         width: 650,
-        height: 250,
+        height: 400,
         child: Form(
           key: _formKey,
           child: Container(
@@ -235,6 +238,93 @@ class AddRemoteRepository {
                     ),
                   ),
                 ),
+                Container(
+                  height: 80,
+                  child: TextFormField(
+                    controller: _usernameController,
+                    cursorColor: SourceColors.blue[2],
+                    enableInteractiveSelection : true,
+                    autofocus: true,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Inform your username to selected repository';
+                      }
+                      return null;
+                    },
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: SourceColors.blue[2],
+                    ),
+                    decoration: InputDecoration(
+                      fillColor: SourceColors.grey,
+                      focusColor: SourceColors.blue[3],
+                      contentPadding: EdgeInsets.all(16),
+                      labelText: 'Username',
+                      hintStyle: TextStyle(
+                        color: SourceColors.blue[2],
+                        fontSize: 16,
+                      ),
+                      labelStyle: TextStyle(
+                        fontSize: 20,
+                        color: SourceColors.blue[2],
+                        height: 0.8,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(5),
+                        ),
+                        borderSide: new BorderSide(
+                          color: SourceColors.blue[6],
+                          width: 1.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 80,
+                  child: TextFormField(
+                    controller: _passwordController,
+                    cursorColor: SourceColors.blue[2],
+                    enableInteractiveSelection : true,
+                    keyboardType : TextInputType.visiblePassword,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Inform the password to selected repository';
+                      }
+
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      fillColor: SourceColors.grey,
+                      focusColor: SourceColors.blue[3],
+                      contentPadding: EdgeInsets.all(16),
+                      labelText: 'Password',
+                      border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(5),
+                        ),
+                        borderSide: new BorderSide(
+                          color: SourceColors.blue[6],
+                          width: 1.0,
+                        ),
+                      ),
+                      hintStyle: TextStyle(
+                        color: SourceColors.blue[2],
+                        fontSize: 16,
+                      ),
+                      labelStyle: TextStyle(
+                        fontSize: 20,
+                        color: SourceColors.blue[2],
+                        height: 0.8,
+                      ),
+                    ),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: SourceColors.blue[2],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -262,20 +352,25 @@ class AddRemoteRepository {
       barrierDismissible: false,
     );
   }
-  void cloneRepository(Repository repository, void onClone(Repository repository), void onFailure()) async {
+  void cloneRepository(Repository repository, String username, String password, void onClone(Repository repository), void onFailure()) async {
+    Load.show();
+    repository.generateCredentials(username, password);
     GitOutput gitOutput = await _viewModel.clone(repository);
     if(gitOutput.isSuccess()) {
       onClone(repository);
     } else {
       onFailure();
     }
+    Load.hide();
   }
 
-  void validateRepository({void onValidate(Repository repository)}) async {
+  void validateRepository({void onValidate(Repository repository, String username, String password)}) async {
     _commandFailure = false;
     String name = _nameController.text;
     String workDirectory = _workDirController.text;
     String url = _urlController.text;
+    String username = _usernameController.text;
+    String password = _passwordController.text;
     Repository repository = Repository(name, workDirectory, url: url);
     _isNameEmpty = name.isEmpty;
     _isWorkDirEmpty = workDirectory.isEmpty;
@@ -283,7 +378,7 @@ class AddRemoteRepository {
 
     if(_isNameEmpty == false && _isWorkDirEmpty == false && _isUrlEmpty == false) {
       if(onValidate != null) {
-        onValidate(repository);
+        onValidate(repository, username, password);
       }
     }
     _formKey.currentState.validate();
