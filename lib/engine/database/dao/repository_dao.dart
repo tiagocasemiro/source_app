@@ -1,6 +1,7 @@
+import 'package:source_app/engine/database/database.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:sembast/sembast.dart';
-import '../database.dart';
+
 
 class RepositoryDao {
   static const String tableName = "git_repositories";
@@ -10,8 +11,8 @@ class RepositoryDao {
   final StoreRef _store = intMapStoreFactory.store(tableName);
 
   Future<bool> save(Repository repository) async {
-    bool exist = await _exist(repository);
-    if(!exist) {
+    bool existRepo = await exist(repository);
+    if(!existRepo) {
       final Database db = await getDatabase();
       Map<String, dynamic> repositoryMap = _toMap(repository);
       var saved =  await _store.add(db, repositoryMap);
@@ -23,8 +24,8 @@ class RepositoryDao {
   }
 
   Future<int> update(Repository repository) async {
-    bool exist = await _exist(repository);
-    if(exist) {
+    bool existRepo = await exist(repository);
+    if(existRepo) {
       var filter = Filter.equals(_workDirectory, repository.workDirectory);
       var finder = Finder(filter: filter);
       final Database db = await getDatabase();
@@ -82,7 +83,7 @@ class RepositoryDao {
     return repositories;
   }
 
-  Future<bool> _exist(Repository repository) async {
+  Future<bool> exist(Repository repository) async {
     final Database db = await getDatabase();
     var filter = Filter.equals(_workDirectory, repository.workDirectory);
     var finder = Finder(filter: filter);

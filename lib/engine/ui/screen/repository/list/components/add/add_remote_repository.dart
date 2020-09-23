@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:load/load.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/file_choose.dart';
 import 'package:source_app/engine/ui/screen/repository/list/list_repositories_viewmodel.dart';
+import 'package:source_app/engine/ui/widgets/application_load.dart';
+import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
 
 class AddRemoteRepository {
   final _nameController = TextEditingController();
@@ -16,7 +19,6 @@ class AddRemoteRepository {
   bool _isWorkDirEmpty = true;
   bool _isNameEmpty = true;
   bool _isUrlEmpty = true;
-  bool _commandFailure = false;
 
   final SelectRepositoryViewModel _selectRepositoryViewModel;
 
@@ -124,9 +126,6 @@ class AddRemoteRepository {
                       if (_isWorkDirEmpty) {
                         return 'Inform the work directory of repository';
                       }
-                      if(_commandFailure) {
-                        return 'Verify work directory';
-                      }
 
                       return null;
                     },                   
@@ -184,9 +183,6 @@ class AddRemoteRepository {
                       if (_isUrlEmpty) {
                         return 'Inform the url of repository';
                       }
-                      if(_commandFailure) {
-                        return 'Verify url, put credentials on url if need';
-                      }
 
                       return null;
                     },
@@ -231,6 +227,7 @@ class AddRemoteRepository {
                       if (value.isEmpty) {
                         return 'Inform your username to selected repository';
                       }
+
                       return null;
                     },
                     style: TextStyle(
@@ -329,23 +326,29 @@ class AddRemoteRepository {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alertDialog;
+        return LoadingProvider(
+            themeData: LoadingThemeData(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              animDuration: Duration(seconds: 1),
+              loadingBackgroundColor: SourceColors.grey[5],
+            ),
+            child: alertDialog
+        );
       },
       barrierDismissible: false,
     );
   }
-  void cloneRepository(Repository repository, String username, String password, {void onClone(Repository repository), void onFailure()}) async {
+  void cloneRepository(Repository repository, String username, String password, {void onClone(Repository repository), void onFailure(GitOutput gitOutput)}) async {
     repository.generateCredentials(username, password);
     GitOutput gitOutput = await _selectRepositoryViewModel.clone(repository);
     if(gitOutput != null && gitOutput.isSuccess()) {
       onClone(repository);
     } else {
-      onFailure();
+      onFailure(gitOutput);
     }
   }
 
   void validateAndSaveRepository(BuildContext context) async {
-    _commandFailure = false;
     String name = _nameController.text;
     String workDirectory = _workDirController.text;
     String url = _urlController.text;
@@ -355,22 +358,40 @@ class AddRemoteRepository {
     _isNameEmpty = name.isEmpty;
     _isWorkDirEmpty = workDirectory.isEmpty;
     _isUrlEmpty = url.isEmpty;
-
-    if(_isNameEmpty == false && _isWorkDirEmpty == false && _isUrlEmpty == false) {
-      cloneRepository(repository, username, password,
-        onClone: (repository) {
-          _selectRepositoryViewModel.save(repository).then((GitOutput gitOutput) {
-            if(gitOutput.isSuccess()) {
-              Navigator.of(context, rootNavigator: true).pop('dialog');
-            }
-          });
-        }, 
-        onFailure: () {
-          _commandFailure = true;
-          _formKey.currentState.validate();
-        }
-      );     
-    }
     _formKey.currentState.validate();
+    if(_isNameEmpty == false && _isWorkDirEmpty == false && _isUrlEmpty == false && username.isNotEmpty && password.isNotEmpty) {
+      Load.show();
+      String a = await Future.delayed(const Duration(seconds: 3), () => "1"); //todo
+      bool existRepositoryOnApp = await _selectRepositoryViewModel.existRepository(repository);
+      if (!existRepositoryOnApp) {
+        cloneRepository(repository, username, password,
+            onClone: (repository) {
+              _selectRepositoryViewModel.save(repository).then((
+                  GitOutput gitOutput) {
+                if (gitOutput.isSuccess()) {
+                  Navigator.of(context, rootNavigator: true).pop('dialog');
+                } else {
+                  String message = gitOutput.message;
+                  message = message.replaceAll(":" + password, "").replaceAll(password, "");
+                  GitOutputErrorAlert(context).displayAlert(message);
+                }
+                Load.hide();
+              }, onError: (e) => Load.hide());
+            },
+            onFailure: (GitOutput gitOutput) {
+              _formKey.currentState.validate();
+              if (gitOutput != null && gitOutput.message != null && gitOutput.message.isNotEmpty) {
+                String message = gitOutput.message;
+                message = message.replaceAll(":" + password, "").replaceAll(password, "");
+                GitOutputErrorAlert(context).displayAlert(message);
+              }
+              Load.hide();
+            }
+        );
+      } else {
+        GitOutputErrorAlert(context).displayAlert("This repository is already registered");
+        Load.hide();
+      }
+    }
   }
 }

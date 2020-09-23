@@ -185,7 +185,7 @@ class _RemoteBranchesState extends State<RemoteBranches> {
             Load.show();
             _dashboardViewModel.checkoutRemoteBranch(branch.name).then((GitOutput gitOutput) {
               if(gitOutput.isFailure()) {
-                GitOutputErrorAlert(context).displayAlert(gitOutput);
+                GitOutputErrorAlert(context).displayAlert(gitOutput.message);
               } else {
                 Notify(context).showSuccessWithMessage(gitOutput);
               }

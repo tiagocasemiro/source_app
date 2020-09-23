@@ -7,7 +7,7 @@ class GitOutputErrorAlert {
   final BuildContext context;
   GitOutputErrorAlert(this.context);
 
-  displayAlert(GitOutput gitOutput) {
+  displayAlert(String message) {
     Widget closeButton = RaisedButton(
       color: SourceColors.red,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -36,7 +36,7 @@ class GitOutputErrorAlert {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       content: Container(
         width: 650,
-        child: Text(gitOutput.message, style: GoogleFonts.roboto(
+        child: Text(message, style: GoogleFonts.roboto(
           fontWeight: FontWeight.w400,
           color: SourceColors.blue[2],
           fontSize: 16.0,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:load/load.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/file_choose.dart';
 import 'package:source_app/engine/ui/screen/repository/list/list_repositories_viewmodel.dart';
+import 'package:source_app/engine/ui/widgets/application_load.dart';
 
 class AddLocalRepository {
   final _nameController = TextEditingController();
@@ -191,7 +193,14 @@ class AddLocalRepository {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alertDialog;
+        return LoadingProvider(
+            themeData: LoadingThemeData(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              animDuration: Duration(seconds: 1),
+              loadingBackgroundColor: SourceColors.grey[5],
+            ),
+            child: alertDialog
+        );
       },
       barrierDismissible: false,
     );
@@ -206,13 +215,15 @@ class AddLocalRepository {
     _isWorkDirInvalid = false;
     _formKey.currentState.validate();
     if(_isNameEmpty == false && _isWorkDirEmpty == false && _isWorkDirInvalid == false) {
+      Load.show();
       GitOutput gitOutput = await _selectRepositoryViewModel.save(repository);
-      if(gitOutput.isSuccess()) {
+      if(gitOutput != null && gitOutput.isSuccess()) {
         Navigator.of(context, rootNavigator: true).pop('dialog');
       } else {
         _isWorkDirInvalid = true;
         _formKey.currentState.validate();
       }
+      Load.hide();
     }
   }
 }

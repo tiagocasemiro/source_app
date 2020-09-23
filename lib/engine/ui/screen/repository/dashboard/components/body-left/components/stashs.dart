@@ -143,7 +143,7 @@ class _StashState extends State<StashDashboard> {
             Load.show();
             _dashboardViewModel.apply(stash).then((GitOutput gitOutput) {
               if(gitOutput.isFailure()) {
-                GitOutputErrorAlert(context).displayAlert(gitOutput);
+                GitOutputErrorAlert(context).displayAlert(gitOutput.message);
               } else {
                 Notify(context).showSuccessWithMessage(gitOutput);
               }

@@ -14,7 +14,7 @@ class RepositoryUseCase {
       if(isSaved) {
         gitOutput.withObject(repository);
       } else {
-        gitOutput.failure();
+        gitOutput = GitOutput("This repository is already registered").failure();
       }
     }
 
@@ -29,6 +29,11 @@ class RepositoryUseCase {
 
     return false;
   }
+
+  Future<bool> existRepository(Repository repository) async {
+    return await RepositoryDao().exist(repository);
+  }
+
 
   Future<List<Repository>> allLocalRepository() async {
     List<Repository> repositories = await RepositoryDao().findAll();

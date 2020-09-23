@@ -17,7 +17,7 @@ class MenuPushButton extends StatelessWidget {
       Load.show();
       _headerViewModell.push().then((GitOutput gitOutput) {
         if(gitOutput.isFailure()) {
-          GitOutputErrorAlert(context).displayAlert(gitOutput);
+          GitOutputErrorAlert(context).displayAlert(gitOutput.message);
         } else {
           Notify(context).showSuccessWithMessage(gitOutput);
         }

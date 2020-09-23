@@ -144,7 +144,7 @@ class _TagsState extends State<TagsDashboard> {
             Load.show();
             _bodyLeftViewModel.checkoutTag(tag).then((GitOutput gitOutput) {
               if(gitOutput.isFailure()) {
-                GitOutputErrorAlert(context).displayAlert(gitOutput);
+                GitOutputErrorAlert(context).displayAlert(gitOutput.message);
               } else {
                 Notify(context).showSuccessWithMessage(gitOutput);
               }

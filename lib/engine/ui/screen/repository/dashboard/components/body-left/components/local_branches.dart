@@ -185,7 +185,7 @@ class _LocalBranchesState extends State<LocalBranches> {
               _dashboardViewModel.checkoutLocalBranch(branch.name).then((
                   GitOutput gitOutput) {
                 if (gitOutput.isFailure()) {
-                  GitOutputErrorAlert(context).displayAlert(gitOutput);
+                  GitOutputErrorAlert(context).displayAlert(gitOutput.message);
                 } else {
                   Notify(context).showSuccessWithMessage(gitOutput);
                 }

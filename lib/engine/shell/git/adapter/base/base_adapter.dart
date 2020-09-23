@@ -36,7 +36,7 @@ abstract class BaseAdapter {
 
       return ((transform != null)? transform(gitOutput) : gitOutput).success();
     } catch (e) {
-      return GitOutput(_terminalOutput.message).failure();
+      return GitOutput(removePassword(_terminalOutput.message)).failure();
     }
   }
 

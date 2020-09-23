@@ -34,6 +34,11 @@ class SelectRepositoryViewModel {
   Future<GitOutput> clone(Repository _repository) async {
     GitOutput gitOutput = await RepositoryUseCase().clone(_repository);
 
+    if(gitOutput.isSuccess()) {
+      _deleteController.add(null);
+      statusInput.add(_repository);
+    }
+
     return gitOutput;
   }
 
@@ -46,6 +51,10 @@ class SelectRepositoryViewModel {
     }
 
     return gitOutput;
+  }
+
+  Future<bool> existRepository(Repository repository) async {
+    return await RepositoryUseCase().existRepository(repository);
   }
 
   void dispose() {
