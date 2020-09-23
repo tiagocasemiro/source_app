@@ -85,7 +85,7 @@ class AuthenticationRepositoryAlert {
                       fillColor: SourceColors.grey,
                       focusColor: SourceColors.blue[3],
                       contentPadding: EdgeInsets.all(16),
-                      labelText: 'Username or email',
+                      labelText: 'Username',
                       hintStyle: TextStyle(
                         color: SourceColors.blue[2],
                         fontSize: 16,
