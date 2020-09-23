@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:load/load.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_view.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_viewmodel.dart';
+import 'package:source_app/engine/ui/widgets/application_load.dart';
 
 class AuthenticationRepositoryAlert {
   final _usernameController = TextEditingController();
@@ -119,7 +121,7 @@ class AuthenticationRepositoryAlert {
                         return 'Inform the password to selected repository';
                       }
                       if(_failureOnStartRepository) {
-                        return 'Falha ao tentar inciar repositório. Verifique todas as informações deste repositório';
+                        return 'Failed to attempt to start repository. Check username and password';
                       }
 
                       return null;
@@ -176,7 +178,13 @@ class AuthenticationRepositoryAlert {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alertDialog;
+        return LoadingProvider(
+          themeData: LoadingThemeData(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            animDuration: Duration(seconds: 1),
+            loadingBackgroundColor: SourceColors.grey[5],
+          ),
+          child: alertDialog);
       },
       barrierDismissible: false,
     );
@@ -187,6 +195,8 @@ class AuthenticationRepositoryAlert {
     String password = _passwordController.text;
     _failureOnStartRepository = false;
     if(_formKey.currentState.validate()) {
+      Load.show();
+      String a = await Future.delayed(const Duration(seconds: 3), () => "1"); //todo
       DashboardViewModel dashboardViewModel = DashboardViewModel();
       dashboardViewModel.initRepository(_repository, username, password).then((success) {
         if(success) {
@@ -196,7 +206,8 @@ class AuthenticationRepositoryAlert {
           _failureOnStartRepository = true;
           _formKey.currentState.validate();
         }
-      });
+        Load.hide();
+      }, onError: (e) => Load.hide());
     }
   }
 }
