@@ -361,7 +361,6 @@ class AddRemoteRepository {
     _formKey.currentState.validate();
     if(_isNameEmpty == false && _isWorkDirEmpty == false && _isUrlEmpty == false && username.isNotEmpty && password.isNotEmpty) {
       Load.show();
-      String a = await Future.delayed(const Duration(seconds: 3), () => "1"); //todo
       bool existRepositoryOnApp = await _selectRepositoryViewModel.existRepository(repository);
       if (!existRepositoryOnApp) {
         cloneRepository(repository, username, password,
