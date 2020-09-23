@@ -43,4 +43,18 @@ class Repository {
 
     return "";
   }
+
+  void generateCredentials(String username, String password) {
+    if(url != null && url.isNotEmpty) {
+      List<String> parts = url.split("//");
+      if(parts.length == 2) {
+        if(parts[1].contains("@")) {
+          List<String> identifier = parts[1].split("@");
+          credentials = parts[0].trim() + "//" + username + ":" + password + "@" + identifier[1].trim();
+        } else {
+          credentials =  parts[0].trim() + "//" + username + ":" + password + "@" + parts[1].trim();
+        }
+      }
+    }
+  }
 }
