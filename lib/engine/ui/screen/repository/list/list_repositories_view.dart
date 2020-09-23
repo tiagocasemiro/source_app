@@ -73,7 +73,6 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
                     child: StreamBuilder(
                       stream: _viewModel.deleteOutput,
                       builder: (_, __) {
-                        _viewModel.statusInput.add(null);
                         return ListRepositories(_viewModel);
                       }
                     ),

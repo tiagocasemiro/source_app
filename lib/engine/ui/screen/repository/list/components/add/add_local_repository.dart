@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
+import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/file_choose.dart';
 import 'package:source_app/engine/ui/screen/repository/list/list_repositories_viewmodel.dart';
+import 'package:source_app/engine/ui/widgets/application_load.dart';
+import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
 
 class AddLocalRepository {
   final _nameController = TextEditingController();
@@ -13,9 +16,9 @@ class AddLocalRepository {
   bool _isWorkDirEmpty = true;
   bool _isNameEmpty = true;
 
-  final SelectRepositoryViewModel _viewModel;
+  final SelectRepositoryViewModel _selectRepositoryViewModel;
 
-  AddLocalRepository(this._viewModel);
+  AddLocalRepository(this._selectRepositoryViewModel);
 
   displayAlert(BuildContext context) {
     Widget createButton = RaisedButton(
@@ -29,9 +32,7 @@ class AddLocalRepository {
         ),
       ),
       onPressed: () {
-        validateRepository(onValidate: (repository) {
-          saveRepository(context, repository);
-        });
+        validateAndSubmitRepository(context);
       },
     );
     Widget cancelButton = RaisedButton(
@@ -85,9 +86,6 @@ class AddLocalRepository {
                       fontSize: 20,
                       color: SourceColors.blue[2],
                     ),
-                    onChanged:(value) {
-                      validateRepository();
-                    },
                     decoration: InputDecoration(
                       fillColor: SourceColors.grey,
                       focusColor: SourceColors.blue[3],
@@ -125,13 +123,10 @@ class AddLocalRepository {
                         return 'Inform the work directory of repository';
                       }
                       if(_isWorkDirInvalid) {
-                        return 'Is not valid directory';
+                        return 'This directory is not valid or are in use';
                       }
 
                       return null;
-                    },
-                    onChanged:(value) {
-                      validateRepository();
                     },
                     decoration: InputDecoration(
                       fillColor: SourceColors.grey,
@@ -204,26 +199,28 @@ class AddLocalRepository {
     );
   }
 
-  void validateRepository({void onValidate(Repository repository)}) async {
+  void validateAndSubmitRepository(BuildContext context) async {
     String name = _nameController.text;
     String workDirectory = _workDirController.text;
     Repository repository = Repository(name, workDirectory);
     _isNameEmpty = name.isEmpty;
     _isWorkDirEmpty = workDirectory.isEmpty;
-    Repository repoValidate = await _viewModel.status(repository);
-
-    _isWorkDirInvalid = repoValidate.status.isEmpty;
-
-    if(_isNameEmpty == false && _isWorkDirEmpty == false && _isWorkDirInvalid == false) {
-      if(onValidate != null) {
-        onValidate(repository);
-      }
-    }
+    _isWorkDirInvalid = false;
+    Load.show();
     _formKey.currentState.validate();
-  }
+    if(_isNameEmpty == false && _isWorkDirEmpty == false && _isWorkDirInvalid == false) {
+      GitOutput gitOutput = await _selectRepositoryViewModel.save(repository);
+      if(gitOutput.isSuccess()) {
+        Navigator.of(context, rootNavigator: true).pop('dialog');
+      } else {
+        _isWorkDirInvalid = true;
+        _formKey.currentState.validate();
+      }
+      Load.hide();
+    } else {
+      Load.hide();
+    }
 
-  void saveRepository(BuildContext context, Repository repository) {
-    _viewModel.save(repository).then((_)
-    => Navigator.of(context, rootNavigator: true).pop('dialog'));
+
   }
 }

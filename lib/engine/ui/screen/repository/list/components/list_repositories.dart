@@ -4,15 +4,15 @@ import 'package:source_app/engine/ui/screen/repository/list/list_repositories_vi
 import 'item_list_repository.dart';
 
 class ListRepositories extends StatelessWidget {
-  final SelectRepositoryViewModel _viewModel;
+  final SelectRepositoryViewModel _selectRepositoryViewModel;
 
-  ListRepositories(this._viewModel);
+  ListRepositories(this._selectRepositoryViewModel);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Repository>>(
       initialData: [],
-      future: _viewModel.all(),
+      future: _selectRepositoryViewModel.all(),
       builder: (context, snapshot) {
         final List<Repository> repositories = snapshot.data != null? snapshot.data: List();
         return Visibility(
@@ -21,7 +21,7 @@ class ListRepositories extends StatelessWidget {
           child: ListView.builder(
               itemBuilder: (context, index) {
                 final Repository repository = repositories[index];
-                return RepositoryItem(repository, _viewModel);
+                return RepositoryItem(repository, _selectRepositoryViewModel);
               },
               itemCount: repositories.length,
             ),

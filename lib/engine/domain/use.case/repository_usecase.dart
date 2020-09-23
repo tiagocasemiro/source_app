@@ -13,6 +13,8 @@ class RepositoryUseCase {
       bool isSaved = await RepositoryDao().save(repository);
       if(isSaved) {
         gitOutput.withObject(repository);
+      } else {
+        gitOutput.failure();
       }
     }
 

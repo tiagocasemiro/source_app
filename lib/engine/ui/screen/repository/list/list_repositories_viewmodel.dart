@@ -37,18 +37,15 @@ class SelectRepositoryViewModel {
     return gitOutput;
   }
 
-  Future<bool> save(Repository repository) async {
-    if(repository == null)
-      return false;
-
+  Future<GitOutput> save(Repository repository) async {
     GitOutput gitOutput = await RepositoryUseCase().addLocalRepository(repository);
 
     if(gitOutput.isSuccess()) {
-      deleteInput.add(null);
+      _deleteController.add(null);
       statusInput.add(repository);
     }
 
-    return gitOutput.isSuccess();
+    return gitOutput;
   }
 
   void dispose() {
@@ -60,6 +57,12 @@ class SelectRepositoryViewModel {
     if(repository == null)
       return false;
 
-    return RepositoryUseCase().deleteLocalRepository(repository);
+    bool isDeleted = await RepositoryUseCase().deleteLocalRepository(repository);
+
+    if(isDeleted) {
+      statusInput.add(null);
+    }
+
+    return isDeleted;
   }
 }
