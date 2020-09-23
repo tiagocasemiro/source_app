@@ -5,7 +5,6 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/file_choose.dart';
 import 'package:source_app/engine/ui/screen/repository/list/list_repositories_viewmodel.dart';
-import 'package:source_app/engine/ui/widgets/application_load.dart';
 
 class AddRemoteRepository {
   final _nameController = TextEditingController();
@@ -19,9 +18,9 @@ class AddRemoteRepository {
   bool _isUrlEmpty = true;
   bool _commandFailure = false;
 
-  final SelectRepositoryViewModel _viewModel;
+  final SelectRepositoryViewModel _selectRepositoryViewModel;
 
-  AddRemoteRepository(this._viewModel);
+  AddRemoteRepository(this._selectRepositoryViewModel);
 
   displayAlert(BuildContext context) {
     Widget cloneButton = RaisedButton(
@@ -35,15 +34,7 @@ class AddRemoteRepository {
         ),
       ),
       onPressed: () {
-        validateRepository(onValidate: (repository, username, password) {
-          cloneRepository(repository, username, password, (repository) {
-            saveRepository(context, repository);
-          },
-          () {
-            _commandFailure = true;
-            _formKey.currentState.validate();
-          });
-        });
+        validateAndSaveRepository(context);
       },
     );
     Widget cancelButton = RaisedButton(
@@ -96,10 +87,7 @@ class AddRemoteRepository {
                     style: TextStyle(
                       fontSize: 20,
                       color: SourceColors.blue[2],
-                    ),
-                    onChanged:(value) {
-                      validateRepository();
-                    },
+                    ),                   
                     decoration: InputDecoration(
                       fillColor: SourceColors.grey,
                       focusColor: SourceColors.blue[3],
@@ -141,10 +129,7 @@ class AddRemoteRepository {
                       }
 
                       return null;
-                    },
-                    onChanged:(value) {
-                      validateRepository();
-                    },
+                    },                   
                     decoration: InputDecoration(
                       fillColor: SourceColors.grey,
                       focusColor: SourceColors.blue[3],
@@ -208,10 +193,7 @@ class AddRemoteRepository {
                     style: TextStyle(
                       fontSize: 20,
                       color: SourceColors.blue[2],
-                    ),
-                    onChanged:(value) {
-                      validateRepository();
-                    },
+                    ),                    
                     decoration: InputDecoration(
                       fillColor: SourceColors.grey,
                       focusColor: SourceColors.blue[3],
@@ -352,19 +334,17 @@ class AddRemoteRepository {
       barrierDismissible: false,
     );
   }
-  void cloneRepository(Repository repository, String username, String password, void onClone(Repository repository), void onFailure()) async {
-    Load.show();
+  void cloneRepository(Repository repository, String username, String password, {void onClone(Repository repository), void onFailure()}) async {
     repository.generateCredentials(username, password);
-    GitOutput gitOutput = await _viewModel.clone(repository);
-    if(gitOutput.isSuccess()) {
+    GitOutput gitOutput = await _selectRepositoryViewModel.clone(repository);
+    if(gitOutput != null && gitOutput.isSuccess()) {
       onClone(repository);
     } else {
       onFailure();
     }
-    Load.hide();
   }
 
-  void validateRepository({void onValidate(Repository repository, String username, String password)}) async {
+  void validateAndSaveRepository(BuildContext context) async {
     _commandFailure = false;
     String name = _nameController.text;
     String workDirectory = _workDirController.text;
@@ -377,15 +357,20 @@ class AddRemoteRepository {
     _isUrlEmpty = url.isEmpty;
 
     if(_isNameEmpty == false && _isWorkDirEmpty == false && _isUrlEmpty == false) {
-      if(onValidate != null) {
-        onValidate(repository, username, password);
-      }
+      cloneRepository(repository, username, password,
+        onClone: (repository) {
+          _selectRepositoryViewModel.save(repository).then((GitOutput gitOutput) {
+            if(gitOutput.isSuccess()) {
+              Navigator.of(context, rootNavigator: true).pop('dialog');
+            }
+          });
+        }, 
+        onFailure: () {
+          _commandFailure = true;
+          _formKey.currentState.validate();
+        }
+      );     
     }
     _formKey.currentState.validate();
-  }
-
-  void saveRepository(BuildContext context, Repository repository) {
-    _viewModel.save(repository).then((_)
-    => Navigator.of(context, rootNavigator: true).pop('dialog'));
   }
 }

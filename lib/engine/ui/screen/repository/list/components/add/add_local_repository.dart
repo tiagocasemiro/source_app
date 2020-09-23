@@ -5,8 +5,6 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/file_choose.dart';
 import 'package:source_app/engine/ui/screen/repository/list/list_repositories_viewmodel.dart';
-import 'package:source_app/engine/ui/widgets/application_load.dart';
-import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
 
 class AddLocalRepository {
   final _nameController = TextEditingController();
@@ -206,7 +204,6 @@ class AddLocalRepository {
     _isNameEmpty = name.isEmpty;
     _isWorkDirEmpty = workDirectory.isEmpty;
     _isWorkDirInvalid = false;
-    Load.show();
     _formKey.currentState.validate();
     if(_isNameEmpty == false && _isWorkDirEmpty == false && _isWorkDirInvalid == false) {
       GitOutput gitOutput = await _selectRepositoryViewModel.save(repository);
@@ -216,11 +213,6 @@ class AddLocalRepository {
         _isWorkDirInvalid = true;
         _formKey.currentState.validate();
       }
-      Load.hide();
-    } else {
-      Load.hide();
     }
-
-
   }
 }
