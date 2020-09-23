@@ -14,7 +14,7 @@ class Terminal {
       String stdout = processResult.stdout.toString();
       String message = (stdout != null && stdout.isNotEmpty)? stdout : stderr;
 
-      //_printOutput(message, processResult.exitCode.toString(), command, parameters: parameters);
+      _printOutput(message, processResult.exitCode.toString(), command, parameters: parameters);
 
       return TerminalOutput(message, processResult.exitCode);
     });

@@ -21,7 +21,6 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
   @override
   Widget build(BuildContext context) {
     var childButtons = List<UnicornButton>();
-
     childButtons.add(UnicornButton(
         hasLabel: true,
         labelText: "Remote",
@@ -34,7 +33,6 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
             AddRemoteRepository(_viewModel).displayAlert(context);
           },
         )));
-
     childButtons.add(UnicornButton(
         hasLabel: true,
         labelText: "Local",
@@ -47,7 +45,6 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
             AddLocalRepository(_viewModel).displayAlert(context);
           },
         )));
-
 
     return Scaffold(
       backgroundColor: SourceColors.white,

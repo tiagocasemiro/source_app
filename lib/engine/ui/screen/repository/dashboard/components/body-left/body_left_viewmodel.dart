@@ -1,10 +1,10 @@
-import 'dart:async';
 import 'package:source_app/engine/domain/model/git_stash.dart';
 import 'package:source_app/engine/domain/model/git_tag.dart';
 import 'package:source_app/engine/domain/use.case/branches_usecase.dart';
 import 'package:source_app/engine/domain/use.case/stashes_usecase.dart';
 import 'package:source_app/engine/domain/use.case/tags_usecase.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
+import 'dart:async';
 
 class BodyLeftViewModel {
   final StreamController<bool> _localBranchesController = StreamController<bool>.broadcast();
@@ -16,7 +16,6 @@ class BodyLeftViewModel {
 
   Future<GitOutput> localBranches() async {
     GitOutput gitOutput = await BranchesUseCase().local();
-
 
     return gitOutput;
   }

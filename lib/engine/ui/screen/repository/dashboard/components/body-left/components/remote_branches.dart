@@ -27,7 +27,6 @@ class _RemoteBranchesState extends State<RemoteBranches> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
-    print("load remote branches");
     return Theme(
       data: theme,
       isMaterialAppTheme: true,
