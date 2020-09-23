@@ -23,10 +23,15 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoadingProvider(
+      themeData: LoadingThemeData(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        animDuration: Duration(seconds: 1),
+        loadingBackgroundColor: SourceColors.grey[5],
+      ),
       child: Scaffold(
         body: Container(
           padding: const EdgeInsets.all(defaultPaddingSize),
-          color: SourceColors.grey[610],
+          color: SourceColors.grey[6],
           child: Column(
             children: [
               LayoutBuilder( builder: (context, BoxConstraints constraints) {
@@ -57,7 +62,7 @@ class Dashboard extends StatelessWidget {
                   ratio: _leftRation,
                   left: Container(
                     height: double.maxFinite,
-                    padding: const EdgeInsets.only(left: defaultPaddingSize, top: defaultPaddingSize),
+                    margin: const EdgeInsets.only(left: defaultPaddingSize, top: defaultPaddingSize),
                     child:  BodyLeftDashboard(_bodyLeftViewModel),
                   ),
                   right: Container(

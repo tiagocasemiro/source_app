@@ -1,12 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'engine/ui/source_resources.dart';
 import 'engine/ui/screen/repository/list/list_repositories_view.dart';
-
-import 'dart:io';
 import 'dart:convert';
 
 void shell() async {
@@ -26,7 +22,6 @@ void shell() async {
     print(exitCode);
   });
 }
-
 
 void main() {
   runApp(MainWidget(SelectRepositoryView()));
@@ -80,7 +75,7 @@ class MainWidget extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: SourceColors.grey[4],
-          accentColor: SourceColors.blue,
+          accentColor: SourceColors.blue[2],
           fontFamily: 'Roboto',
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
@@ -89,20 +84,17 @@ class MainWidget extends StatelessWidget {
   }
 }
 
-
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => new _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   Vehicle veicle =new Vehicle(
-      'Branch local',
-      ['RECHARGE-024', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099'],
-      Icons.call_merge,
-    );
-
+    'Branch local',
+    ['RECHARGE-024', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099', 'RECHARGE-084', 'RECHARGE-075', 'RECHARGE-099'],
+    Icons.call_merge,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -150,5 +142,3 @@ class Vehicle {
 
   Vehicle(this.title, this.contents, this.icon);
 }
-
-
