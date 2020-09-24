@@ -1,3 +1,8 @@
+import 'package:source_app/engine/shell/git/git.dart';
+import 'package:source_app/engine/shell/git/model/git_output.dart';
+
 class PullUseCase {
-  void pull() {}
+  Future<GitOutput> pull() async {
+    return await Git().pull().call();
+  }
 }
