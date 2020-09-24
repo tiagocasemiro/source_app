@@ -1,5 +1,6 @@
 import 'package:source_app/engine/domain/model/git_remote.dart';
 import 'package:source_app/engine/shell/git/adapter/remote_adapter.dart';
+import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
@@ -25,22 +26,13 @@ class Remote extends BaseGitCommand {
     return this;
   }
 
-  Remote showWithCredentials(GitRemote gitRemote, String username, String password) {
+  Remote showWithCredentials(GitRemote gitRemote) {
     parameters.add('show');
-    parameters.add(gitRemote.urlWithCredentials(username, password));
+    parameters.add(Git.credentials());
     _variant = _Variant.show;
 
     return this;
   }
-
-  Remote addUrlWithCredentiasl(GitRemote gitRemote, String username, String password) {
-    parameters.add('add');
-    parameters.add(gitRemote.name);
-    parameters.add(gitRemote.urlWithCredentials(username, password));
-
-    return this;
-  }
-
 
   @override
   Future<GitOutput> call() async {

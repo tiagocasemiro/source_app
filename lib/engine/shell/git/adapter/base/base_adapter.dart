@@ -23,7 +23,6 @@ abstract class BaseAdapter {
 
   GitOutput execute({GitOutput transform(GitOutput gitOutput)}) {
     try {
-
       var gitOutput = GitOutput(removePassword(_terminalOutput.message));
       if (_terminalOutput.isFailure()) {
         return gitOutput.failure();
@@ -43,7 +42,7 @@ abstract class BaseAdapter {
   String removePassword(String message) {
     if(message != null && message.isNotEmpty && message.contains(Git.credentials())) {
       String credentials = Git.credentials();
-      String privateCredentials = Git.privateCredentials();
+      String privateCredentials = Git.url();
       message =  message.replaceAll(credentials, privateCredentials);
     }
 

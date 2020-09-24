@@ -40,6 +40,9 @@ void main() {
   //Git().log().graph().pretty(Log.historyFormat).call().then((branches) => print(branches));
   //Git().restore().files(['cument_5.txt']).call();
 
+  //credenciais
+  //https://stackoverflow.com/questions/35942754/how-to-save-username-and-password-in-git-gitextension
+
   //context menu
   //https://pub.dev/packages/bot_toast
 

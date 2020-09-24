@@ -13,10 +13,6 @@ class SelectRepositoryViewModel {
   Sink<Repository> get statusInput => _statusController.sink;
   Stream<Repository> get statusOutput => _statusController.stream.asyncMap((repository) => status(repository));
 
-  Future<bool> hasCredential(Repository _repository) async {
-    return await StartApplicationUseCase().checkCredentials(_repository.workDirectory);
-  }
-
   Future<bool> startGitApplication(Repository repository) async {
     return await StartApplicationUseCase().startGitApplication(repository);
   }

@@ -4,18 +4,14 @@ import 'package:source_app/engine/domain/use.case/start_application_usecase.dart
 import 'dart:async';
 
 class DashboardViewModel {
-  Future<bool> initRepository(Repository repository, String username, String password) async {
+  Future<bool> initRepository(Repository repository) async {
     StartApplicationUseCase startApplicationUseCase = StartApplicationUseCase();
-    String credentials = await startApplicationUseCase.startGitApplicationWithCredentials(repository.workDirectory, username, password);
+    String credentials = await startApplicationUseCase.startGitApplicationWithCredentials(repository);
     if(credentials != null) {
       repository.credentials = credentials;
       return await RepositoryUseCase().updateLocalRepository(repository);
     }
 
     return false;
-  }
-
-  Future<bool> checkCredentials(Repository repository) async {
-    return await StartApplicationUseCase().checkCredentials(repository.workDirectory);
   }
 }

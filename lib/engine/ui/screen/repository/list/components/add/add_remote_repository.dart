@@ -338,8 +338,8 @@ class AddRemoteRepository {
       barrierDismissible: false,
     );
   }
-  void cloneRepository(Repository repository, String username, String password, {void onClone(Repository repository), void onFailure(GitOutput gitOutput)}) async {
-    repository.generateCredentials(username, password);
+  void cloneRepository(Repository repository, {void onClone(Repository repository), void onFailure(GitOutput gitOutput)}) async {
+    repository.generateCredentials();
     GitOutput gitOutput = await _selectRepositoryViewModel.clone(repository);
     if(gitOutput != null && gitOutput.isSuccess()) {
       onClone(repository);
@@ -355,6 +355,8 @@ class AddRemoteRepository {
     String username = _usernameController.text;
     String password = _passwordController.text;
     Repository repository = Repository(name, workDirectory, url: url);
+    repository.username = username;
+    repository.password = password;
     _isNameEmpty = name.isEmpty;
     _isWorkDirEmpty = workDirectory.isEmpty;
     _isUrlEmpty = url.isEmpty;
@@ -363,7 +365,7 @@ class AddRemoteRepository {
       Load.show();
       bool existRepositoryOnApp = await _selectRepositoryViewModel.existRepository(repository);
       if (!existRepositoryOnApp) {
-        cloneRepository(repository, username, password,
+        cloneRepository(repository,
             onClone: (repository) {
               _selectRepositoryViewModel.save(repository).then((
                   GitOutput gitOutput) {

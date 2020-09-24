@@ -3,8 +3,11 @@ class Repository {
   String name;
   String workDirectory;
   String status;
-  String url;
-  String credentials;
+  String url = "";
+  String credentials = "";
+  String username = "";
+  String password = "";
+  String origin = "origin";
 
   Repository(this.name, this.workDirectory, {this.url});
 
@@ -44,8 +47,8 @@ class Repository {
     return "";
   }
 
-  void generateCredentials(String username, String password) {
-    if(url != null && url.isNotEmpty) {
+  void generateCredentials() {
+    if(url != null && url.isNotEmpty && username != null && username.isNotEmpty && password != null && password.isNotEmpty) {
       List<String> parts = url.split("//");
       if(parts.length == 2) {
         if(parts[1].contains("@")) {

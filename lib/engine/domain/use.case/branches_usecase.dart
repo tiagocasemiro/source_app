@@ -27,7 +27,7 @@ class BranchesUseCase {
   }
 
   Future<GitOutput> checkoutRemoteBranch(String branchName) async {
-    String repository = Git.repository();
+    String repository = Git.origin();
 
     return Git().checkout().remoteBranch(branchName.replaceAll("$repository/", ""), branchName).call();
   }

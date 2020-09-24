@@ -198,7 +198,9 @@ class AuthenticationRepositoryAlert {
       Load.show();
       String a = await Future.delayed(const Duration(seconds: 3), () => "1"); //todo
       DashboardViewModel dashboardViewModel = DashboardViewModel();
-      dashboardViewModel.initRepository(_repository, username, password).then((success) {
+      _repository.username = username;
+      _repository.password = password;
+      dashboardViewModel.initRepository(_repository).then((success) {
         if(success) {
           Navigator.of(context, rootNavigator: true).pop('dialog');
           Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard()));
