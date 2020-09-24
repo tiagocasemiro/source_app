@@ -11,11 +11,17 @@ class Remote extends BaseGitCommand {
     parameters.add('remote');
   }
 
-  Remote show(String origin) {
+  Remote showFrom(String origin) {
     parameters.add('show');
     parameters.add(origin);
     _variant = _Variant.show;
 
+    return this;
+  }
+
+  Remote show() {
+    parameters.add('show'); 
+  
     return this;
   }
 
@@ -26,6 +32,15 @@ class Remote extends BaseGitCommand {
 
     return this;
   }
+
+  Remote addUrlWithCredentiasl(GitRemote gitRemote, String username, String password) {
+    parameters.add('add');
+    parameters.add(gitRemote.name);
+    parameters.add(gitRemote.urlWithCredentials(username, password));
+
+    return this;
+  }
+
 
   @override
   Future<GitOutput> call() async {

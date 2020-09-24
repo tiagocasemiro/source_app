@@ -29,16 +29,25 @@ class Git {
     _workDirectory = workDirectory;
     await config().store().call();
     GitOutput gitOutputRemote = await config().url().call();
-    _credentials = (gitOutputRemote.object as GitRemote).urlWithCredentials(username, password);
-    _privateCredentials = (gitOutputRemote.object as GitRemote).url;
-    remote().showWithCredentials(gitOutputRemote.object, username, password).call().then((GitOutput gitOutput) {
-      if(gitOutput.isSuccess()) {
-        _repository = (gitOutput.object as GitRemote).name;
-        _completer.complete(_credentials);
+
+    if(gitOutputRemote.isSuccess()) {
+      _credentials = (gitOutputRemote.object as GitRemote).urlWithCredentials(username, password);
+      _privateCredentials = (gitOutputRemote.object as GitRemote).url;
+      GitOutput gitOutputAddCredentials = await remote().showWithCredentials(gitOutputRemote.object, username, password).call();
+      if(gitOutputAddCredentials.isSuccess()) {
+        GitOutput gitOutputShow = await remote().show().call();
+        if(gitOutputShow.isSuccess()) {
+          _repository = (gitOutputShow.object as GitRemote).name;
+          _completer.complete(_credentials);
+        } else {
+          _completer.complete(null);
+        }
       } else {
         _completer.complete(null);
       }
-    }, onError: (e) => _completer.complete(null));
+    } else {
+      _completer.complete(null);
+    }
 
     return _completer.future;
   }

@@ -18,7 +18,7 @@ class StartApplicationUseCase {
     GitOutput gitOutput = await remoteCommand.call();
     if(gitOutput.isSuccess()) {
       GitRemote gitRemote = gitOutput.object as GitRemote;
-      gitOutput = await remoteCommand.show(gitRemote.name).call();
+      gitOutput = await remoteCommand.showFrom(gitRemote.name).call();
 
       return gitOutput.isSuccess();
     }
