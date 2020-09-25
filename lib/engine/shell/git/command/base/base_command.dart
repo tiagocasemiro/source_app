@@ -1,21 +1,28 @@
+import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/shell/model/terminal_output.dart';
 import '../../../terminal.dart';
 
 abstract class BaseGitCommand {
-  static const Map<String, String> _language = {'LANG':'en_GB'};
+  Map<String, String> _environmentVariable;
   static const String _git = 'git';
 
   final List<String> parameters = List();
   String _workDirectory;
 
-  BaseGitCommand(this._workDirectory);
+  BaseGitCommand(this._workDirectory, {String username, String password}) {
+    _environmentVariable = {
+      'LANG':'en_GB',
+      Git.gitRepoUsername: username,
+      Git.gitRepoPassword: password
+    };
+  }
 
   Future<TerminalOutput> execute({List<String> parameters = const []}) async {
     //_printCommand(parameters);
     try {
       TerminalOutput gitOutput = await Terminal(_workDirectory).run(
-          _git, parameters: parameters, environment: _language);
+          _git, parameters: parameters, environment: _environmentVariable);
 
       return gitOutput;
     } catch (e) {
