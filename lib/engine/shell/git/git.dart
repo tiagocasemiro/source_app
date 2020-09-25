@@ -1,12 +1,17 @@
-import 'dart:async';
+import 'dart:io' show File, FileMode, Platform, stdout;
+import 'package:path_provider/path_provider.dart';
 import 'package:source_app/engine/domain/model/git_remote.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
+import 'package:source_app/engine/shell/git/command/base/base_command.dart';
 import 'package:source_app/engine/shell/git/command/checkout.dart';
+import 'package:source_app/engine/shell/git/command/clone.dart';
 import 'package:source_app/engine/shell/git/command/config.dart';
 import 'package:source_app/engine/shell/git/command/pull.dart';
 import 'package:source_app/engine/shell/git/command/remote.dart';
 import 'package:source_app/engine/shell/git/command/restore.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
+import 'package:source_app/engine/shell/model/terminal_output.dart';
+import 'package:source_app/engine/shell/terminal.dart';
 import 'command/add.dart';
 import 'command/branch.dart';
 import 'command/commit.dart';
@@ -17,22 +22,24 @@ import 'command/push.dart';
 import 'command/stash.dart';
 import 'command/status.dart';
 import 'command/tag.dart';
+import 'dart:async';
 
 class Git {
-  static Repository _repository = Repository("", "");
+  static String gitRepoUsername = "GIT_REPO_USERNAME";
+  static String gitRepoPassword = "GIT_REPO_PASSWORD";
+  static Repository _repository;
 
   Future<String> startRepositoryWithCredentials(Repository repository) async {
     Completer<String> _completer = new Completer<String>();
-    _repository = repository;  
+    _repository = repository;
     await config().store().call();
     GitOutput gitOutputRemote = await config().url().call();
 
-    if(gitOutputRemote.isSuccess()) {      
+    if(gitOutputRemote.isSuccess()) {
       _repository.url = (gitOutputRemote.object as GitRemote).url;
-      _repository.generateCredentials();    
-
-      GitOutput gitOutputAddCredentials = await remote().showWithCredentials(gitOutputRemote.object).call();
-      if(gitOutputAddCredentials.isSuccess()) {
+      _repository.generateCredentials();
+      File file = await File(Platform.environment['HOME'] + '/.git-credentials').writeAsString("\n${_repository.credentials}",  mode: FileMode.writeOnlyAppend);
+      if(file != null) {
         GitOutput gitOutputShow = await remote().show().call();
         if(gitOutputShow.isSuccess()) {
           _repository.origin = (gitOutputShow.object as GitRemote).name;
@@ -49,13 +56,19 @@ class Git {
 
     return _completer.future;
   }
-  
+
   static String origin() {
-    return _repository.origin;  
+    if(_repository != null && _repository.origin != null)
+      return _repository.origin;
+
+    return "";
   }
 
   static String credentials() {
-    return _repository.credentials;
+    if(_repository != null && _repository.credentials != null)
+      return _repository.credentials;
+
+    return "";
   }
 
   static String url() {
@@ -65,10 +78,23 @@ class Git {
     return "";
   }
 
+  static String username() {
+    if(_repository != null && _repository.username != null)
+      return _repository.username;
+
+    return "";
+  }
+
+  static String password() {
+    if(_repository != null && _repository.password != null)
+      return _repository.password;
+
+    return "";
+  }
+
   Future<bool> startRepository(Repository repository) async {
     Completer<bool> _completer = new Completer<bool>();
     _repository = repository;
-    _repository.url = _repository.hidePasswordCredentials();
     remote().show().call().then((GitOutput remote) {
       if(remote.isSuccess()) {
         _repository.origin = (remote.object as GitRemote).name;
@@ -101,7 +127,7 @@ class Git {
   }
 
   Push push() {
-    return Push(_repository.workDirectory, _repository.origin);
+    return Push(_repository.workDirectory, username(), password());
   }
 
   Pull pull() {
@@ -138,6 +164,11 @@ class Git {
 
   Config config() {
     return Config(_repository.workDirectory);
+  }
+
+  Clone clone(Repository repository) {
+    _repository = repository;
+    return Clone(_repository.workDirectory);
   }
 
   Future<bool> isGitDirectory() async {
