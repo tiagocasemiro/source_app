@@ -1,12 +1,12 @@
 import 'package:source_app/engine/shell/git/adapter/push_adapter.dart';
+import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/shell/model/terminal_output.dart';
 import 'base/base_command.dart';
 
 class Push extends BaseGitCommand {
-  final String _origin;
- 
-  Push(workDirectory, this._origin) : super(workDirectory) {
+
+  Push(workDirectory, String username, String password) : super(workDirectory, username: username, password: password) {
     parameters.add('push');
   }
 
@@ -17,7 +17,7 @@ class Push extends BaseGitCommand {
   }
 
   Push delete(String branch) {
-    parameters.add(_origin);
+    parameters.add(Git.origin());
     parameters.add('--delete');
     parameters.add(branch);
 
@@ -25,7 +25,7 @@ class Push extends BaseGitCommand {
   }
 
   Push rename(String oldName, String newName) {
-    parameters.add(_origin);
+    parameters.add(Git.origin());
     parameters.add(oldName);
     parameters.add(newName);
 
@@ -34,7 +34,7 @@ class Push extends BaseGitCommand {
 
   Push branch(String name) {
     parameters.add('--set-upstream');
-    parameters.add(_origin);
+    parameters.add(Git.origin());
     parameters.add(name);
 
     return this;
