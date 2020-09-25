@@ -4,12 +4,12 @@ import 'dart:async';
 import 'package:source_app/engine/shell/model/terminal_output.dart';
 
 class Terminal {
-  final String _workDirectory;
+  final String _directory;
 
-  Terminal(this._workDirectory);
+  Terminal(this._directory);
 
   Future<TerminalOutput> run(String command, {List<String> parameters = const [], Map<String, String> environment}) {
-    return Process.run(command, parameters, workingDirectory: _workDirectory, environment: environment).then((processResult) {
+    return Process.run(command, parameters, workingDirectory: _directory, environment: environment).then((processResult) {
       String stderr = processResult.stderr.toString();
       String stdout = processResult.stdout.toString();
       String message = (stdout != null && stdout.isNotEmpty)? stdout : stderr;
@@ -21,7 +21,7 @@ class Terminal {
   }
 
   Future<TerminalOutput> runWithGitCredentials(String command, String username, String password, {List<String> parameters = const [], Map<String, String> environment}) async {
-    Process process = await Process.start(command, parameters, workingDirectory: _workDirectory, environment: environment, runInShell: true);
+    Process process = await Process.start(command, parameters, workingDirectory: _directory, environment: environment, runInShell: true);
     var _completer = new Completer<TerminalOutput>();
     var message = "";
     int exitCode = -1;
@@ -77,7 +77,7 @@ class Terminal {
       command += " $element";
     });
     print("Git command: " + command);
-    print("Directory: " + _workDirectory);
+    print("Directory: " + _directory);
     print("Message : " + message);
     print("Exit code : " + exitCode);
   }
