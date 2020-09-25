@@ -8,6 +8,9 @@ class RepositoryDao {
   final String _workDirectory = "workDirectory";
   final String _name = "name";
   final String _credentials = "credentials";
+  final String _username = "username";
+  final String _password = "username";
+  final String _url = "username";
   final StoreRef _store = intMapStoreFactory.store(tableName);
 
   Future<bool> save(Repository repository) async {
@@ -45,6 +48,9 @@ class RepositoryDao {
     records.forEach((item) {
       final Repository repository = Repository(item[_name],item[_workDirectory]);
       repository.credentials = item[_credentials];
+      repository.username = item[_username];
+      repository.password = item[_password];
+      repository.url = item[_url];
       repositories.add(repository);
     });
 
@@ -65,6 +71,9 @@ class RepositoryDao {
     repositoryMap[_name] = repository.name;
     repositoryMap[_workDirectory] = repository.workDirectory;
     repositoryMap[_credentials] = repository.credentials;
+    repositoryMap[_username] = repository.username;
+    repositoryMap[_password] = repository.password;
+    repositoryMap[_url] = repository.url;
 
     return repositoryMap;
   }
@@ -77,6 +86,9 @@ class RepositoryDao {
           map[_workDirectory]
       );
       repository.credentials = map[_credentials];
+      repository.username = map[_username];
+      repository.password = map[_password];
+      repository.url = map[_url];
       repositories.add(repository);
     }
 
