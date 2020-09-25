@@ -1,8 +1,7 @@
-import 'dart:io' show File, FileMode, Platform, stdout;
-import 'package:path_provider/path_provider.dart';
+import 'dart:io' show Platform;
+import 'package:source_app/engine/database/file/FileUtils.dart';
 import 'package:source_app/engine/domain/model/git_remote.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
-import 'package:source_app/engine/shell/git/command/base/base_command.dart';
 import 'package:source_app/engine/shell/git/command/checkout.dart';
 import 'package:source_app/engine/shell/git/command/clone.dart';
 import 'package:source_app/engine/shell/git/command/config.dart';
@@ -10,8 +9,6 @@ import 'package:source_app/engine/shell/git/command/pull.dart';
 import 'package:source_app/engine/shell/git/command/remote.dart';
 import 'package:source_app/engine/shell/git/command/restore.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
-import 'package:source_app/engine/shell/model/terminal_output.dart';
-import 'package:source_app/engine/shell/terminal.dart';
 import 'command/add.dart';
 import 'command/branch.dart';
 import 'command/commit.dart';
@@ -25,8 +22,6 @@ import 'command/tag.dart';
 import 'dart:async';
 
 class Git {
-  static String gitRepoUsername = "GIT_REPO_USERNAME";
-  static String gitRepoPassword = "GIT_REPO_PASSWORD";
   static Repository _repository;
 
   Future<String> startRepositoryWithCredentials(Repository repository) async {
@@ -38,8 +33,8 @@ class Git {
     if(gitOutputRemote.isSuccess()) {
       _repository.url = (gitOutputRemote.object as GitRemote).url;
       _repository.generateCredentials();
-      File file = await File(Platform.environment['HOME'] + '/.git-credentials').writeAsString("\n${_repository.credentials}",  mode: FileMode.writeOnlyAppend);
-      if(file != null) {
+      bool isAddedWithSuccess = await FileUtil(Platform.environment['HOME'] + '/.git-credentials').addLine(_repository.credentials);
+      if(isAddedWithSuccess) {
         GitOutput gitOutputShow = await remote().show().call();
         if(gitOutputShow.isSuccess()) {
           _repository.origin = (gitOutputShow.object as GitRemote).name;
@@ -127,7 +122,7 @@ class Git {
   }
 
   Push push() {
-    return Push(_repository.workDirectory, username(), password());
+    return Push(_repository.workDirectory);
   }
 
   Pull pull() {

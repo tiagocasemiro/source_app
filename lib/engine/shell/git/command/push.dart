@@ -6,7 +6,7 @@ import 'base/base_command.dart';
 
 class Push extends BaseGitCommand {
 
-  Push(workDirectory, String username, String password) : super(workDirectory, username: username, password: password) {
+  Push(workDirectory) : super(workDirectory) {
     parameters.add('push');
   }
 

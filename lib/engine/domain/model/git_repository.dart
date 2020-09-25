@@ -1,6 +1,4 @@
 
-import 'package:source_app/engine/shell/git/git.dart';
-
 class Repository {
   String name;
   String workDirectory;
@@ -34,14 +32,14 @@ class Repository {
   int get hashCode => name.hashCode ^ workDirectory.hashCode;
 
   void generateCredentials() {
-    if(url != null && url.isNotEmpty) {
+    if(url != null && url.isNotEmpty && password != null && password.isNotEmpty && username != null && username.isNotEmpty) {
       List<String> parts = url.split("//");
       if(parts.length == 2) {
         if(parts[1].contains("@")) {
           List<String> identifier = parts[1].split("@");
-          credentials = parts[0].trim() + "//\$" + Git.gitRepoUsername + ":\$" + Git.gitRepoPassword + "@" + identifier.last.split("/")[0].trim();
+          credentials = parts[0].trim() + "//" + username + ":" + password + "@" + identifier.last.split("/")[0].trim();
         } else {
-          credentials =  parts[0].trim() + "//\$" + Git.gitRepoUsername + ":\$" + Git.gitRepoPassword + "@" + parts[1].split("/")[0].trim();
+          credentials =  parts[0].trim() + "//" + username + ":" + password + "@" + parts[1].split("/")[0].trim();
         }
       }
     }
