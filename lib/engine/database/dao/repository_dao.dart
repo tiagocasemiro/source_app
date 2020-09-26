@@ -9,8 +9,8 @@ class RepositoryDao {
   final String _name = "name";
   final String _credentials = "credentials";
   final String _username = "username";
-  final String _password = "username";
-  final String _url = "username";
+  final String _password = "password";
+  final String _url = "url";
   final StoreRef _store = intMapStoreFactory.store(tableName);
 
   Future<bool> save(Repository repository) async {
