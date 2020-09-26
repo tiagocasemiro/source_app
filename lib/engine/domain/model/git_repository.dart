@@ -45,6 +45,22 @@ class Repository {
     }
   }
 
+  String urlWithCredentials() {
+    if(url != null && url.isNotEmpty && password != null && password.isNotEmpty && username != null && username.isNotEmpty) {
+      List<String> parts = url.split("//");
+      if(parts.length == 2) {
+        if(parts[1].contains("@")) {
+          List<String> identifier = parts[1].split("@");
+          return parts[0].trim() + "//" + username + ":" + password + "@" + identifier.last.trim();
+        } else {
+          return  parts[0].trim() + "//" + username + ":" + password + "@" + parts[1].trim();
+        }
+      }
+    }
+
+    return null;
+  }
+
   String serviceUrl() {
     if(url != null && url.isNotEmpty) {
       List<String> parts = url.split("//");
