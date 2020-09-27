@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
-import 'package:source_app/engine/domain/use.case/start_application_usecase.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/dashboard_view.dart';
