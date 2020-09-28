@@ -367,8 +367,7 @@ class AddRemoteRepository {
       if (!existRepositoryOnApp) {
         cloneRepository(repository,
             onClone: (repository) {
-              _selectRepositoryViewModel.save(repository).then((
-                  GitOutput gitOutput) {
+              _selectRepositoryViewModel.saveCredentialsAndRepo(repository).then((GitOutput gitOutput) {
                 if (gitOutput.isSuccess()) {
                   Navigator.of(context, rootNavigator: true).pop('dialog');
                 } else {
@@ -377,7 +376,9 @@ class AddRemoteRepository {
                   GitOutputErrorAlert(context).displayAlert(message);
                 }
                 Load.hide();
-              }, onError: (e) => Load.hide());
+              }, onError: (e) {
+                Load.hide();
+              });
             },
             onFailure: (GitOutput gitOutput) {
               _formKey.currentState.validate();

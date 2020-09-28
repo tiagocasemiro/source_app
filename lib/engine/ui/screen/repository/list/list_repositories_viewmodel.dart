@@ -38,6 +38,24 @@ class SelectRepositoryViewModel {
     return gitOutput;
   }
 
+  Future<GitOutput> saveCredentialsAndRepo(Repository repository) async {
+    bool isSave = await StartApplicationUseCase().saveCredentials(repository);
+    GitOutput gitOutput;
+
+    if(isSave) {
+      gitOutput = await RepositoryUseCase().addLocalRepository(repository);
+    } else {
+      gitOutput = GitOutput("Cloned repository. However, an error occurred while saving credentials for git.").failure();
+    }
+
+    if(gitOutput.isSuccess()) {
+      _deleteController.add(null);
+      statusInput.add(repository);
+    }
+
+    return gitOutput;
+  }
+
   Future<GitOutput> save(Repository repository) async {
     GitOutput gitOutput = await RepositoryUseCase().addLocalRepository(repository);
 
@@ -48,6 +66,7 @@ class SelectRepositoryViewModel {
 
     return gitOutput;
   }
+
 
   Future<bool> existRepository(Repository repository) async {
     return await RepositoryUseCase().existRepository(repository);
