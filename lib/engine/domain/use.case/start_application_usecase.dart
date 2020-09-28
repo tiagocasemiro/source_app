@@ -7,16 +7,18 @@ import 'dart:async';
 import 'dart:io';
 
 class StartApplicationUseCase {
+  String _unixHomeDirectory = 'HOME';
+  String _gitCredentialsFile = '/.git-credentials';
+
   Future<String> startGitApplicationWithCredentials(Repository repository) async {
     Completer<String> _completer = new Completer<String>();
     Git.repositoryCache = repository;
     await Git().config().store().call();
     GitOutput gitOutputRemote = await Git().config().url().call();
-
     if(gitOutputRemote.isSuccess()) {
       Git.repositoryCache.url = (gitOutputRemote.object as GitRemote).url;
       Git.repositoryCache.generateCredentials();
-      bool isAddedWithSuccess = await FileUtil(Platform.environment['HOME'] + '/.git-credentials').addLine(Git.repositoryCache.credentials);
+      bool isAddedWithSuccess = await FileUtil(Platform.environment[_unixHomeDirectory] + _gitCredentialsFile).addLine(Git.repositoryCache.credentials);
       if(isAddedWithSuccess) {
         GitOutput gitOutputShow = await Git().remote().show().call();
         if(gitOutputShow.isSuccess()) {
@@ -46,5 +48,12 @@ class StartApplicationUseCase {
     }, onError: (e) => _completer.complete(false));
 
     return _completer.future;
+  }
+
+  Future<bool> saveCredentials(Repository repository) async {
+    repository.generateCredentials();
+    bool isAddedWithSuccess = await FileUtil(Platform.environment[_unixHomeDirectory] + _gitCredentialsFile).addLine(repository.credentials);
+
+    return isAddedWithSuccess;
   }
 }

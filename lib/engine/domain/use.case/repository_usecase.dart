@@ -34,7 +34,6 @@ class RepositoryUseCase {
     return await RepositoryDao().exist(repository);
   }
 
-
   Future<List<Repository>> allLocalRepository() async {
     List<Repository> repositories = await RepositoryDao().findAll();
 
