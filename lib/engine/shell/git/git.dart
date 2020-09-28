@@ -22,148 +22,106 @@ import 'command/tag.dart';
 import 'dart:async';
 
 class Git {
-  static Repository _repository;
-
-  Future<String> startRepositoryWithCredentials(Repository repository) async {
-    Completer<String> _completer = new Completer<String>();
-    _repository = repository;
-    await config().store().call();
-    GitOutput gitOutputRemote = await config().url().call();
-
-    if(gitOutputRemote.isSuccess()) {
-      _repository.url = (gitOutputRemote.object as GitRemote).url;
-      _repository.generateCredentials();
-      bool isAddedWithSuccess = await FileUtil(Platform.environment['HOME'] + '/.git-credentials').addLine(_repository.credentials);
-      if(isAddedWithSuccess) {
-        GitOutput gitOutputShow = await remote().show().call();
-        if(gitOutputShow.isSuccess()) {
-          _repository.origin = (gitOutputShow.object as GitRemote).name;
-          _completer.complete(_repository.credentials);
-        } else {
-          _completer.complete(null);
-        }
-      } else {
-        _completer.complete(null);
-      }
-    } else {
-      _completer.complete(null);
-    }
-
-    return _completer.future;
-  }
+  static Repository repositoryCache;
 
   static String origin() {
-    if(_repository != null && _repository.origin != null)
-      return _repository.origin;
+    if(repositoryCache != null && repositoryCache.origin != null)
+      return repositoryCache.origin;
 
     return "";
   }
 
   static String credentials() {
-    if(_repository != null && _repository.credentials != null)
-      return _repository.credentials;
+    if(repositoryCache != null && repositoryCache.credentials != null)
+      return repositoryCache.credentials;
 
     return "";
   }
 
   static String url() {
-    if(_repository != null && _repository.url != null)
-      return _repository.url;
+    if(repositoryCache != null && repositoryCache.url != null)
+      return repositoryCache.url;
 
     return "";
   }
 
   static String username() {
-    if(_repository != null && _repository.username != null)
-      return _repository.username;
+    if(repositoryCache != null && repositoryCache.username != null)
+      return repositoryCache.username;
 
     return "";
   }
 
   static String password() {
-    if(_repository != null && _repository.password != null)
-      return _repository.password;
+    if(repositoryCache != null && repositoryCache.password != null)
+      return repositoryCache.password;
 
     return "";
   }
 
-  Future<bool> startRepository(Repository repository) async {
-    Completer<bool> _completer = new Completer<bool>();
-    _repository = repository;
-    remote().show().call().then((GitOutput remote) {
-      if(remote.isSuccess()) {
-        _repository.origin = (remote.object as GitRemote).name;
-      }
-      _completer.complete(remote.isSuccess());
-    }, onError: (e) => _completer.complete(false));
-
-    return _completer.future;
-  }
-
-
   Branch branch() {
-    return Branch(_repository.workDirectory);
+    return Branch(repositoryCache.workDirectory);
   }
 
   Tag tag() {
-    return Tag(_repository.workDirectory);
+    return Tag(repositoryCache.workDirectory);
   }
 
   Add add() {
-    return Add(_repository.workDirectory);
+    return Add(repositoryCache.workDirectory);
   }
 
   Fetch fetch() {
-    return Fetch(_repository.workDirectory);
+    return Fetch(repositoryCache.workDirectory);
   }
 
   Commit commit() {
-    return Commit(_repository.workDirectory);
+    return Commit(repositoryCache.workDirectory);
   }
 
   Push push() {
-    return Push(_repository.workDirectory);
+    return Push(repositoryCache.workDirectory);
   }
 
   Pull pull() {
-    return Pull(_repository.workDirectory);
+    return Pull(repositoryCache.workDirectory);
   }
 
   Merge merge() {
-    return Merge(_repository.workDirectory);
+    return Merge(repositoryCache.workDirectory);
   }
 
   Stash stash() {
-    return Stash(_repository.workDirectory);
+    return Stash(repositoryCache.workDirectory);
   }
 
   Checkout checkout() {
-    return Checkout(_repository.workDirectory);
+    return Checkout(repositoryCache.workDirectory);
   }
 
   Log log() {
-    return Log(_repository.workDirectory);
+    return Log(repositoryCache.workDirectory);
   }
 
   Status status() {
-    return Status(_repository.workDirectory);
+    return Status(repositoryCache.workDirectory);
   }
 
   Restore restore() {
-    return Restore(_repository.workDirectory);
+    return Restore(repositoryCache.workDirectory);
   }
 
   Remote remote() {
-    return Remote(_repository.workDirectory);
+    return Remote(repositoryCache.workDirectory);
   }
 
   Config config() {
-    return Config(_repository.workDirectory);
+    return Config(repositoryCache.workDirectory);
   }
 
   Clone clone(Repository repository) {
-    _repository = repository;
-    return Clone(_repository.workDirectory);
+    repositoryCache = repository;
+    return Clone(repositoryCache.workDirectory);
   }
 
   Future<bool> isGitDirectory() async {
