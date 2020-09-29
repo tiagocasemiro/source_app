@@ -14,11 +14,17 @@ import 'package:source_app/engine/ui/widgets/horizontal_split_view.dart';
 import 'package:source_app/engine/ui/widgets/vertical_split_view.dart';
 
 
+// ignore: must_be_immutable
 class Dashboard extends StatelessWidget {
   final double _leftRation = 0.25;
   final double _minLeftRation = 0.20;
-  final BodyLeftViewModel _bodyLeftViewModel = BodyLeftViewModel();
-  final HeaderViewModel _headerViewModel = HeaderViewModel();
+  BodyLeftViewModel _bodyLeftViewModel;
+  HeaderViewModel _headerViewModel;
+
+  Dashboard() {
+    _bodyLeftViewModel = BodyLeftViewModel();
+    _headerViewModel = HeaderViewModel(_bodyLeftViewModel);
+  }
 
   @override
   Widget build(BuildContext context) {
