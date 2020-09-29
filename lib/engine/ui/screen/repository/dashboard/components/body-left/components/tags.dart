@@ -143,12 +143,12 @@ class _TagsState extends State<TagsDashboard> {
           onDoubleTap: () {
             Load.show();
             _bodyLeftViewModel.checkoutTag(tag).then((GitOutput gitOutput) {
+              Load.hide();
               if(gitOutput.isFailure()) {
                 GitOutputErrorAlert(context).displayAlert(gitOutput.message);
               } else {
                 Notify(context).showSuccessWithMessage(gitOutput);
               }
-              Load.hide();
             }, onError: (e) => Load.hide());
           },
         ),

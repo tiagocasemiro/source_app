@@ -368,6 +368,7 @@ class AddRemoteRepository {
         cloneRepository(repository,
             onClone: (repository) {
               _selectRepositoryViewModel.saveCredentialsAndRepo(repository).then((GitOutput gitOutput) {
+                Load.hide();
                 if (gitOutput.isSuccess()) {
                   Navigator.of(context, rootNavigator: true).pop('dialog');
                 } else {
@@ -375,7 +376,6 @@ class AddRemoteRepository {
                   message = message.replaceAll(":" + password, "").replaceAll(password, "");
                   GitOutputErrorAlert(context).displayAlert(message);
                 }
-                Load.hide();
               }, onError: (e) {
                 Load.hide();
               });

@@ -182,14 +182,13 @@ class _LocalBranchesState extends State<LocalBranches> {
           onDoubleTap: () {
             if(!branch.current) {
               Load.show();
-              _dashboardViewModel.checkoutLocalBranch(branch.name).then((
-                  GitOutput gitOutput) {
+              _dashboardViewModel.checkoutLocalBranch(branch.name).then((GitOutput gitOutput) {
+                Load.hide();
                 if (gitOutput.isFailure()) {
                   GitOutputErrorAlert(context).displayAlert(gitOutput.message);
                 } else {
                   Notify(context).showSuccessWithMessage(gitOutput);
                 }
-                Load.hide();
               }, onError: (e) => Load.hide());
             } else {
               Notify(context).showWarning("The branch " + branch.name + ", is the current");

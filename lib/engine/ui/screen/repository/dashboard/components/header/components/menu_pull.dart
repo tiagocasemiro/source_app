@@ -16,12 +16,12 @@ class MenuPullButton extends StatelessWidget {
     return MenuButton("pull", "images/ic_menu_pull.svg", () {
       Load.show();
       _headerViewModel.pull().then((GitOutput gitOutput) {
+        Load.hide();
         if(gitOutput.isFailure()) {
           GitOutputErrorAlert(context).displayAlert(gitOutput.message);
         } else {
           Notify(context).showSuccessWithMessage(gitOutput);
         }
-        Load.hide();
       }, onError: (e) => Load.hide());
     });
   }

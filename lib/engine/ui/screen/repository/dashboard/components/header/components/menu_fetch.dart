@@ -16,12 +16,12 @@ class MenuFetchButton extends StatelessWidget {
     return MenuButton("fetch", "images/ic_menu_fetch.svg", (){
       Load.show();
       _headerViewModel.fetch().then((GitOutput gitOutput) {
+        Load.hide();
         if(gitOutput.isFailure()) {
           GitOutputErrorAlert(context).displayAlert(gitOutput.message);
         } else {
           Notify(context).showSuccessWithMessage(gitOutput);
         }
-        Load.hide();
       }, onError: (e) => Load.hide());
     });
   }

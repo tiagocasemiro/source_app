@@ -142,12 +142,12 @@ class _StashState extends State<StashDashboard> {
           onDoubleTap: () {
             Load.show();
             _dashboardViewModel.apply(stash).then((GitOutput gitOutput) {
+              Load.hide();
               if(gitOutput.isFailure()) {
                 GitOutputErrorAlert(context).displayAlert(gitOutput.message);
               } else {
                 Notify(context).showSuccessWithMessage(gitOutput);
               }
-              Load.hide();
             }, onError: (e) => Load.hide());
           },
         ),

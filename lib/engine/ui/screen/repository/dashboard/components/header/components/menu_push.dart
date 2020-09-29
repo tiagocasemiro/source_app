@@ -7,21 +7,21 @@ import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
 import 'package:source_app/engine/ui/widgets/notify.dart';
 
 class MenuPushButton extends StatelessWidget {
-  final HeaderViewModel _headerViewModell;
+  final HeaderViewModel _headerViewModel;
 
-  MenuPushButton(this._headerViewModell);
+  MenuPushButton(this._headerViewModel);
 
   @override
   Widget build(BuildContext context) {
     return MenuButton("push", "images/ic_menu_push.svg", () {
       Load.show();
-      _headerViewModell.push().then((GitOutput gitOutput) {
+      _headerViewModel.push().then((GitOutput gitOutput) {
+        Load.hide();
         if(gitOutput.isFailure()) {
           GitOutputErrorAlert(context).displayAlert(gitOutput.message);
         } else {
           Notify(context).showSuccessWithMessage(gitOutput);
         }
-        Load.hide();
       }, onError: (e) => Load.hide());
     });
   }
