@@ -1,3 +1,4 @@
+import 'package:source_app/engine/domain/use.case/branches_usecase.dart';
 import 'package:source_app/engine/domain/use.case/fetch_usecase.dart';
 import 'package:source_app/engine/domain/use.case/pull_usecase.dart';
 import 'package:source_app/engine/domain/use.case/push_usecase.dart';
@@ -19,6 +20,15 @@ class HeaderViewModel {
 
   Future<GitOutput> fetch() async {
     GitOutput gitOutput = await FetchUseCase().fetch();
+
+    if(gitOutput.isSuccess()) {
+      _bodyLeftViewModel.refreshLocalBranches();
+    }
+    return gitOutput;
+  }
+
+  Future<GitOutput> newBranch(String name) async {
+    GitOutput gitOutput = await BranchesUseCase().newBranch(name);
 
     if(gitOutput.isSuccess()) {
       _bodyLeftViewModel.refreshLocalBranches();
