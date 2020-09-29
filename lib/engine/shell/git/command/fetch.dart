@@ -14,6 +14,12 @@ class Fetch extends BaseGitCommand {
     return this;
   }
 
+  Fetch all() {
+    parameters.add("--all");
+
+    return this;
+  }
+
   @override
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
