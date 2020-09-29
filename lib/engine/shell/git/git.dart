@@ -1,6 +1,3 @@
-import 'dart:io' show Platform;
-import 'package:source_app/engine/database/file/FileUtils.dart';
-import 'package:source_app/engine/domain/model/git_remote.dart';
 import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/shell/git/command/checkout.dart';
 import 'package:source_app/engine/shell/git/command/clone.dart';
