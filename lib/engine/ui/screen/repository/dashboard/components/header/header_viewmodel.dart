@@ -35,4 +35,17 @@ class HeaderViewModel {
     }
     return gitOutput;
   }
+
+  Future<GitOutput> newBranchAndCheckout(String name) async {
+    GitOutput gitOutput = await BranchesUseCase().newBranch(name);
+
+    if(gitOutput.isSuccess()) {
+      gitOutput = await  BranchesUseCase().checkoutLocalBranch(name);
+    }
+
+    if(gitOutput.isSuccess()) {
+      _bodyLeftViewModel.refreshLocalBranches();
+    }
+    return gitOutput;
+  }
 }
