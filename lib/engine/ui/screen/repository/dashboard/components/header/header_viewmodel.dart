@@ -1,5 +1,6 @@
 import 'package:source_app/engine/domain/model/git_branch.dart';
 import 'package:source_app/engine/domain/use.case/branches_usecase.dart';
+import 'package:source_app/engine/domain/use.case/commit_usecase.dart';
 import 'package:source_app/engine/domain/use.case/fetch_usecase.dart';
 import 'package:source_app/engine/domain/use.case/pull_usecase.dart';
 import 'package:source_app/engine/domain/use.case/push_usecase.dart';
@@ -55,6 +56,14 @@ class HeaderViewModel {
     if(gitOutput.isSuccess()) {
       _bodyLeftViewModel.refreshLocalBranches();
     }
+    return gitOutput;
+  }
+
+  Future<GitOutput> uncommittedFiles() async {
+    GitOutput gitOutput = await CommitUseCase().uncommittedFiles();
+
+    gitOutput.failure();
+
     return gitOutput;
   }
 }

@@ -2,6 +2,7 @@ import 'package:source_app/engine/domain/model/git_repository.dart';
 import 'package:source_app/engine/shell/git/command/checkout.dart';
 import 'package:source_app/engine/shell/git/command/clone.dart';
 import 'package:source_app/engine/shell/git/command/config.dart';
+import 'package:source_app/engine/shell/git/command/diff.dart';
 import 'package:source_app/engine/shell/git/command/pull.dart';
 import 'package:source_app/engine/shell/git/command/remote.dart';
 import 'package:source_app/engine/shell/git/command/restore.dart';
@@ -114,6 +115,10 @@ class Git {
 
   Config config() {
     return Config(repositoryCache.workDirectory);
+  }
+
+  Diff diff() {
+    return Diff(repositoryCache.workDirectory);
   }
 
   Clone clone(Repository repository) {
