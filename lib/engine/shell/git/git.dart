@@ -3,6 +3,7 @@ import 'package:source_app/engine/shell/git/command/checkout.dart';
 import 'package:source_app/engine/shell/git/command/clone.dart';
 import 'package:source_app/engine/shell/git/command/config.dart';
 import 'package:source_app/engine/shell/git/command/diff.dart';
+import 'package:source_app/engine/shell/git/command/ls_files.dart';
 import 'package:source_app/engine/shell/git/command/pull.dart';
 import 'package:source_app/engine/shell/git/command/remote.dart';
 import 'package:source_app/engine/shell/git/command/restore.dart';
@@ -119,6 +120,10 @@ class Git {
 
   Diff diff() {
     return Diff(repositoryCache.workDirectory);
+  }
+
+  LsFiles lsFiles() {
+    return LsFiles(repositoryCache.workDirectory);
   }
 
   Clone clone(Repository repository) {

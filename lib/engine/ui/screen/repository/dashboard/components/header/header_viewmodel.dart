@@ -1,9 +1,14 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:source_app/engine/domain/model/git_branch.dart';
 import 'package:source_app/engine/domain/use.case/branches_usecase.dart';
 import 'package:source_app/engine/domain/use.case/commit_usecase.dart';
 import 'package:source_app/engine/domain/use.case/fetch_usecase.dart';
 import 'package:source_app/engine/domain/use.case/pull_usecase.dart';
 import 'package:source_app/engine/domain/use.case/push_usecase.dart';
+import 'package:source_app/engine/domain/use.case/stashes_usecase.dart';
+import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/body_left_viewmodel.dart';
 
@@ -60,10 +65,24 @@ class HeaderViewModel {
   }
 
   Future<GitOutput> uncommittedFiles() async {
-    GitOutput gitOutput = await CommitUseCase().uncommittedFiles();
-
-    gitOutput.failure();
+    GitOutput uncommited = await CommitUseCase().uncommittedFiles();
+    if(uncommited.isFailure()) {
+      return uncommited;
+    }
+    GitOutput untracked = await CommitUseCase().untrackedFiles();
+    if(untracked.isFailure()) {
+      return untracked;
+    }
+    GitOutput gitOutput = GitOutput("").success();
+    List<String> allFiles = List();
+    allFiles.addAll(uncommited.object as List<String>);
+    allFiles.addAll(untracked.object as List<String>);
+    gitOutput.withObject(allFiles);
 
     return gitOutput;
+  }
+
+  Future<GitOutput> createStash(String name, Set<String> selectedFiles) async {
+    return await StashesUseCase().create(name, selectedFiles);
   }
 }

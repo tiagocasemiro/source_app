@@ -11,4 +11,8 @@ class CommitUseCase {
   Future<GitOutput> uncommittedFiles() async {
     return Git().diff().nameOnly().call();
   }
+
+  Future<GitOutput> untrackedFiles() async {
+    return Git().lsFiles().others().excludeStandard().call();
+  }
 }
