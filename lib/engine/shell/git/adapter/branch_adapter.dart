@@ -36,7 +36,7 @@ class BranchAdapter extends BaseAdapter {
           orElse: () => null);
 
       return branch != null
-          ? gitOutput.withObject(GitBranch(clean(branch))).success()
+          ? gitOutput.withObject(GitBranch(clean(branch), current: true)).success()
           : gitOutput.failure();
     });
   }
