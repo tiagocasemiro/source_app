@@ -1,3 +1,4 @@
+import 'package:source_app/engine/domain/model/git_branch.dart';
 import 'package:source_app/engine/domain/use.case/branches_usecase.dart';
 import 'package:source_app/engine/domain/use.case/fetch_usecase.dart';
 import 'package:source_app/engine/domain/use.case/pull_usecase.dart';
@@ -11,7 +12,15 @@ class HeaderViewModel {
   HeaderViewModel(this._bodyLeftViewModel);
 
   Future<GitOutput> push() async {
-    return await PushUseCase().push();
+    GitOutput gitOutput = await BranchesUseCase().current();
+
+    if(gitOutput.isSuccess()) {
+      GitBranch gitBranch = gitOutput.object as GitBranch;
+
+      gitOutput = await PushUseCase().push(gitBranch.name);
+    }
+
+    return gitOutput;
   }
 
   Future<GitOutput> pull() async {
