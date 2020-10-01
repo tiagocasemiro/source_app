@@ -10,8 +10,15 @@ class BodyLeftViewModel {
   final StreamController<bool> _localBranchesController = StreamController<bool>.broadcast();
   Stream<bool> get localBranchesOutput => _localBranchesController.stream;
 
+  final StreamController<bool> _stashController = StreamController<bool>.broadcast();
+  Stream<bool> get stashOutput => _stashController.stream;
+
   void refreshLocalBranches() async {
     _localBranchesController.sink.add(true);
+  }
+
+  void refreshStash() async {
+    _stashController.sink.add(true);
   }
 
   Future<GitOutput> localBranches() async {
@@ -70,5 +77,6 @@ class BodyLeftViewModel {
 
   void dispose() {
     _localBranchesController.close();
+    _stashController.close();
   }
 }

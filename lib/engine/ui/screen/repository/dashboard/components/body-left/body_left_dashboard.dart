@@ -28,7 +28,12 @@ class BodyLeftDashboard extends StatelessWidget {
             Container(height: 10, width: double.maxFinite,),
             TagsDashboard(_dashboardViewModel),
             Container(height: 10, width: double.maxFinite,),
-            StashDashboard(_dashboardViewModel),
+            StreamBuilder(
+              stream: _dashboardViewModel.stashOutput,
+              builder: (_, __) {
+                return StashDashboard(_dashboardViewModel);
+              }
+            ),
             Container(height: 5, width: double.maxFinite,),
           ],
         ),

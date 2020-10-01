@@ -65,6 +65,12 @@ class HeaderViewModel {
   }
 
   Future<GitOutput> createStash(String name) async {
-    return await StashesUseCase().create(name);
+    GitOutput gitOutput = await StashesUseCase().create(name);
+
+    if(gitOutput.isSuccess()) {
+      _bodyLeftViewModel.refreshStash();
+    }
+
+    return gitOutput;
   }
 }
