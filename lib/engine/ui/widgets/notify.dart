@@ -5,7 +5,6 @@ import 'package:source_app/engine/ui/source_resources.dart';
 
 class Notify {
   BuildContext context;
-  Duration _duration = Duration(seconds: 2);
   final String _defaultMessage =  "Command successfully executed";
   static  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> _current;
 
@@ -36,6 +35,7 @@ class Notify {
   }
 
   SnackBar _buildWarningSnackBar(String message) {
+    Duration _duration = Duration(seconds: _calculateTimer(message));
     return SnackBar(
       duration: _duration,
       content: Container(
@@ -50,16 +50,42 @@ class Notify {
   }
 
   SnackBar _buildSuccessSnackBar(String message) {
+    Duration _duration = Duration(seconds: _calculateTimer(message));
     return SnackBar(
       duration: _duration,
       content: Container(
-        child: Text(message, style: GoogleFonts.roboto(
-          fontWeight: FontWeight.w500,
-          color: SourceColors.white,
-          fontSize: 18.0, ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Text(message, style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w500,
+                color: SourceColors.white,
+                fontSize: 18.0, ),
+              ),
+            ),
+            RaisedButton(
+              color: SourceColors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              child: Text("close",
+                style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.w600,
+                  color: SourceColors.green,
+                  fontSize: 18.0,
+                ),
+              ),
+              onPressed: () {
+                _current.close();
+              },
+            )
+          ],
         ),
       ),
       backgroundColor: SourceColors.green,
     );
+  }
+
+  int _calculateTimer(String message) {
+    return ((message.length / 30) + 1).toInt();
   }
 }
