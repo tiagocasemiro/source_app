@@ -64,25 +64,7 @@ class HeaderViewModel {
     return gitOutput;
   }
 
-  Future<GitOutput> uncommittedFiles() async {
-    GitOutput uncommited = await CommitUseCase().uncommittedFiles();
-    if(uncommited.isFailure()) {
-      return uncommited;
-    }
-    GitOutput untracked = await CommitUseCase().untrackedFiles();
-    if(untracked.isFailure()) {
-      return untracked;
-    }
-    GitOutput gitOutput = GitOutput("").success();
-    List<String> allFiles = List();
-    allFiles.addAll(uncommited.object as List<String>);
-    allFiles.addAll(untracked.object as List<String>);
-    gitOutput.withObject(allFiles);
-
-    return gitOutput;
-  }
-
-  Future<GitOutput> createStash(String name, Set<String> selectedFiles) async {
-    return await StashesUseCase().create(name, selectedFiles);
+  Future<GitOutput> createStash(String name) async {
+    return await StashesUseCase().create(name);
   }
 }

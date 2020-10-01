@@ -47,6 +47,12 @@ class Stash extends BaseGitCommand {
     return this;
   }
 
+  Stash untracked() {
+    parameters.add("--include-untracked");
+
+    return this;
+  }
+
   @override
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);

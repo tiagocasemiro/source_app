@@ -11,7 +11,7 @@ class StashesUseCase {
     return await Git().stash().apply(stash).call();
   }
 
-  Future<GitOutput> create(String name, Set<String> files)async {
-    return await GitOutput("");
+  Future<GitOutput> create(String name) async {
+    return await Git().stash().create(name).untracked().call();
   }
 }

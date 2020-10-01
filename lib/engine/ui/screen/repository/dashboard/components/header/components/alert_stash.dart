@@ -12,21 +12,11 @@ class CreateStashAlert {
   final _nameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final HeaderViewModel _headerViewModel;
-  Set<String> _selectedFiles = Set<String>();
   CreateStashAlert(this._headerViewModel);
 
   displayAlert(BuildContext context) {
-    Load.show();
-    _headerViewModel.uncommittedFiles().then((GitOutput gitOutput){
-      Load.hide();
-      if(gitOutput.isSuccess()) {
-        List<String> _files = gitOutput.object as List<String>;
-        Widget content = createContent(context, _files);
-        _display(context, content);
-      } else {
-        GitOutputErrorAlert(context).displayAlert(gitOutput.message);
-      }
-    });
+    Widget content = createContent(context);
+    _display(context, content);
   }
 
   void _display(BuildContext context, Widget content) {
@@ -45,7 +35,7 @@ class CreateStashAlert {
     );
   }
 
-  Widget  createContent(BuildContext context, List<String> _files) {
+  Widget  createContent(BuildContext context) {
     Widget createButton = RaisedButton(
       color: SourceColors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -87,8 +77,8 @@ class CreateStashAlert {
           actionsPadding: const EdgeInsets.all(16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           content: Container(
-            width: 750,
-            height: 350,
+            width: 550,
+            height: 100,
             child: Form(
               key: _formKey,
               child: Container(
@@ -138,35 +128,6 @@ class CreateStashAlert {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          final String file = _files[index];
-                          return CheckboxListTile(
-                            title: Text(file,
-                              style: GoogleFonts.roboto(
-                                fontWeight: FontWeight.w400,
-                                color: SourceColors.blue[2],
-                                fontSize: 16.0,
-                              ),
-                            ),
-                            value: _selectedFiles.contains(file),
-                            onChanged: (newValue) {
-                              setState(() {
-                                if(newValue) {
-                                  _selectedFiles.add(file);
-                                } else {
-                                  _selectedFiles.remove(file);
-                                }
-                              });
-                            },
-                            controlAffinity: ListTileControlAffinity.platform,
-                            contentPadding: EdgeInsets.only(right: 8, left: 16),
-                          );
-                        },
-                        itemCount: _files.length,
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -194,7 +155,7 @@ class CreateStashAlert {
     String name = _nameController.text;
     if(_formKey.currentState.validate()) {
       Load.show();
-      GitOutput gitOutput = await _headerViewModel.createStash(name, _selectedFiles);
+      GitOutput gitOutput = await _headerViewModel.createStash(name);
       Load.hide();
       if(gitOutput.isFailure()) {
         GitOutputErrorAlert(context).displayAlert(gitOutput.message);
