@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:source_app/engine/domain/model/git_branch.dart';
 import 'package:source_app/engine/domain/use.case/branches_usecase.dart';
-import 'package:source_app/engine/domain/use.case/commit_usecase.dart';
 import 'package:source_app/engine/domain/use.case/fetch_usecase.dart';
 import 'package:source_app/engine/domain/use.case/pull_usecase.dart';
 import 'package:source_app/engine/domain/use.case/push_usecase.dart';
@@ -83,5 +80,18 @@ class HeaderViewModel {
     }
 
     return gitOutput;
+  }
+
+  Future<GitOutput> merge(GitBranch branch) async {
+    if(branch == null) {
+      return GitOutput("It is necessary to select a branch").failure();
+    }
+    GitOutput gitOutput = await BranchesUseCase().mergeWith(branch.name);
+
+    return gitOutput;
+  }
+
+  Future<GitOutput> localBranches() async {
+    return await BranchesUseCase().local();
   }
 }
