@@ -35,21 +35,17 @@ class Notify {
   }
 
   SnackBar _buildWarningSnackBar(String message) {
-    Duration _duration = Duration(seconds: _calculateTimer(message));
-    return SnackBar(
-      duration: _duration,
-      content: Container(
-        child: Text(message, style: GoogleFonts.roboto(
-          fontWeight: FontWeight.w500,
-          color: SourceColors.white,
-          fontSize: 18.0, ),
-        ),
-      ),
-      backgroundColor: SourceColors.orange,
-    );
+    return _buildSnackBar(message, _Variant.warning);
   }
 
   SnackBar _buildSuccessSnackBar(String message) {
+    return _buildSnackBar(message, _Variant.success);
+  }
+
+  SnackBar _buildSnackBar(String message, _Variant variant) {
+    Color color = variant == _Variant.success? SourceColors.green : SourceColors.orange;
+
+
     Duration _duration = Duration(seconds: _calculateTimer(message));
     return SnackBar(
       duration: _duration,
@@ -70,18 +66,18 @@ class Notify {
               child: Text("close",
                 style: GoogleFonts.roboto(
                   fontWeight: FontWeight.w600,
-                  color: SourceColors.green,
+                  color: color,
                   fontSize: 18.0,
                 ),
               ),
               onPressed: () {
-                _current.close();
+                breakCurrent();
               },
             )
           ],
         ),
       ),
-      backgroundColor: SourceColors.green,
+      backgroundColor: color,
     );
   }
 
@@ -89,3 +85,5 @@ class Notify {
     return ((message.length / 30) + 1).toInt();
   }
 }
+
+enum _Variant { success, warning }
