@@ -29,8 +29,19 @@ class HeaderViewModel {
     return gitOutput;
   }
 
-  Future<GitOutput> pull() async {
+  Future<GitOutput> pull(GitBranch branch) async {
+    if(branch != null) {
+      String origin = Git.origin();
+      String name = branch.name.replaceFirst("${Git.origin()}/", "");
+
+      return await PullUseCase().pullOtherBranch(origin, name);
+    }
+
     return await PullUseCase().pull();
+  }
+
+  Future<GitOutput> remoteBranches() async {
+    return await BranchesUseCase().remote();
   }
 
   Future<GitOutput> fetch() async {

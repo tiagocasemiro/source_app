@@ -12,7 +12,7 @@ class BranchAdapter extends BaseAdapter {
     return execute(transform: (gitOutput) {
       List<GitBranch> branches = List();
       gitOutput.lines.forEach((line) {
-        if (line.isNotEmpty) {
+        if (!line.contains("HEAD ->") && line.isNotEmpty) {
           if(line.startsWith("*")) {
             branches.add(GitBranch(clean(line), current: true));
           } else {
