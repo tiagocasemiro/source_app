@@ -6,12 +6,18 @@ import 'package:source_app/engine/domain/use.case/tags_usecase.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'dart:async';
 
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
+
 class BodyLeftViewModel {
+  final BodyRightViewModel _bodyRightViewModel;
+
   final StreamController<bool> _localBranchesController = StreamController<bool>.broadcast();
   Stream<bool> get localBranchesOutput => _localBranchesController.stream;
 
   final StreamController<bool> _stashController = StreamController<bool>.broadcast();
   Stream<bool> get stashOutput => _stashController.stream;
+
+  BodyLeftViewModel(this._bodyRightViewModel);
 
   void refreshLocalBranches() async {
     _localBranchesController.sink.add(true);
@@ -19,6 +25,10 @@ class BodyLeftViewModel {
 
   void refreshStash() async {
     _stashController.sink.add(true);
+  }
+
+  void displayHistoty() {
+    _bodyRightViewModel.displayHistory();
   }
 
   Future<GitOutput> localBranches() async {

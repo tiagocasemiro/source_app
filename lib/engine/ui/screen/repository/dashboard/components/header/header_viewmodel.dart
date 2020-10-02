@@ -8,11 +8,13 @@ import 'package:source_app/engine/domain/use.case/stashes_usecase.dart';
 import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/body_left_viewmodel.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
 
 class HeaderViewModel {
   final BodyLeftViewModel _bodyLeftViewModel;
+  final BodyRightViewModel _bodyRightViewModel;
 
-  HeaderViewModel(this._bodyLeftViewModel);
+  HeaderViewModel(this._bodyLeftViewModel, this._bodyRightViewModel);
 
   Future<GitOutput> push() async {
     GitOutput gitOutput = await BranchesUseCase().current();
@@ -24,6 +26,10 @@ class HeaderViewModel {
     }
 
     return gitOutput;
+  }
+
+  void displayCommit() {
+    _bodyRightViewModel.displayCommit();
   }
 
   Future<GitOutput> pull(GitBranch branch) async {

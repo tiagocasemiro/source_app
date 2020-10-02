@@ -194,6 +194,9 @@ class _LocalBranchesState extends State<LocalBranches> {
               Notify(context).showWarning("The branch " + branch.name + ", is the current");
             }
           },
+          onTap: () {
+            _dashboardViewModel.displayHistoty();
+          },
         ),
       ),
     );
