@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:load/load.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/body_left_viewmodel.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_commit.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_history.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/header/header_viewmodel.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/default_values.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/body_left_dashboard.dart';
-import 'package:source_app/engine/ui/screen/repository/dashboard/components/body_right_dashboard.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_dashboard.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/footer_dashboard.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/footer_left_dashboard.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/footer_right_dashboard.dart';
@@ -19,11 +22,13 @@ class Dashboard extends StatelessWidget {
   final double _leftRation = 0.25;
   final double _minLeftRation = 0.20;
   BodyLeftViewModel _bodyLeftViewModel;
+  BodyRightViewModel _bodyRightViewModel;
   HeaderViewModel _headerViewModel;
 
   Dashboard() {
-    _bodyLeftViewModel = BodyLeftViewModel();
-    _headerViewModel = HeaderViewModel(_bodyLeftViewModel);
+    _bodyRightViewModel = BodyRightViewModel();
+    _bodyLeftViewModel = BodyLeftViewModel(_bodyRightViewModel);
+    _headerViewModel = HeaderViewModel(_bodyLeftViewModel, _bodyRightViewModel);
   }
 
   @override
@@ -43,7 +48,8 @@ class Dashboard extends StatelessWidget {
               LayoutBuilder( builder: (context, BoxConstraints constraints) {
                 return  Container(
                   height: 100,
-                  width: constraints.maxWidth - defaultDivisorSize,
+                  width: constraints.maxWidth,
+                  margin: EdgeInsets.only(left: defaultPaddingSize),
                   child: Row(
                     children: [
                       Container(
@@ -71,28 +77,15 @@ class Dashboard extends StatelessWidget {
                     margin: const EdgeInsets.only(left: defaultPaddingSize, top: defaultPaddingSize),
                     child:  BodyLeftDashboard(_bodyLeftViewModel),
                   ),
-                  right: Container(
-                    child: HorizontalSplitView(
-                      ratio: 0.60,
-                      up: Container(
-                        padding: const EdgeInsets.only(right: defaultPaddingSize, top: defaultPaddingSize),
-                        child: BodyRightDashboard(),
-                      ),
-                      down: Container(
-                        child: FooterDashboard(
-                          VerticalSplitView(
-                            left: Container(
-                              padding: const EdgeInsets.only(bottom: defaultPaddingSize),
-                              child: FooterLeftDashboard(),
-                            ),
-                            right: Container(
-                              padding: const EdgeInsets.only(right: defaultPaddingSize, bottom: defaultPaddingSize),
-                              child: FooterRightDashboard(),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  right: StreamBuilder(
+                    stream: _bodyRightViewModel.rightDashboardOutput,
+                    builder: (context, snapshot) {
+                      if(snapshot.data == rightCommit){
+                        return BodyRightCommit();
+                      }
+
+                      return BodyRightHistory();
+                    },
                   ),
                 ),
               ),
