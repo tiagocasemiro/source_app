@@ -8,12 +8,7 @@ import 'package:source_app/engine/ui/screen/repository/dashboard/components/head
 import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/utils/default_values.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/body_left_dashboard.dart';
-import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_dashboard.dart';
-import 'package:source_app/engine/ui/screen/repository/dashboard/components/footer_dashboard.dart';
-import 'package:source_app/engine/ui/screen/repository/dashboard/components/footer_left_dashboard.dart';
-import 'package:source_app/engine/ui/screen/repository/dashboard/components/footer_right_dashboard.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/header/header_dashboard.dart';
-import 'package:source_app/engine/ui/widgets/horizontal_split_view.dart';
 import 'package:source_app/engine/ui/widgets/vertical_split_view.dart';
 
 

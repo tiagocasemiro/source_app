@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:source_app/engine/ui/screen/repository/dashboard/components/footer_dashboard.dart';
-import 'package:source_app/engine/ui/source_resources.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/components/dashboard_commit.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/components/staged_files.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/components/unstaged_files.dart';
 import 'package:source_app/engine/ui/utils/default_values.dart';
 import 'package:source_app/engine/ui/widgets/horizontal_split_view.dart';
 import 'package:source_app/engine/ui/widgets/vertical_split_view.dart';
+import 'package:flutter/material.dart';
 
 class BodyRightCommit extends StatelessWidget {
 
@@ -17,21 +18,17 @@ class BodyRightCommit extends StatelessWidget {
           child: VerticalSplitView(
             left: Container(
               padding: const EdgeInsets.only(),
-              child: Container(color: SourceColors.grey,),
+              child: UnstagedFiles(),
             ),
             right: Container(
               padding: const EdgeInsets.only(right: defaultPaddingSize),
-              child: Container(color: SourceColors.grey,),
+              child: StagedFiles(),
             ),
           ),
         ),
         down: Container(
           padding: const EdgeInsets.only(right: defaultPaddingSize, bottom: defaultPaddingSize),
-          child: FooterDashboard(
-            Container(
-              color: SourceColors.grey,
-            ),
-          ),
+          child: CommitDashboard(),
         ),
       ),
     );
