@@ -4,9 +4,9 @@ import 'package:source_app/engine/ui/source_resources.dart';
 import 'package:source_app/engine/ui/screen/repository/list/list_repositories_viewmodel.dart';
 
 class EmptyContentRepository extends StatelessWidget {
-  final SelectRepositoryViewModel _viewModel;
+  final SelectRepositoryViewModel _selectRepositoryViewModel;
 
-  EmptyContentRepository(this._viewModel);
+  EmptyContentRepository(this._selectRepositoryViewModel);
 
   @override
   Widget build(BuildContext context) {
