@@ -78,6 +78,7 @@ class RepositoryDao {
     return repositoryMap;
   }
 
+  // ignore: unused_element
   List<Repository> _toList(List<Map<String, dynamic>> result) {
     final List<Repository> repositories = List();
     for(Map<String, dynamic> map in result) {

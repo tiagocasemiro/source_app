@@ -25,6 +25,7 @@ abstract class BaseGitCommand {
     }
   }
 
+  // ignore: unused_element
   void _printCommand(List<String> parameters) {
     print("Directory: " + _workDirectory);
     var allParameters = "";
