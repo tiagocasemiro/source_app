@@ -76,10 +76,10 @@ class Dashboard extends StatelessWidget {
                     stream: _bodyRightViewModel.rightDashboardOutput,
                     builder: (context, snapshot) {
                       if(snapshot.data == rightCommit){
-                        return BodyRightCommit();
+                        return BodyRightCommit(_bodyRightViewModel);
                       }
 
-                      return BodyRightHistory();
+                      return BodyRightHistory(_bodyRightViewModel);
                     },
                   ),
                 ),
