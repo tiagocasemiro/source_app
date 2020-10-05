@@ -1,5 +1,6 @@
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/components/dashboard_commit.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/components/diff_file.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/components/staged_files.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/components/unstaged_files.dart';
 import 'package:source_app/engine/ui/utils/default_values.dart';
@@ -23,11 +24,15 @@ class BodyRightCommit extends StatelessWidget {
           child: VerticalSplitView(
             left: Container(
               padding: const EdgeInsets.only(),
-              child: UnstagedFiles(),
+              child: HorizontalSplitView(
+                ratio: 0.50,
+                up: StagedFiles(),
+                down: UnstagedFiles(),
+              ),
             ),
             right: Container(
               padding: const EdgeInsets.only(right: defaultPaddingSize),
-              child: StagedFiles(),
+              child: FileDiff(),
             ),
           ),
         ),
