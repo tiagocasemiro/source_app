@@ -1,4 +1,3 @@
-import 'package:source_app/engine/shell/git/adapter/diff_adapter.dart';
 import 'package:source_app/engine/shell/git/adapter/ls_files_adapter.dart';
 import 'package:source_app/engine/shell/git/command/base/base_command.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
