@@ -32,7 +32,7 @@ class BodyRightCommit extends StatelessWidget {
             ),
             right: Container(
               padding: const EdgeInsets.only(right: defaultPaddingSize),
-              child: FileDiff(),
+              child: FileDiff(_bodyRightViewModel),
             ),
           ),
         ),

@@ -30,7 +30,7 @@ class BodyRightHistory extends StatelessWidget {
             ),
             right: Container(
               padding: const EdgeInsets.only(right: defaultPaddingSize, bottom: defaultPaddingSize),
-              child: FileDiff(),
+              child: FileDiff(_bodyRightViewModel),
             ),
           ),
         ),
