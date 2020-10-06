@@ -13,23 +13,26 @@ class FileDiff extends StatelessWidget {
     return StreamBuilder(
       stream: _bodyRightViewModel.fileDiffDashboardOutput,
       builder: (context, snapshot) {
-        return Visibility(
-          visible: snapshot.data != null,
-          replacement: Center(child: Text("No file",
-            style: GoogleFonts.roboto(
-              fontWeight: FontWeight.w700,
-              color: SourceColors.blue[2],
-              fontSize: 16.0,
-            ),
-          )),
-          child: Container(
-            decoration: BoxDecoration(
-                color: SourceColors.grey[2],
-                borderRadius: BorderRadius.circular(10)
-            ),
-            child: Text(snapshot.data,
+        String content = snapshot.data != null? snapshot.data : "";
+
+
+        return Container(
+          decoration: BoxDecoration(
+            color: SourceColors.grey[2],
+            borderRadius: BorderRadius.circular(10)
+          ),
+          child: Visibility(
+            visible: content.isNotEmpty,
+            replacement: Center(child: Text("No file selected",
               style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w300,
+                color: SourceColors.blue[2],
+                fontSize: 16.0,
+              ),
+            )),
+            child: Text(content,
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w300,
                   color: SourceColors.blue[2],
                   fontSize: 16.0,
               ),
