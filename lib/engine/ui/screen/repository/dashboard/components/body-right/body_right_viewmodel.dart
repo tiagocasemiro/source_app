@@ -5,6 +5,13 @@ class BodyRightViewModel {
   final StreamController<String> _rightDashboardController = StreamController<String>.broadcast();
   Stream<String> get rightDashboardOutput => _rightDashboardController.stream;
 
+  final StreamController<String> _fileDiffDashboardController = StreamController<String>.broadcast();
+  Stream<String> get fileDiffDashboardOutput => _fileDiffDashboardController.stream;
+
+  void displayFileDiff(String _content) {
+    _fileDiffDashboardController.sink.add(_content);
+  }
+
   void displayHistory() async {
     _rightDashboardController.sink.add(rightHistory);
   }
@@ -15,5 +22,6 @@ class BodyRightViewModel {
 
   void dispose() {
     _rightDashboardController.close();
+    _fileDiffDashboardController.close();
   }
 }
