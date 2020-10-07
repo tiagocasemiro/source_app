@@ -9,7 +9,6 @@ import 'package:source_app/engine/ui/widgets/vertical_split_view.dart';
 import 'package:flutter/material.dart';
 
 class BodyRightCommit extends StatelessWidget {
-
   final BodyRightViewModel _bodyRightViewModel;
 
   const BodyRightCommit( this._bodyRightViewModel);
@@ -26,7 +25,7 @@ class BodyRightCommit extends StatelessWidget {
               padding: const EdgeInsets.only(),
               child: HorizontalSplitView(
                 ratio: 0.50,
-                up: StagedFiles(),
+                up: StagedFiles(_bodyRightViewModel),
                 down: UnstagedFiles(),
               ),
             ),

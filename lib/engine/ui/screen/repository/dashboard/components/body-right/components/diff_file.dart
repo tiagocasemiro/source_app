@@ -41,7 +41,7 @@ class FileDiff extends StatelessWidget {
                     fontSize: 16.0,
                   ),
                 )),
-                child: Text(file,
+                child: Text(fileDiff.toString(),
                   style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w300,
                     color: SourceColors.blue[2],
