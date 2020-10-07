@@ -41,12 +41,18 @@ class FileDiff extends StatelessWidget {
                     fontSize: 16.0,
                   ),
                 )),
-                child: Text(fileDiff.toString(),
-                  style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w300,
-                    color: SourceColors.blue[2],
-                    fontSize: 16.0,
-                  ),
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    final String line = fileDiff[index];
+                    return Text(line,
+                      style: GoogleFonts.roboto(
+                        fontWeight: FontWeight.w300,
+                        color: SourceColors.blue[2],
+                        fontSize: 16.0,
+                      ),
+                    );
+                  },
+                  itemCount: fileDiff.length,
                 ),
               ),
             );
