@@ -40,6 +40,7 @@ class SourceColors {
     <int, Color>{
       1: Color(0xFF24922F),
       2: Color(0xFFB4D5B8),
+      3: Color(0xFF146F1D),
     },
   );
 

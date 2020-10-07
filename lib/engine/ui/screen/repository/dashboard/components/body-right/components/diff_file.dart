@@ -25,17 +25,22 @@ class FileDiff extends StatelessWidget {
             if (snapshotGitOutput.data is GitOutput) {
               GitOutput gitOutput = snapshotGitOutput.data;
               fileDiff = gitOutput.isSuccess() &&
-                  gitOutput.lines != null &&
-                  gitOutput.lines is List<String> ? gitOutput.lines: List<String>();
+                gitOutput.lines != null &&
+                gitOutput.lines is List<String> ? gitOutput.lines: List<String>();
             }
             if(fileDiff.isNotEmpty && fileDiff.length > 5) {
-              fileDiff = fileDiff.sublist(5);
+              List<String> temp  = fileDiff.sublist(5);
+              fileDiff.clear();
+              fileDiff.add("");
+              fileDiff.addAll(temp);
             }
 
+
             return Container(
+              padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  color: SourceColors.grey[2],
-                  borderRadius: BorderRadius.circular(10)
+                color: SourceColors.grey[2],
+                borderRadius: BorderRadius.circular(10)
               ),
               child: Visibility(
                 visible: fileDiff.isNotEmpty,
@@ -49,7 +54,7 @@ class FileDiff extends StatelessWidget {
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     final String line = fileDiff[index];
-                    return ItemLineFile(index, line);
+                    return ItemLineFile(index, line, file);
                   },
                   itemCount: fileDiff.length,
                 ),
