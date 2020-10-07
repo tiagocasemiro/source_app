@@ -15,4 +15,8 @@ class CommitUseCase {
   Future<GitOutput> untrackedFiles() async {
     return Git().lsFiles().others().excludeStandard().call();
   }
+
+  Future<GitOutput> diff(String file) {
+    return Git().diff().file(file).call();
+  }
 }

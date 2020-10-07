@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:source_app/engine/domain/use.case/commit_usecase.dart';
+import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/utils/default_values.dart';
 
 class BodyRightViewModel {
@@ -18,6 +20,10 @@ class BodyRightViewModel {
 
   void displayCommit() async {
     _rightDashboardController.sink.add(rightCommit);
+  }
+
+  Future<GitOutput> diff(String file) async {
+    return await CommitUseCase().diff(file);
   }
 
   void dispose() {

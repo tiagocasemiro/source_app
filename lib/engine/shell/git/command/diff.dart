@@ -14,6 +14,12 @@ class Diff extends BaseGitCommand {
     return this;
   }
 
+  Diff file(String name) {
+    parameters.add(name);
+
+    return this;
+  }
+
   @override
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
