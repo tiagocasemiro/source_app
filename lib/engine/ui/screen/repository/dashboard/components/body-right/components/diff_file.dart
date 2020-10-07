@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/widget/item_line_file.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 
 class FileDiff extends StatelessWidget {
@@ -27,6 +28,10 @@ class FileDiff extends StatelessWidget {
                   gitOutput.lines != null &&
                   gitOutput.lines is List<String> ? gitOutput.lines: List<String>();
             }
+            if(fileDiff.isNotEmpty && fileDiff.length > 5) {
+              fileDiff = fileDiff.sublist(5);
+            }
+
             return Container(
               decoration: BoxDecoration(
                   color: SourceColors.grey[2],
@@ -44,13 +49,7 @@ class FileDiff extends StatelessWidget {
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     final String line = fileDiff[index];
-                    return Text(line,
-                      style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w300,
-                        color: SourceColors.blue[2],
-                        fontSize: 16.0,
-                      ),
-                    );
+                    return ItemLineFile(index, line);
                   },
                   itemCount: fileDiff.length,
                 ),
