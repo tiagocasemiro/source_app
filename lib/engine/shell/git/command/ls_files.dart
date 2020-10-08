@@ -13,6 +13,11 @@ class LsFiles extends BaseGitCommand {
 
     return this;
   }
+  LsFiles stage() {
+    parameters.add("--stage");
+
+    return this;
+  }
 
   LsFiles excludeStandard() {
     parameters.add("--exclude-standard");

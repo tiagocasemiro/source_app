@@ -14,6 +14,12 @@ class Diff extends BaseGitCommand {
     return this;
   }
 
+  Diff cached() {
+    parameters.add("--cached");
+
+    return this;
+  }
+
   Diff file(String name) {
     parameters.add(name);
 

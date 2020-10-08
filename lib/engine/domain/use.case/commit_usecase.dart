@@ -21,4 +21,12 @@ class CommitUseCase {
   Future<GitOutput> add(String file) async {
     return await Git().add().file(file).call();
   }
+
+  Future<GitOutput> stagedFiles() async {
+    return await Git().diff().cached().nameOnly().call();
+  }
+
+  Future<GitOutput> remove(String file) async {
+    return await Git().restore().file(file).call();
+  }
 }

@@ -43,11 +43,20 @@ class BodyRightViewModel {
     return gitOutput;
   }
 
+  Future<GitOutput> remove(String file) async {
+    GitOutput gitOutput = await CommitUseCase().remove(file);
+    if(gitOutput.isSuccess()) {
+      updateCommitDashboard();
+    }
+
+    return gitOutput;
+  }
+
   Future<GitOutput> diff(String file) async {
     return await CommitUseCase().diff(file);
   }
 
-  Future<GitOutput> uncommittedFiles() async {
+  Future<GitOutput> unStagedFiles() async {
     GitOutput unCommitted = await CommitUseCase().uncommittedFiles();
     if(unCommitted.isFailure()) {
       return unCommitted;
@@ -65,6 +74,9 @@ class BodyRightViewModel {
     return gitOutput;
   }
 
+  Future<GitOutput> stagedFiles() async {
+    return  await CommitUseCase().stagedFiles();
+  }
 
   void dispose() {
     _rightDashboardController.close();

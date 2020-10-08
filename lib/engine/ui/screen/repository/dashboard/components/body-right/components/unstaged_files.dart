@@ -19,7 +19,7 @@ class UnstagedFiles extends StatelessWidget {
 
         return FutureBuilder(
             initialData: [],
-            future: _bodyRightViewModel.uncommittedFiles(),
+            future: _bodyRightViewModel.unStagedFiles(),
             builder: (context, snapshotGitOutput) {
               List<String> filesUncommitted = List();
               filesUncommitted.add("");
@@ -50,7 +50,7 @@ class UnstagedFiles extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final String file = filesUncommitted[index];
 
-                      return ItemLineCheck(file, index, "Staged files", (String checkedFile) {
+                      return ItemLineCheck(file, index, "Unstaged files", (String checkedFile) {
                         _bodyRightViewModel.add(checkedFile).then((GitOutput gitOutput) {
                           if(gitOutput.isFailure()) {
                             GitOutputErrorAlert(context).displayAlert(gitOutput.message);
