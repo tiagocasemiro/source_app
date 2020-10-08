@@ -4,6 +4,7 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/widget/item_file_check.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
+import 'package:source_app/engine/ui/utils/default_values.dart';
 import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
 
 class UnstagedFiles extends StatelessWidget {
@@ -56,6 +57,8 @@ class UnstagedFiles extends StatelessWidget {
                             GitOutputErrorAlert(context).displayAlert(gitOutput.message);
                           }
                         });
+                      }, (String clickedFile) {
+                        _bodyRightViewModel.displayFileDiff(MapEntry<String, String>(unstaged, clickedFile));
                       });
                     },
                     itemCount: filesUncommitted.length,

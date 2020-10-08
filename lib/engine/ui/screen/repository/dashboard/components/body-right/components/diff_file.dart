@@ -15,7 +15,7 @@ class FileDiff extends StatelessWidget {
     return StreamBuilder(
       stream: _bodyRightViewModel.fileDiffDashboardOutput,
       builder: (context, snapshot) {
-        String file = snapshot.data != null? snapshot.data : "";
+        MapEntry<String, String> file = snapshot.data != null? snapshot.data : null;
 
         return FutureBuilder(
           initialData: [],
@@ -54,7 +54,7 @@ class FileDiff extends StatelessWidget {
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     final String line = fileDiff[index];
-                    return ItemLineFile(index, line, file);
+                    return ItemLineFile(index, line, file.value);
                   },
                   itemCount: fileDiff.length,
                 ),

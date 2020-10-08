@@ -7,9 +7,11 @@ class ItemLineCheck extends StatelessWidget {
   final String _file;
   final int _index;
   final String _title;
-  final Function _callback;
+  final Function _onCheck;
+  final Function _onClick;
 
-  ItemLineCheck(this._file, this._index, this._title, this._callback(String file));
+
+  ItemLineCheck(this._file, this._index, this._title, this._onCheck(String file), this._onClick(String file));
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +35,29 @@ class ItemLineCheck extends StatelessWidget {
     }
 
     return CheckboxListTile(
-      title: Text(_file,
-        style: GoogleFonts.roboto(
-          fontWeight: FontWeight.w400,
-          color: SourceColors.blue[2],
-          fontSize: 16.0,
+      title: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.all(Radius.circular(3)),
+          hoverColor: SourceColors.blue[4],
+          child: Container(
+            padding: EdgeInsets.only(left: 10, top: 5, right: 5, bottom: 5),
+            child: Text(_file,
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w400,
+                color: SourceColors.blue[2],
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+          onTap: () {
+            _onClick(_file);
+          },
         ),
       ),
       value: _isChecked,
       onChanged: (newValue) {
-        _callback(_file);
+        _onCheck(_file);
       },
       controlAffinity: ListTileControlAffinity.leading,
       contentPadding: EdgeInsets.only(right: 8, left: 16),

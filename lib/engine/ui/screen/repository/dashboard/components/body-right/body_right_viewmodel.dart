@@ -7,8 +7,8 @@ class BodyRightViewModel {
   final StreamController<String> _rightDashboardController = StreamController<String>.broadcast();
   Stream<String> get rightDashboardOutput => _rightDashboardController.stream;
 
-  final StreamController<String> _fileDiffDashboardController = StreamController<String>.broadcast();
-  Stream<String> get fileDiffDashboardOutput => _fileDiffDashboardController.stream;
+  final StreamController<MapEntry<String, String>> _fileDiffDashboardController = StreamController<MapEntry<String, String>>.broadcast();
+  Stream<MapEntry<String, String>> get fileDiffDashboardOutput => _fileDiffDashboardController.stream;
 
   final StreamController<bool> _stagedDashboardController = StreamController<bool>.broadcast();
   Stream<bool> get stagedDashboardOutput => _stagedDashboardController.stream;
@@ -17,7 +17,7 @@ class BodyRightViewModel {
   Stream<bool> get unStagedDashboardOutput => _unStagedDashboardController.stream;
 
 
-  void displayFileDiff(String file) {
+  void displayFileDiff(MapEntry<String, String> file) {
     _fileDiffDashboardController.sink.add(file);
   }
 
@@ -52,8 +52,12 @@ class BodyRightViewModel {
     return gitOutput;
   }
 
-  Future<GitOutput> diff(String file) async {
-    return await CommitUseCase().diff(file);
+  Future<GitOutput> diff(MapEntry<String, String> file) async {
+    if(file.key == staged) {
+      return await CommitUseCase().diffCached(file.value);
+    }
+
+    return await CommitUseCase().diff(file.value);
   }
 
   Future<GitOutput> unStagedFiles() async {
