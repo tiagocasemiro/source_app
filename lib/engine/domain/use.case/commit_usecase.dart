@@ -2,21 +2,23 @@ import 'package:source_app/engine/shell/git/git.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 
 class CommitUseCase {
-  void add(String fileName) {}
-
   void addAll() {}
 
   void commit() {}
 
   Future<GitOutput> uncommittedFiles() async {
-    return Git().diff().nameOnly().call();
+    return await Git().diff().nameOnly().call();
   }
 
   Future<GitOutput> untrackedFiles() async {
-    return Git().lsFiles().others().excludeStandard().call();
+    return await Git().lsFiles().others().excludeStandard().call();
   }
 
-  Future<GitOutput> diff(String file) {
-    return Git().diff().file(file).call();
+  Future<GitOutput> diff(String file) async {
+    return await Git().diff().file(file).call();
+  }
+
+  Future<GitOutput> add(String file) async {
+    return await Git().add().file(file).call();
   }
 }

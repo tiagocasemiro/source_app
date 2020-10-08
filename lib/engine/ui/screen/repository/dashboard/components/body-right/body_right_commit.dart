@@ -26,7 +26,7 @@ class BodyRightCommit extends StatelessWidget {
               child: HorizontalSplitView(
                 ratio: 0.50,
                 up: StagedFiles(_bodyRightViewModel),
-                down: UnstagedFiles(),
+                down: UnstagedFiles(_bodyRightViewModel),
               ),
             ),
             right: Container(
