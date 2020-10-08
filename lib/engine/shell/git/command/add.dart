@@ -22,6 +22,12 @@ class Add extends BaseGitCommand {
     return this;
   }
 
+  Add file(String file) {
+    parameters.add(file);
+
+    return this;
+  }
+
   @override
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);

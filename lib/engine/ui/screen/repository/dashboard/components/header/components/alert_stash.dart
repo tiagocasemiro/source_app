@@ -12,6 +12,7 @@ class CreateStashAlert {
   final _nameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final HeaderViewModel _headerViewModel;
+
   CreateStashAlert(this._headerViewModel);
 
   displayAlert(BuildContext context) {

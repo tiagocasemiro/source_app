@@ -13,8 +13,6 @@ class ItemLineCheck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color background = SourceColors.grey[8];
-    Color text = SourceColors.blue[2];
     bool _isChecked = false;
 
     if(_index == 0) {
@@ -46,7 +44,7 @@ class ItemLineCheck extends StatelessWidget {
       onChanged: (newValue) {
         _callback(_file);
       },
-      controlAffinity: ListTileControlAffinity.trailing,
+      controlAffinity: ListTileControlAffinity.leading,
       contentPadding: EdgeInsets.only(right: 8, left: 16),
     );
   }

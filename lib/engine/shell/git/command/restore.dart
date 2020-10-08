@@ -21,6 +21,13 @@ class Restore extends BaseGitCommand {
 
     return this;
   }
+
+  Restore file(String file) {
+    parameters.add('--staged');
+    parameters.add(file);
+
+    return this;
+  }
   
   @override
   Future<GitOutput> call() async {
