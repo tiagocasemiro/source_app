@@ -4,7 +4,9 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 class CommitUseCase {
   void addAll() {}
 
-  void commit() {}
+  Future<GitOutput> commit(String message) async {
+    return await Git().commit().message(message).call();
+  }
 
   Future<GitOutput> uncommittedFiles() async {
     return await Git().diff().nameOnly().call();

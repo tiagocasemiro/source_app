@@ -63,9 +63,12 @@ class BodyRightViewModel {
       List<String> modifiedFile = gitOutput.lines;
       gitOutput.lines = (filter(modifiedFile));
     }
-    print("");
 
     return gitOutput;
+  }
+
+  Future<GitOutput> commit(String message) async {
+    return await CommitUseCase().commit(message);
   }
 
   List<String> filter(List<String> fullList) {
@@ -104,7 +107,7 @@ class BodyRightViewModel {
   }
 
   Future<GitOutput> stagedFiles() async {
-    return  await CommitUseCase().stagedFiles();
+    return await CommitUseCase().stagedFiles();
   }
 
   void dispose() {

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
+import 'package:source_app/engine/ui/widgets/application_load.dart';
+import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
+import 'package:source_app/engine/ui/widgets/notify.dart';
 
 class CommitDashboard extends StatelessWidget {
   final _nameController = TextEditingController();
@@ -24,10 +28,7 @@ class CommitDashboard extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        print("commit");
-
-        // todo commit files
-
+        commit(context);
       },
     );
     Widget cancelButton = RaisedButton(
@@ -127,5 +128,21 @@ class CommitDashboard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void commit(BuildContext context) {
+    if(_formKey.currentState.validate()) {
+      String message = _nameController.text;
+      Load.show();
+      _bodyRightViewModel.commit(message).then((GitOutput gitOutput) {
+        Load.hide();
+        if(gitOutput.isFailure()) {
+          GitOutputErrorAlert(context).displayAlert(gitOutput.message);
+        } else {
+          Notify(context).showSuccessWithMessage(gitOutput);
+          _bodyRightViewModel.displayHistory();
+        }
+      });
+    }
   }
 }
