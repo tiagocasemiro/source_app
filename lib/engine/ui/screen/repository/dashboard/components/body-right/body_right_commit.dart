@@ -37,7 +37,7 @@ class BodyRightCommit extends StatelessWidget {
         ),
         down: Container(
           padding: const EdgeInsets.only(right: defaultPaddingSize, bottom: defaultPaddingSize),
-          child: CommitDashboard(),
+          child: CommitDashboard(_bodyRightViewModel),
         ),
       ),
     );

@@ -42,7 +42,7 @@ class ItemLineFile extends StatelessWidget {
 
     return Row(children: [
       Container(
-        color: SourceColors.grey[5],
+        color: SourceColors.grey[9],
         height: 33,
         width: 33,
         child: Center(
