@@ -34,33 +34,36 @@ class ItemLineCheck extends StatelessWidget {
       );
     }
 
-    return CheckboxListTile(
-      title: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.all(Radius.circular(3)),
-          hoverColor: SourceColors.blue[4],
-          child: Container(
-            padding: EdgeInsets.only(left: 10, top: 5, right: 5, bottom: 5),
-            child: Text(_file,
-              style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w400,
-                color: SourceColors.blue[2],
-                fontSize: 16.0,
+    return Container(
+      height: 30,
+      child: CheckboxListTile(
+        title: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.all(Radius.circular(3)),
+            hoverColor: SourceColors.blue[4],
+            child: Container(
+              padding: EdgeInsets.only(left: 10, top: 5, right: 5, bottom: 5),
+              child: Text(_file,
+                style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.w400,
+                  color: SourceColors.blue[2],
+                  fontSize: 16.0,
+                ),
               ),
             ),
+            onTap: () {
+              _onClick(_file);
+            },
           ),
-          onTap: () {
-            _onClick(_file);
-          },
         ),
+        value: _isChecked,
+        onChanged: (newValue) {
+          _onCheck(_file);
+        },
+        controlAffinity: ListTileControlAffinity.leading,
+        contentPadding: EdgeInsets.only(right: 4, left: 4),
       ),
-      value: _isChecked,
-      onChanged: (newValue) {
-        _onCheck(_file);
-      },
-      controlAffinity: ListTileControlAffinity.leading,
-      contentPadding: EdgeInsets.only(right: 8, left: 16),
     );
   }
 }
