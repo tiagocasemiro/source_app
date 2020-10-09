@@ -24,17 +24,12 @@ class FileDiff extends StatelessWidget {
             List<String> fileDiff = List();
             if (snapshotGitOutput.data is GitOutput) {
               GitOutput gitOutput = snapshotGitOutput.data;
-              fileDiff = gitOutput.isSuccess() &&
+              List<String> temp =  gitOutput.isSuccess() &&
                 gitOutput.lines != null &&
                 gitOutput.lines is List<String> ? gitOutput.lines: List<String>();
-            }
-            if(fileDiff.isNotEmpty && fileDiff.length > 5) {
-              List<String> temp  = fileDiff.sublist(5);
-              fileDiff.clear();
               fileDiff.add("");
               fileDiff.addAll(temp);
             }
-
 
             return Container(
               padding: EdgeInsets.all(8),

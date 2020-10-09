@@ -53,12 +53,37 @@ class BodyRightViewModel {
   }
 
   Future<GitOutput> diff(MapEntry<String, String> file) async {
+    GitOutput gitOutput;
     if(file.key == staged) {
-      return await CommitUseCase().diffCached(file.value);
+      gitOutput = await CommitUseCase().diffCached(file.value);
+    } else {
+      gitOutput = await CommitUseCase().diff(file.value);
     }
+    if(gitOutput.isSuccess()) {
+      List<String> modifiedFile = gitOutput.lines;
+      gitOutput.lines = (filter(modifiedFile));
+    }
+    print("");
 
-    return await CommitUseCase().diff(file.value);
+    return gitOutput;
   }
+
+  List<String> filter(List<String> fullList) {
+    List<String> newList = List();
+    bool canAdd = false;
+    fullList.forEach((element) {
+      if(canAdd) {
+        newList.add(element);
+      }
+      if(element.contains("@@")) {
+        print(element);
+        canAdd = true;
+      }
+    });
+
+    return newList;
+  }
+
 
   Future<GitOutput> unStagedFiles() async {
     GitOutput unCommitted = await CommitUseCase().uncommittedFiles();
