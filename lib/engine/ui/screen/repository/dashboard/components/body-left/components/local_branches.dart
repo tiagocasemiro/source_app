@@ -11,12 +11,12 @@ import 'package:source_app/engine/ui/widgets/notify.dart';
 
 
 class LocalBranches extends StatefulWidget {
-  final BodyLeftViewModel _dashboardViewModel;
+  final BodyLeftViewModel _bodyLeftViewModel;
 
-  LocalBranches(this._dashboardViewModel);
+  LocalBranches(this._bodyLeftViewModel);
 
   @override
-  _LocalBranchesState createState() => _LocalBranchesState(_dashboardViewModel);
+  _LocalBranchesState createState() => _LocalBranchesState(_bodyLeftViewModel);
 }
 
 class _LocalBranchesState extends State<LocalBranches> {
