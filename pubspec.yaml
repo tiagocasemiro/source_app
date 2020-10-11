@@ -75,6 +75,11 @@ flutter:
     - images/ic_menu_merge.svg
     - images/ic_menu_pull.svg
     - images/ic_menu_push.svg
+    - images/file_addeded.svg
+    - images/file_conflicted.svg
+    - images/file_deleted.svg
+    - images/file_modified.svg
+    - images/file_renamed.svg
 
 
 
