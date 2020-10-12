@@ -11,12 +11,12 @@ import 'package:source_app/engine/ui/widgets/notify.dart';
 
 
 class RemoteBranches extends StatefulWidget {
-  final BodyLeftViewModel _dashboardViewModel;
+  final BodyLeftViewModel _bodyLeftViewModel;
 
-  RemoteBranches(this._dashboardViewModel);
+  RemoteBranches(this._bodyLeftViewModel);
 
   @override
-  _RemoteBranchesState createState() => _RemoteBranchesState(_dashboardViewModel);
+  _RemoteBranchesState createState() => _RemoteBranchesState(_bodyLeftViewModel);
 }
 
 class _RemoteBranchesState extends State<RemoteBranches> {
