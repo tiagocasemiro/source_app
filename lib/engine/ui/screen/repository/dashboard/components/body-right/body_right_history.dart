@@ -8,10 +8,9 @@ import 'package:source_app/engine/ui/widgets/vertical_split_view.dart';
 import 'package:flutter/material.dart';
 
 class BodyRightHistory extends StatelessWidget {
-
   final BodyRightViewModel _bodyRightViewModel;
 
-  const BodyRightHistory( this._bodyRightViewModel);
+  const BodyRightHistory(this._bodyRightViewModel);
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +18,19 @@ class BodyRightHistory extends StatelessWidget {
       child: HorizontalSplitView(
         ratio: 0.60,
         up: Container(
-          padding: const EdgeInsets.only(right: defaultPaddingSize, top: defaultPaddingSize),
+          padding: const EdgeInsets.only(
+              right: defaultPaddingSize, top: defaultPaddingSize),
           child: HistoryDashboard(),
         ),
         down: Container(
           child: VerticalSplitView(
             left: Container(
               padding: const EdgeInsets.only(bottom: defaultPaddingSize),
-              child: CommitFiles(),
+              child: CommitFiles(_bodyRightViewModel),
             ),
             right: Container(
-              padding: const EdgeInsets.only(right: defaultPaddingSize, bottom: defaultPaddingSize),
+              padding: const EdgeInsets.only(
+                  right: defaultPaddingSize, bottom: defaultPaddingSize),
               child: FileDiff(_bodyRightViewModel),
             ),
           ),

@@ -11,7 +11,6 @@ import 'package:source_app/engine/ui/screen/repository/dashboard/components/body
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/header/header_dashboard.dart';
 import 'package:source_app/engine/ui/widgets/vertical_split_view.dart';
 
-
 // ignore: must_be_immutable
 class Dashboard extends StatelessWidget {
   final double _leftRation = 0.25;
@@ -40,8 +39,8 @@ class Dashboard extends StatelessWidget {
           color: SourceColors.grey[6],
           child: Column(
             children: [
-              LayoutBuilder( builder: (context, BoxConstraints constraints) {
-                return  Container(
+              LayoutBuilder(builder: (context, BoxConstraints constraints) {
+                return Container(
                   height: 100,
                   width: constraints.maxWidth,
                   margin: EdgeInsets.only(left: defaultPaddingSize),
@@ -49,7 +48,8 @@ class Dashboard extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(20),
-                        width: _leftRation * (constraints.maxWidth - defaultDivisorSize),
+                        width: _leftRation *
+                            (constraints.maxWidth - defaultDivisorSize),
                         height: 150,
                         child: Image.asset("images/source-logo.png"),
                       ),
@@ -69,13 +69,14 @@ class Dashboard extends StatelessWidget {
                   ratio: _leftRation,
                   left: Container(
                     height: double.maxFinite,
-                    margin: const EdgeInsets.only(left: defaultPaddingSize, top: defaultPaddingSize),
-                    child:  BodyLeftDashboard(_bodyLeftViewModel),
+                    margin: const EdgeInsets.only(
+                        left: defaultPaddingSize, top: defaultPaddingSize),
+                    child: BodyLeftDashboard(_bodyLeftViewModel),
                   ),
                   right: StreamBuilder(
                     stream: _bodyRightViewModel.rightDashboardOutput,
                     builder: (context, snapshot) {
-                      if(snapshot.data == rightCommit){
+                      if (snapshot.data == rightCommit) {
                         return BodyRightCommit(_bodyRightViewModel);
                       }
 
