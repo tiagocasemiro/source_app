@@ -1,7 +1,9 @@
-import 'package:source_app/engine/domain/model/git_log.dart';
+import 'package:source_app/engine/shell/git/command/log.dart';
+import 'package:source_app/engine/shell/git/git.dart';
+import 'package:source_app/engine/shell/git/model/git_output.dart';
 
 class LogUseCase {
-  List<GitLog> history() {
-    return List();
+  Future<GitOutput> history() async {
+    return Git().log().graph().pretty(Log.historyFormat).call();
   }
 }
