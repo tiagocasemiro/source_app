@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:source_app/engine/domain/use.case/commit_usecase.dart';
+import 'package:source_app/engine/domain/use.case/log_usecase.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/utils/default_values.dart';
 
@@ -87,7 +88,6 @@ class BodyRightViewModel {
     return newList;
   }
 
-
   Future<GitOutput> unStagedFiles() async {
     GitOutput unCommitted = await CommitUseCase().uncommittedFiles();
     if(unCommitted.isFailure()) {
@@ -108,6 +108,10 @@ class BodyRightViewModel {
 
   Future<GitOutput> stagedFiles() async {
     return await CommitUseCase().stagedFiles();
+  }
+
+  Future<GitOutput> history() async {
+    return LogUseCase().history();
   }
 
   void dispose() {
