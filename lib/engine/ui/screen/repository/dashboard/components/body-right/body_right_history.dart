@@ -20,7 +20,7 @@ class BodyRightHistory extends StatelessWidget {
         up: Container(
           padding: const EdgeInsets.only(
               right: defaultPaddingSize, top: defaultPaddingSize),
-          child: HistoryDashboard(),
+          child: HistoryDashboard(_bodyRightViewModel),
         ),
         down: Container(
           child: VerticalSplitView(
