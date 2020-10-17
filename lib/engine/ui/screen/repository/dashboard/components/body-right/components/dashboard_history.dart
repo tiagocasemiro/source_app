@@ -42,7 +42,7 @@ class HistoryDashboard extends StatelessWidget {
                 Text("Date", style: _style)
               ],
             ),
-
+            // TODO add body
           ],
         )
       ),
