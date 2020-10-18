@@ -196,7 +196,6 @@ class AuthenticationRepositoryAlert {
     _failureOnStartRepository = false;
     if(_formKey.currentState.validate()) {
       Load.show();
-      String a = await Future.delayed(const Duration(seconds: 3), () => "1"); //todo
       DashboardViewModel dashboardViewModel = DashboardViewModel();
       _repository.username = username;
       _repository.password = password;
