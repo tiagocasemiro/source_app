@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 
 class GitOutputErrorAlert {
