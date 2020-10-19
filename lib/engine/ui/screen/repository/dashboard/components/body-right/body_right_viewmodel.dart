@@ -119,7 +119,13 @@ class BodyRightViewModel {
   }
 
   Future<GitOutput> history() async {
-    return LogUseCase().history();
+    GitOutput gitOutput = await LogUseCase().history();
+
+    if(gitOutput.isSuccess()) {
+      displayHistoryCommit(gitOutput);
+    }
+
+    return gitOutput;
   }
 
   void dispose() {
