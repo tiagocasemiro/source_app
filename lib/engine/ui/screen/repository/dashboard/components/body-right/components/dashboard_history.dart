@@ -7,6 +7,11 @@ import 'package:source_app/engine/ui/screen/repository/dashboard/components/body
 import 'package:source_app/engine/ui/source_resources.dart';
 
 class HistoryDashboard extends StatelessWidget {
+  static const double columnWithTreeHistory = 100;
+  static const double columnWithHashHistory = 130;
+  //static const double columnWithMessageHistory = 100;
+  static const double columnWithAuthorHistory = 250;
+  static const double columnWithDateHistory = 130;
 
   final BodyRightViewModel _bodyRightViewModel;
 
@@ -35,16 +40,15 @@ class HistoryDashboard extends StatelessWidget {
                   color: SourceColors.grey[5],
                   borderRadius: BorderRadius.circular(5)
               ),
-              padding: EdgeInsets.only(left: 35, bottom: 1, top: 1),
               margin: EdgeInsets.all(8),
+              padding: EdgeInsets.symmetric(horizontal: 8),
               child: Row(
                 children: [
-                  Text("_file", style: _style),
-                  Text("Tree", style: _style),
-                  Text("Hash", style: _style),
-                  Text("Message", style: _style),
-                  Text("Author", style:_style),
-                  Text("Date", style: _style),
+                  Container(child: Text("Tree", style: _style), width: columnWithTreeHistory,),
+                  Container(child: Text("Hash", style: _style), width: columnWithHashHistory,),
+                  Expanded(child: Text("Message", style: _style)),
+                  Container(child: Text("Author", style:_style), width: columnWithAuthorHistory,),
+                  Container(child: Text("Date", style: _style), width: columnWithDateHistory,),
                 ],
               ),
             ),
