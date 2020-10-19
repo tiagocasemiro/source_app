@@ -35,4 +35,8 @@ class CommitUseCase {
   Future<GitOutput> remove(String file) async {
     return await Git().restore().file(file).call();
   }
+
+  Future<GitOutput> filesModifieds(String hashCommit) async {
+    return await Git().diff().tree().noCommitId().nameOnly().r().hash(hashCommit).call();
+  }
 }

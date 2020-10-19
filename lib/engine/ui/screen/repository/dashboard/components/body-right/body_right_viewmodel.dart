@@ -21,10 +21,16 @@ class BodyRightViewModel {
   final StreamController<GitOutput> _historyCommitController = StreamController<GitOutput>.broadcast();
   Stream<GitOutput> get historyCommitOutput => _historyCommitController.stream;
 
+  final StreamController<GitOutput> _filesModifiedFromCommitController = StreamController<GitOutput>.broadcast();
+  Stream<GitOutput> get filesModifiedFromCommitOutput => _filesModifiedFromCommitController.stream;
+
+  void displayFilesFromCommit(GitOutput gitOutput) {
+    _filesModifiedFromCommitController.sink.add(gitOutput);
+  }
+
   void displayHistoryCommit(GitOutput gitOutput) {
     _historyCommitController.sink.add(gitOutput);
   }
-  
 
   void displayFileDiff(MapEntry<String, String> file) {
     _fileDiffDashboardController.sink.add(file);
@@ -128,11 +134,22 @@ class BodyRightViewModel {
     return gitOutput;
   }
 
+  Future<GitOutput> modifiedFilesFromCommit(String hashCommit) async {
+    GitOutput gitOutput = await CommitUseCase().filesModifieds(hashCommit.trim());
+
+    if(gitOutput.isSuccess()) {
+      displayFilesFromCommit(gitOutput);
+    }
+
+    return gitOutput;
+  }
+
   void dispose() {
     _rightDashboardController.close();
     _fileDiffDashboardController.close();
     _stagedDashboardController.close();
     _unStagedDashboardController.close();
     _historyCommitController.close();
+    _filesModifiedFromCommitController.close();
   }
 }

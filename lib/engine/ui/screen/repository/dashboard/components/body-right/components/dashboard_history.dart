@@ -77,7 +77,7 @@ class HistoryDashboard extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final GitCommit commit = commits[index];
                             return ItemHistory(index, commit, () {
-                              print(commit.author);
+                              _bodyRightViewModel.modifiedFilesFromCommit(commit.hash);
                             });
                           },
                           itemCount: commits.length,
