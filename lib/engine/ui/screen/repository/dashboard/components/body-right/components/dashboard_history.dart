@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 
@@ -39,7 +40,12 @@ class HistoryDashboard extends StatelessWidget {
                 Text("Hash", style: _style),
                 Text("Message", style: _style),
                 Text("Author", style:_style),
-                Text("Date", style: _style)
+                Text("Date", style: _style),
+                StreamBuilder(
+                stream: _bodyRightViewModel.historyCommitOutput,
+                builder: (context, snapshot) {
+                  return Container();
+                }),
               ],
             ),
             // TODO add body
