@@ -37,6 +37,6 @@ class CommitUseCase {
   }
 
   Future<GitOutput> filesModifieds(String hashCommit) async {
-    return await Git().diff().tree().noCommitId().nameOnly().r().hash(hashCommit).call();
+    return await Git().diff().tree().noCommitId().nameStatus().r().hash(hashCommit).call();
   }
 }

@@ -8,9 +8,6 @@ class CommitFiles extends StatelessWidget {
 
   CommitFiles(this._bodyRightViewModel);
 
-  //git diff-tree --no-commit-id --name-only -r 03772e053a5d8b2b37d04fbed4f090c2a9c6d3e8
-
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
