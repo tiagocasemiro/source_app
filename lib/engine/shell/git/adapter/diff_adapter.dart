@@ -1,3 +1,4 @@
+import 'package:source_app/engine/domain/model/git_file_modified.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/shell/model/terminal_output.dart';
 import 'base/base_adapter.dart';
@@ -11,6 +12,17 @@ class DiffAdapter extends BaseAdapter {
       List<String> files = List();
       gitOutput.lines.forEach((String line) {
         files.add(clean(line));
+      });
+
+      return gitOutput.withObject(files);
+    });
+  }
+
+  GitOutput filesModifiedFromCommit() {
+    return execute(transform: (gitOutput) {
+      List<GitFileModified> files = List();
+      gitOutput.lines.forEach((String line) {
+        files.add(GitFileModified(line, TypeFile.add));
       });
 
       return gitOutput.withObject(files);
