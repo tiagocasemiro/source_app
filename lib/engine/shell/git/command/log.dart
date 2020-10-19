@@ -5,7 +5,7 @@ import 'base/base_command.dart';
 
 class Log extends BaseGitCommand {
   static const String breakGraphCharacter = "#";
-  static const String historyFormat = "$breakGraphCharacter %h $breakGraphCharacter %an $breakGraphCharacter %s $breakGraphCharacter %as";
+  static const String historyFormat = "$breakGraphCharacter %h $breakGraphCharacter %an $breakGraphCharacter %s $breakGraphCharacter %as $breakGraphCharacter %H";
 
   Log(String workDirectory) : super(workDirectory) {
     parameters.add('--no-pager');

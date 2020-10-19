@@ -17,13 +17,14 @@ class LogAdapter extends BaseAdapter {
         line = line.replaceAll("\"", "");
         List<String> breakLine = line.split(Log.breakGraphCharacter);
         if(breakLine.length > 0) {
-          if(breakLine.length == 5) {
+          if(breakLine.length == 6) {
             commits.add(GitCommit(
                 asciiGraph: breakLine[0],
                 abbreviatedHash: breakLine[1],
                 author: breakLine[2],
                 message: breakLine[3],
-                date: breakLine[4]));
+                date: breakLine[4],
+                hash: breakLine[5]));
           } else {
             commits.add(GitCommit(asciiGraph: breakLine[0]));
           }
