@@ -22,7 +22,19 @@ class DiffAdapter extends BaseAdapter {
     return execute(transform: (gitOutput) {
       List<GitFileModified> files = List();
       gitOutput.lines.forEach((String line) {
-        files.add(GitFileModified(line, TypeFile.add));
+        List<String> parts = line.split("\t");
+
+        TypeFile typeFile = TypeFile.modification;
+        if(parts.length == 2) {
+          if(parts[0] == "A") {
+            typeFile = TypeFile.add;
+          } else if(parts[0] == "D") {
+            typeFile = TypeFile.delete;
+          } else if(parts[0] == "M") {
+            typeFile = TypeFile.modification;
+          }
+          files.add(GitFileModified(parts[1], typeFile));
+        }
       });
 
       return gitOutput.withObject(files);

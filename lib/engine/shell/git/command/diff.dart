@@ -53,6 +53,12 @@ class Diff extends BaseGitCommand {
     return this;
   }
 
+  Diff nameStatus() {
+    parameters.add("--name-status");
+
+    return this;
+  }
+
   @override
   Future<GitOutput> call() async {
     TerminalOutput terminalOutput = await super.execute(parameters: parameters);
