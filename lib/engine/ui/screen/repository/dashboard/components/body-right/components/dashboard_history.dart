@@ -9,7 +9,6 @@ import 'package:source_app/engine/ui/source_resources.dart';
 class HistoryDashboard extends StatelessWidget {
   static const double columnWithTreeHistory = 100;
   static const double columnWithHashHistory = 130;
-  //static const double columnWithMessageHistory = 100;
   static const double columnWithAuthorHistory = 250;
   static const double columnWithDateHistory = 130;
 
@@ -26,67 +25,70 @@ class HistoryDashboard extends StatelessWidget {
     );
     _bodyRightViewModel.history();
 
-    return Container(
-      decoration: BoxDecoration(
-        color: SourceColors.grey[2],
-        borderRadius: BorderRadius.circular(10)
-      ),
+    return Material(
+      color: Colors.transparent,
       child: Container(
-        width: double.maxFinite,
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  color: SourceColors.grey[5],
-                  borderRadius: BorderRadius.circular(5)
+        decoration: BoxDecoration(
+          color: SourceColors.grey[2],
+          borderRadius: BorderRadius.circular(10)
+        ),
+        child: Container(
+          width: double.maxFinite,
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: SourceColors.grey[5],
+                    borderRadius: BorderRadius.circular(5)
+                ),
+                margin: EdgeInsets.all(8),
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Row(
+                  children: [
+                    Container(child: Text("Tree", style: _style), width: columnWithTreeHistory,),
+                    Container(child: Text("Hash", style: _style), width: columnWithHashHistory,),
+                    Expanded(child: Text("Message", style: _style)),
+                    Container(child: Text("Author", style:_style), width: columnWithAuthorHistory,),
+                    Container(child: Text("Date", style: _style), width: columnWithDateHistory,),
+                  ],
+                ),
               ),
-              margin: EdgeInsets.all(8),
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: Row(
-                children: [
-                  Container(child: Text("Tree", style: _style), width: columnWithTreeHistory,),
-                  Container(child: Text("Hash", style: _style), width: columnWithHashHistory,),
-                  Expanded(child: Text("Message", style: _style)),
-                  Container(child: Text("Author", style:_style), width: columnWithAuthorHistory,),
-                  Container(child: Text("Date", style: _style), width: columnWithDateHistory,),
-                ],
-              ),
-            ),
-            StreamBuilder(
-              stream: _bodyRightViewModel.historyCommitOutput,
-              builder: (context, snapshot) {
-                GitOutput gitOutput = snapshot.data;
-                List<GitCommit> commits = snapshot.data is GitOutput &&
-                    gitOutput.isSuccess() && gitOutput.object != null &&
-                    gitOutput.object is List<GitCommit> ? gitOutput.object: List<GitCommit>();
+              StreamBuilder(
+                stream: _bodyRightViewModel.historyCommitOutput,
+                builder: (context, snapshot) {
+                  GitOutput gitOutput = snapshot.data;
+                  List<GitCommit> commits = snapshot.data is GitOutput &&
+                      gitOutput.isSuccess() && gitOutput.object != null &&
+                      gitOutput.object is List<GitCommit> ? gitOutput.object: List<GitCommit>();
 
-                return Visibility(
-                  visible: commits.isNotEmpty,
-                  replacement: Center(child: Text("No history",
-                    style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w300,
-                      color: SourceColors.blue[2],
-                      fontSize: 16.0,
-                    ),
-                  )),
-                  child: Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 8, left: 8, right: 8),
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          final GitCommit commit = commits[index];
-                          return ItemHistory(index, commit, (String hash) {
-                            print(hash);
-                          });
-                        },
-                        itemCount: commits.length,
+                  return Visibility(
+                    visible: commits.isNotEmpty,
+                    replacement: Center(child: Text("No history",
+                      style: GoogleFonts.roboto(
+                        fontWeight: FontWeight.w300,
+                        color: SourceColors.blue[2],
+                        fontSize: 16.0,
+                      ),
+                    )),
+                    child: Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 8, left: 8, right: 8),
+                        child: ListView.builder(
+                          itemBuilder: (context, index) {
+                            final GitCommit commit = commits[index];
+                            return ItemHistory(index, commit, () {
+                              print(commit.author);
+                            });
+                          },
+                          itemCount: commits.length,
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },),
-          ],
-        )
+                  );
+                },),
+            ],
+          )
+        ),
       ),
     );
   }
