@@ -18,6 +18,14 @@ class BodyRightViewModel {
   Stream<bool> get unStagedDashboardOutput => _unStagedDashboardController.stream;
 
 
+  final StreamController<GitOutput> _historyCommitController = StreamController<GitOutput>.broadcast();
+  Stream<GitOutput> get historyCommitOutput => _historyCommitController.stream;
+
+  void displayHistoryCommit(GitOutput gitOutput) {
+    _historyCommitController.sink.add(gitOutput);
+  }
+  
+
   void displayFileDiff(MapEntry<String, String> file) {
     _fileDiffDashboardController.sink.add(file);
   }
@@ -119,5 +127,6 @@ class BodyRightViewModel {
     _fileDiffDashboardController.close();
     _stagedDashboardController.close();
     _unStagedDashboardController.close();
+    _historyCommitController.close();
   }
 }
