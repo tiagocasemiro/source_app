@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
@@ -9,7 +8,6 @@ class ItemLineCheck extends StatelessWidget {
   final String _title;
   final Function _onCheck;
   final Function _onClick;
-
 
   ItemLineCheck(this._file, this._index, this._title, this._onCheck(String file), this._onClick(String file));
 
