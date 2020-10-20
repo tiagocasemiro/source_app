@@ -7,6 +7,7 @@ import 'package:source_app/engine/ui/screen/repository/dashboard/components/body
 import 'package:source_app/engine/ui/source_resources.dart';
 
 class HistoryDashboard extends StatelessWidget {
+  final ScrollController _scrollController = ScrollController();
   static const double columnWithTreeHistory = 100;
   static const double columnWithHashHistory = 130;
   static const double columnWithAuthorHistory = 250;
@@ -73,14 +74,20 @@ class HistoryDashboard extends StatelessWidget {
                     child: Expanded(
                       child: Container(
                         margin: EdgeInsets.only(bottom: 8, left: 8, right: 8),
-                        child: ListView.builder(
-                          itemBuilder: (context, index) {
-                            final GitCommit commit = commits[index];
-                            return ItemHistory(index, commit, () {
-                              _bodyRightViewModel.modifiedFilesFromCommit(commit.hash);
-                            });
-                          },
-                          itemCount: commits.length,
+                        child: Scrollbar(
+                          isAlwaysShown: true,
+                          controller: _scrollController,
+                          radius: Radius.circular(10),
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            itemBuilder: (context, index) {
+                              final GitCommit commit = commits[index];
+                              return ItemHistory(index, commit, () {
+                                _bodyRightViewModel.modifiedFilesFromCommit(commit.hash);
+                              });
+                            },
+                            itemCount: commits.length,
+                          ),
                         ),
                       ),
                     ),
