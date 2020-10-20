@@ -1,6 +1,6 @@
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/components/dashboard_history.dart';
-import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/components/commit_files.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/components/commit_details.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/components/diff_file.dart';
 import 'package:source_app/engine/ui/utils/default_values.dart';
 import 'package:source_app/engine/ui/widgets/horizontal_split_view.dart';
@@ -26,7 +26,7 @@ class BodyRightHistory extends StatelessWidget {
           child: VerticalSplitView(
             left: Container(
               padding: const EdgeInsets.only(bottom: defaultPaddingSize),
-              child: CommitFiles(_bodyRightViewModel),
+              child: CommitDetails(_bodyRightViewModel),
             ),
             right: Container(
               padding: const EdgeInsets.only(
