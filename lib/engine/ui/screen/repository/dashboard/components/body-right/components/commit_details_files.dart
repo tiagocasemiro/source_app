@@ -5,11 +5,11 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 
-class ItemFileFromCommit extends StatelessWidget {
+class CommitDetailsFiles extends StatelessWidget {
 
   final BodyRightViewModel _bodyRightViewModel;
 
-  ItemFileFromCommit(this._bodyRightViewModel);
+  CommitDetailsFiles(this._bodyRightViewModel);
 
   @override
   Widget build(BuildContext context) {
