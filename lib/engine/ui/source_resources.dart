@@ -15,6 +15,8 @@ class SourceColors {
       9: Color(0xFFE9E9E9),
       10: Color(0xFFD7D7D7),
       11: Color(0xFFEBEBEB),
+      12: Color(0xFF828282),
+      13: Color(0xFFB2B2B2)
 
     },
   );
@@ -51,6 +53,12 @@ class SourceColors {
   static const MaterialColor orange = MaterialColor(0xFFDB950D,
     <int, Color>{
       1: Color(0xFFDB950D),
+    },
+  );
+
+  static const MaterialColor transparent = MaterialColor(0x00000000,
+    <int, Color>{
+      1: Color(0x00000000),
     },
   );
 
