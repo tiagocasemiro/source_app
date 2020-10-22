@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:source_app/engine/domain/model/git_commit.dart';
 import 'package:source_app/engine/domain/use.case/commit_usecase.dart';
 import 'package:source_app/engine/domain/use.case/log_usecase.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
@@ -17,15 +18,14 @@ class BodyRightViewModel {
   final StreamController<bool> _unStagedDashboardController = StreamController<bool>.broadcast();
   Stream<bool> get unStagedDashboardOutput => _unStagedDashboardController.stream;
 
-
   final StreamController<GitOutput> _historyCommitController = StreamController<GitOutput>.broadcast();
   Stream<GitOutput> get historyCommitOutput => _historyCommitController.stream;
 
-  final StreamController<GitOutput> _filesModifiedFromCommitController = StreamController<GitOutput>.broadcast();
-  Stream<GitOutput> get filesModifiedFromCommitOutput => _filesModifiedFromCommitController.stream;
+  final StreamController<GitCommit> _commitDetailsController = StreamController<GitCommit>.broadcast();
+  Stream<GitCommit> get commitDetailsOutput => _commitDetailsController.stream;
 
-  void displayFilesFromCommit(GitOutput gitOutput) {
-    _filesModifiedFromCommitController.sink.add(gitOutput);
+  void displayCommitDetails(GitCommit gitOutput) {
+    _commitDetailsController.sink.add(gitOutput);
   }
 
   void displayHistoryCommit(GitOutput gitOutput) {
@@ -134,12 +134,8 @@ class BodyRightViewModel {
     return gitOutput;
   }
 
-  Future<GitOutput> modifiedFilesFromCommit(String hashCommit) async {
-    GitOutput gitOutput = await CommitUseCase().filesModifieds(hashCommit.trim());
-
-    if(gitOutput.isSuccess()) {
-      displayFilesFromCommit(gitOutput);
-    }
+  Future<GitOutput> modifiedFilesFromCommit(GitCommit commit) async {
+    GitOutput gitOutput = await CommitUseCase().filesModifieds(commit.hash.trim());
 
     return gitOutput;
   }
@@ -150,6 +146,6 @@ class BodyRightViewModel {
     _stagedDashboardController.close();
     _unStagedDashboardController.close();
     _historyCommitController.close();
-    _filesModifiedFromCommitController.close();
+    _commitDetailsController.close();
   }
 }
