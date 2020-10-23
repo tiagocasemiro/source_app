@@ -14,8 +14,9 @@ class CommitDetailsFiles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GitOutput initialData = GitOutput("").withObject( List<GitFileModified>());
     return FutureBuilder(
-      initialData: null,
+      initialData: initialData,
       future: _bodyRightViewModel.modifiedFilesFromCommit(_commitDetails),
       builder: (context, snapshot) {
         GitOutput gitOutput = snapshot.data;
@@ -24,15 +25,15 @@ class CommitDetailsFiles extends StatelessWidget {
           gitOutput.object is List<GitFileModified> ? gitOutput.object: List<GitFileModified>();
         return Visibility(
           visible: filesCommitted.isNotEmpty,
-          replacement: Center(child: Text("No files on commit",
-            style: GoogleFonts.roboto(
-              fontWeight: FontWeight.w300,
-              color: SourceColors.blue[2],
-              fontSize: 16.0,
-            ),
+          replacement: Center(child: snapshot.connectionState != ConnectionState.done? CircularProgressIndicator(): Text("No files on commit",
+           style: GoogleFonts.roboto(
+             fontWeight: FontWeight.w300,
+             color: SourceColors.blue[2],
+             fontSize: 16.0,
+           ),
           )),
           child: Container(
-            child: Text(gitOutput.message), //todo
+            child: Text(""), //todo
           )
         );
       }
