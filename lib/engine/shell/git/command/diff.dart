@@ -21,6 +21,12 @@ class Diff extends BaseGitCommand {
     return this;
   }
 
+  Diff commit(String hash) {
+    parameters.add(hash);
+
+    return this;
+  }
+
   Diff file(String name) {
     parameters.add(name);
 

@@ -24,6 +24,10 @@ class CommitUseCase {
     return await Git().diff().cached().file(file).call();
   }
 
+  Future<GitOutput> diffCommitted(String hash, String file) async {
+    return await Git().diff().commit(hash).file(file).call();
+  }
+
   Future<GitOutput> add(String file) async {
     return await Git().add().file(file).call();
   }
