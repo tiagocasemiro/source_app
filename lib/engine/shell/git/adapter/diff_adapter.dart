@@ -33,7 +33,7 @@ class DiffAdapter extends BaseAdapter {
           } else if(parts[0] == "M") {
             typeFile = TypeFile.modification;
           }
-          files.add(GitFileModified(parts[1], typeFile));
+          files.add(GitFileModified(parts[1], typeFile: typeFile));
         }
       });
 
