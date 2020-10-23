@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:source_app/engine/domain/model/git_commit.dart';
+import 'package:source_app/engine/domain/model/git_file_modified.dart';
 import 'package:source_app/engine/domain/use.case/commit_usecase.dart';
 import 'package:source_app/engine/domain/use.case/log_usecase.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
@@ -9,8 +10,8 @@ class BodyRightViewModel {
   final StreamController<String> _rightDashboardController = StreamController<String>.broadcast();
   Stream<String> get rightDashboardOutput => _rightDashboardController.stream;
 
-  final StreamController<MapEntry<String, String>> _fileDiffDashboardController = StreamController<MapEntry<String, String>>.broadcast();
-  Stream<MapEntry<String, String>> get fileDiffDashboardOutput => _fileDiffDashboardController.stream;
+  final StreamController<GitFileModified> _fileDiffDashboardController = StreamController<GitFileModified>.broadcast();
+  Stream<GitFileModified> get fileDiffDashboardOutput => _fileDiffDashboardController.stream;
 
   final StreamController<bool> _stagedDashboardController = StreamController<bool>.broadcast();
   Stream<bool> get stagedDashboardOutput => _stagedDashboardController.stream;
@@ -32,7 +33,7 @@ class BodyRightViewModel {
     _historyCommitController.sink.add(gitOutput);
   }
 
-  void displayFileDiff(MapEntry<String, String> file) {
+  void displayFileDiff(GitFileModified file) {
     _fileDiffDashboardController.sink.add(file);
   }
 
@@ -67,12 +68,14 @@ class BodyRightViewModel {
     return gitOutput;
   }
 
-  Future<GitOutput> diff(MapEntry<String, String> file) async {
+  Future<GitOutput> diff(GitFileModified fileModified) async {
     GitOutput gitOutput;
-    if(file.key == staged) {
-      gitOutput = await CommitUseCase().diffCached(file.value);
-    } else {
-      gitOutput = await CommitUseCase().diff(file.value);
+    if(fileModified.stageFile == StageFile.staged) {
+      gitOutput = await CommitUseCase().diffCached(fileModified.name);
+    } else if(fileModified.stageFile == StageFile.unstaged)
+      gitOutput = await CommitUseCase().diff(fileModified.name);
+    else {
+      gitOutput = await CommitUseCase().diffCommitted(fileModified.commitHash, fileModified.name);
     }
     if(gitOutput.isSuccess()) {
       List<String> modifiedFile = gitOutput.lines;
