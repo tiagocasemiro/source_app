@@ -17,7 +17,8 @@ class ItemFileCommitted extends StatelessWidget {
           child: Text(fileCommitted.name)
         ),
         onTap: () {
-          // _bodyRightViewModel.displayFileDiff(MapEntry<String, String>(unstaged, fileCommitted.name)); todo create new command diff to commited files
+          GitFileModified fileModified = GitFileModified(fileCommitted.name, commitHash: fileCommitted.commitHash, stageFile: StageFile.committed);
+          _bodyRightViewModel.displayFileDiff(fileModified);
         },
       )
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:source_app/engine/domain/model/git_file_modified.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/widget/item_file_check.dart';
@@ -58,7 +59,8 @@ class UnstagedFiles extends StatelessWidget {
                           }
                         });
                       }, (String clickedFile) {
-                        _bodyRightViewModel.displayFileDiff(MapEntry<String, String>(unstaged, clickedFile));
+                        GitFileModified fileModified = GitFileModified(clickedFile, stageFile: StageFile.unstaged);
+                        _bodyRightViewModel.displayFileDiff(fileModified);
                       });
                     },
                     itemCount: filesUncommitted.length,
