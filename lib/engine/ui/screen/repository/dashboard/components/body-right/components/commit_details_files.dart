@@ -4,6 +4,7 @@ import 'package:source_app/engine/domain/model/git_commit.dart';
 import 'package:source_app/engine/domain/model/git_file_modified.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/widget/item_file_commited.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 
 class CommitDetailsFiles extends StatelessWidget {
@@ -33,7 +34,14 @@ class CommitDetailsFiles extends StatelessWidget {
            ),
           )),
           child: Container(
-            child: Text(""), //todo
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                final GitFileModified fileCommitted = filesCommitted[index];
+
+                return ItemFileCommitted(_bodyRightViewModel, fileCommitted);
+              },
+              itemCount: filesCommitted.length,
+            ),
           )
         );
       }
