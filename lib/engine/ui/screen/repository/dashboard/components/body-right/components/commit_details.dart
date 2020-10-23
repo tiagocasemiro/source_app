@@ -17,7 +17,6 @@ class CommitDetails extends StatelessWidget {
     double heightTitle = 18;
     double widthTitle = 100;
 
-
     Map<int, Widget> titles_1 = <int, Widget>{
       0: Container(height: heightTitle, width: widthTitle, child: Center(
         child: Text("Files", style: GoogleFonts.roboto(
@@ -78,8 +77,8 @@ class CommitDetails extends StatelessWidget {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                            color: SourceColors.grey[10],
-                            borderRadius: BorderRadius.circular(5)
+                          color: SourceColors.grey[10],
+                          borderRadius: BorderRadius.circular(5)
                         ),
                         margin: EdgeInsets.all(8),
                         padding: EdgeInsets.all(4),
@@ -101,8 +100,7 @@ class CommitDetails extends StatelessWidget {
                                     padding: EdgeInsets.symmetric(horizontal: 2),
                                     borderColor: SourceColors.grey[5],
                                     selectedColor: SourceColors.grey[12],
-                                    unselectedColor: SourceColors
-                                        .grey[13],
+                                    unselectedColor: SourceColors.grey[13],
                                     pressedColor: SourceColors.grey[13],
                                     children: selectedTitle,
                                     onValueChanged: (int value) {
@@ -120,8 +118,8 @@ class CommitDetails extends StatelessWidget {
                                 ),
                               ),
                               Flexible(
-                                  flex: 10,
-                                  child: Container()
+                                flex: 10,
+                                child: Container()
                               )
                             ],
                           ),
