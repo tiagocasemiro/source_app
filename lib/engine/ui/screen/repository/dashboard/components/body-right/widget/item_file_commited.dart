@@ -17,8 +17,8 @@ class ItemFileCommitted extends StatelessWidget {
           child: Text(fileCommitted.name)
         ),
         onTap: () {
-          GitFileModified fileModified = GitFileModified(fileCommitted.name, commitHash: fileCommitted.commitHash, stageFile: StageFile.committed);
-          _bodyRightViewModel.displayFileDiff(fileModified);
+          fileCommitted.stageFile = StageFile.committed;
+          _bodyRightViewModel.displayFileDiff(fileCommitted);
         },
       )
     );
