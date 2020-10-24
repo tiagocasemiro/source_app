@@ -24,6 +24,8 @@ class ItemLineFile extends StatelessWidget {
     }
 
     if(_number == 0) {
+      String title = _file.split("/").last;
+
       return Container(
         decoration: BoxDecoration(
             color: SourceColors.grey[5],
@@ -32,14 +34,17 @@ class ItemLineFile extends StatelessWidget {
         padding: EdgeInsets.only(left: 35, bottom: 1, top: 1),
         margin: EdgeInsets.only(bottom: 8),
         width: double.maxFinite,
-        child: Text(_file, style: GoogleFonts.balooBhai(
+        child: Text(title, style: GoogleFonts.balooBhai(
           fontWeight: FontWeight.w400,
           color: SourceColors.blue[2],
           fontSize: 18.0,
         ),),
       );
     }
-
+    String content = _content;
+    if(_content.contains("@@")) {
+      content  = _content.split("@@")[2];
+    }
     return Row(children: [
       Container(
         color: SourceColors.grey[9],
@@ -61,7 +66,7 @@ class ItemLineFile extends StatelessWidget {
               padding: EdgeInsets.all(5),
               color: background,
               alignment: Alignment.centerLeft,
-              child: Text(_content, style: GoogleFonts.roboto(
+              child: Text(content, style: GoogleFonts.roboto(
                 fontWeight: FontWeight.w400,
                 color: text,
                 fontSize: 16.0,
