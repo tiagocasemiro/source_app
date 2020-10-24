@@ -5,8 +5,9 @@ class GitCommit {
   String message;
   String date;
   String author;
+  String beforeHash;
 
-  GitCommit({this.asciiGraph = "", this.abbreviatedHash = "", this.author = "", this.message = "", this.date = "", this.hash = ""});
+  GitCommit({this.asciiGraph = "", this.abbreviatedHash = "", this.author = "", this.message = "", this.date = "", this.hash = "", this.beforeHash = ""});
 
   @override
   String toString() {
