@@ -24,7 +24,12 @@ class CommitUseCase {
     return await Git().diff().cached().file(file).call();
   }
 
-  Future<GitOutput> diffCommitted(String hash, String file) async {
+  Future<GitOutput> diffCommitted(String beforeHash, String hash, String file) async {
+    //git diff f4a2ea00f0ca6e845597961e32cbb71cc3de149b..4071ba9cc286f9a370fef743ca500417fb2592bb documento-modificado.txt
+    if(beforeHash != null && beforeHash.isNotEmpty) {
+      return await Git().diff().commits(beforeHash, hash).file(file).call();
+    }
+
     return await Git().diff().commit(hash).file(file).call();
   }
 
