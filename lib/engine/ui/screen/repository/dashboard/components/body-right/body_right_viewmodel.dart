@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:source_app/engine/domain/model/git_commit.dart';
 import 'package:source_app/engine/domain/model/git_file_modified.dart';
 import 'package:source_app/engine/domain/use.case/commit_usecase.dart';
@@ -75,7 +76,7 @@ class BodyRightViewModel {
     } else if(fileModified.stageFile == StageFile.unstaged)
       gitOutput = await CommitUseCase().diff(fileModified.name);
     else {
-      gitOutput = await CommitUseCase().diffCommitted(fileModified.commitHash, fileModified.name);
+      gitOutput = await CommitUseCase().diffCommitted(fileModified.beforeCommitHash, fileModified.commitHash, fileModified.name);
     }
     if(gitOutput.isSuccess()) {
       List<String> modifiedFile = gitOutput.lines;
@@ -97,7 +98,6 @@ class BodyRightViewModel {
         newList.add(element);
       }
       if(element.contains("@@")) {
-        print(element);
         canAdd = true;
       }
     });
@@ -139,6 +139,15 @@ class BodyRightViewModel {
 
   Future<GitOutput> modifiedFilesFromCommit(GitCommit commit) async {
     GitOutput gitOutput = await CommitUseCase().filesModifieds(commit.hash.trim());
+
+    if(gitOutput.isSuccess() && gitOutput.object != null && gitOutput.object is List<GitFileModified>) {
+      List<GitFileModified> files = gitOutput.object;
+      files.forEach((file) {
+        file.commitHash = commit.hash.trim();
+        file.beforeCommitHash = commit.beforeHash.trim();
+      });
+      gitOutput.withObject(files);
+    }
 
     return gitOutput;
   }
