@@ -37,6 +37,7 @@ class CommitDetailsFiles extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (context, index) {
                 final GitFileModified fileCommitted = filesCommitted[index];
+                fileCommitted.beforeCommitHash = _commitDetails.beforeHash.trim();
 
                 return ItemFileCommitted(_bodyRightViewModel, fileCommitted);
               },
