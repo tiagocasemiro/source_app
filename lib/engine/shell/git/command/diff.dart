@@ -27,6 +27,12 @@ class Diff extends BaseGitCommand {
     return this;
   }
 
+  Diff commits(String before, String hash) {
+    parameters.add("$before..$hash");
+
+    return this;
+  }
+
   Diff file(String name) {
     parameters.add(name);
 
