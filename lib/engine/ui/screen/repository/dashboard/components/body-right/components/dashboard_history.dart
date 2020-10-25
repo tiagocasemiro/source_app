@@ -83,6 +83,10 @@ class HistoryDashboard extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final GitCommit commit = commits[index];
                               return ItemHistory(index, commit, () {
+                                int beforeIndex = index + 1;
+                                if(beforeIndex < commits.length) {
+                                  commit.beforeHash = commits[beforeIndex].hash;
+                                }
                                 _bodyRightViewModel.displayCommitDetails(commit);
                               });
                             },
