@@ -32,7 +32,7 @@ class CommitDetailsFiles extends StatelessWidget {
         }
 
         return Visibility(
-          visible: filesCommitted.isNotEmpty,
+          visible: filesCommitted != null && filesCommitted.isNotEmpty,
           replacement: Center(child: snapshot.connectionState != ConnectionState.done? CircularProgressIndicator(): Text("No files on commit",
            style: GoogleFonts.roboto(
              fontWeight: FontWeight.w300,
