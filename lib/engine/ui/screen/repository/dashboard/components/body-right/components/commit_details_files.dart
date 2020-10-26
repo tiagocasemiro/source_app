@@ -24,6 +24,13 @@ class CommitDetailsFiles extends StatelessWidget {
         List<GitFileModified> filesCommitted = snapshot.data is GitOutput &&
           gitOutput.isSuccess() && gitOutput.object != null &&
           gitOutput.object is List<GitFileModified> ? gitOutput.object: List<GitFileModified>();
+
+        if(snapshot.connectionState == ConnectionState.done && filesCommitted != null && filesCommitted.isNotEmpty) {
+          GitFileModified fileCommitted = filesCommitted[0];
+          fileCommitted.stageFile = StageFile.committed;
+          _bodyRightViewModel.displayFileDiff(fileCommitted);
+        }
+
         return Visibility(
           visible: filesCommitted.isNotEmpty,
           replacement: Center(child: snapshot.connectionState != ConnectionState.done? CircularProgressIndicator(): Text("No files on commit",
