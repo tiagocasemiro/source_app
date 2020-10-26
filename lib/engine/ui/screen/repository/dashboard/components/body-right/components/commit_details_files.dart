@@ -46,7 +46,7 @@ class CommitDetailsFiles extends StatelessWidget {
                 final GitFileModified fileCommitted = filesCommitted[index];
                 fileCommitted.beforeCommitHash = _commitDetails.beforeHash.trim();
 
-                return ItemFileCommitted(_bodyRightViewModel, fileCommitted);
+                return ItemFileCommitted(index, _bodyRightViewModel, fileCommitted);
               },
               itemCount: filesCommitted.length,
             ),
