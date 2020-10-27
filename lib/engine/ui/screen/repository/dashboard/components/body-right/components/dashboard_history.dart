@@ -8,10 +8,10 @@ import 'package:source_app/engine/ui/source_resources.dart';
 
 class HistoryDashboard extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
-  static const double columnWithTreeHistory = 100;
-  static const double columnWithHashHistory = 130;
-  static const double columnWithAuthorHistory = 250;
-  static const double columnWithDateHistory = 130;
+  static const double columnWithTreeHistory = 130;
+  static const double columnWithHashHistory = 100;
+  static const double columnWithAuthorHistory = 200;
+  static const double columnWithDateHistory = 110;
 
   final BodyRightViewModel _bodyRightViewModel;
 
