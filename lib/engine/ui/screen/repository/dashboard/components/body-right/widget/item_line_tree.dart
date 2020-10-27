@@ -12,6 +12,7 @@ class ItemLineTree extends StatelessWidget {
   //https://stackoverflow.com/a/34987899/7249382
 
   //git log --pretty='%h|%p|%d'
+  //git log --all --date-order --pretty="%H|%P|%d"
 
   @override
   Widget build(BuildContext context) {
