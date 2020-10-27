@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:source_app/engine/domain/model/git_commit.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/components/dashboard_history.dart';
+import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/widget/item_line_tree.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 
 class ItemHistory extends StatelessWidget {
@@ -30,12 +31,10 @@ class ItemHistory extends StatelessWidget {
         splashColor: SourceColors.blue[5],
         child: Container(
           color: isPair ? SourceColors.grey[11] : SourceColors.grey[10],
-          padding: EdgeInsets.symmetric(horizontal: 8,),
           child: Row(
             children: [
               Container(
-                alignment: Alignment.centerLeft,
-                child: Text(_commit.asciiGraph, style: _style, maxLines: 1,),
+                child: ItemLineTree(_commit.asciiGraph),
                 width: HistoryDashboard.columnWithTreeHistory,
                 height: lineHeight,),
               Container(
