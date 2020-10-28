@@ -4,6 +4,6 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 
 class LogUseCase {
   Future<GitOutput> history() async {
-    return Git().log().graph().pretty(Log.historyFormat).call();
+    return Git().log().all().dateOrder().pretty(Log.historyFormat).call();
   }
 }
