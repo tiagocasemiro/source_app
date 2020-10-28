@@ -33,9 +33,9 @@ class ItemLineTree extends StatelessWidget {
 
   List<Widget> buildLine() {
     List<Widget> line = List();
-    List<String> patterns = lineTree.split("");
-
+    List<String> patterns = lineTree.split("|");
     patterns.forEach((pattern) {
+
       if(pattern != null) {
         Widget flow = patternToWidget(pattern);
         if(flow != null) {
