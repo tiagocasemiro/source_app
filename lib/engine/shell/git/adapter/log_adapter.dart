@@ -15,7 +15,7 @@ class LogAdapter extends BaseAdapter {
 
       gitOutput.lines.forEach((line) {
         line = line.replaceAll("\"", "");
-        List<String> breakLine = line.split(Log.breakGraphCharacter);
+        List<String> breakLine = line.split(Log.breakWord);
         if(breakLine.length > 0) {
           if(breakLine.length == 6) {
             commits.add(GitCommit(
