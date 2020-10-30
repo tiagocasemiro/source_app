@@ -62,7 +62,7 @@ class HistoryDashboard extends StatelessWidget {
                       gitOutput.isSuccess() && gitOutput.object != null &&
                       gitOutput.object is List<GitCommit> ? gitOutput.object: List<GitCommit>();
 
-                  return Visibility(
+                   return Visibility(
                     visible: commits.isNotEmpty,
                     replacement: Center(child: Text("No history",
                       style: GoogleFonts.roboto(
@@ -82,11 +82,7 @@ class HistoryDashboard extends StatelessWidget {
                             controller: _scrollController,
                             itemBuilder: (context, index) {
                               final GitCommit commit = commits[index];
-                              return ItemHistory(index, commit, () {
-                                int beforeIndex = index + 1;
-                                if(beforeIndex < commits.length) {
-                                  commit.beforeHash = commits[beforeIndex].hash;
-                                }
+                             return ItemHistory(index, commit, () {
                                 _bodyRightViewModel.displayCommitDetails(commit);
                               });
                             },
