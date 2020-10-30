@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
@@ -33,9 +35,8 @@ class ItemLineTree extends StatelessWidget {
 
   List<Widget> buildLine() {
     List<Widget> line = List();
-    List<String> patterns = lineTree.split("|");
+    List<String> patterns = lineTree.split("");
     patterns.forEach((pattern) {
-
       if(pattern != null) {
         Widget flow = patternToWidget(pattern);
         if(flow != null) {
@@ -52,17 +53,10 @@ class ItemLineTree extends StatelessWidget {
 
   Widget patternToWidget(String pattern) {
     String image = "";
-    switch(pattern){
+
+    switch(pattern.trim()){
       case "|": {
         image = "images/flow-vertical.svg";
-        break;
-      }
-      case "/": {
-        image = "images/flow-from-right.svg";
-        break;
-      }
-      case "\\": {
-        image = "images/flow-from-left.svg";
         break;
       }
       case "*": {
@@ -70,11 +64,11 @@ class ItemLineTree extends StatelessWidget {
         break;
       }
       default: {
-        return null;
+        return Container(width:10, height: singleLine,);
       }
     }
 
-   return  SvgPicture.asset(image, width: singleLine, height: singleLine);
+   return  SvgPicture.asset(image, width: 10, height: singleLine);
   }
 }
 
