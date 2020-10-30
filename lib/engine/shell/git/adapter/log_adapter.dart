@@ -13,21 +13,33 @@ class LogAdapter extends BaseAdapter {
     return execute(transform: (gitOutput) {
       List<GitCommit> commits = List();
 
+      List<String> hashes = List();
+
       gitOutput.lines.forEach((line) {
         line = line.replaceAll("\"", "");
         List<String> breakLine = line.split(Log.breakWord);
         if(breakLine.length > 0) {
           if(breakLine.length == 6) {
+            List<String> hashesAux;
+            if(hashes.length > 0) {
+              hashes.add(breakLine[0].trim());
+              hashesAux = hashes;
+              hashes = List();
+            }
+            if(commits.length > 0) {
+              commits.last.beforeHash = breakLine[1];
+            }
             commits.add(GitCommit(
-              asciiGraph: breakLine[0],
+              asciiGraph: breakLine[0].trim(),
               abbreviatedHash: breakLine[1],
               author: breakLine[2],
               message: breakLine[3],
               date: breakLine[4],
-              hash: breakLine[5]
+              hash: breakLine[5],
+              asciiGraphs: hashesAux
             ));
           } else {
-            commits.add(GitCommit(asciiGraph: breakLine[0]));
+            hashes.add(breakLine[0].trim());
           }
         }
       });
