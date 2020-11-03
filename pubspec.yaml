@@ -80,17 +80,13 @@ flutter:
     - images/file_deleted.svg
     - images/file_modified.svg
     - images/file_renamed.svg
-    - images/flow-cross-circle.svg
-    - images/flow-from-left.svg
-    - images/flow-from-left-circle.svg
-    - images/flow-from-right.svg
-    - images/flow-from-right-circle.svg
-    - images/flow-horizontal.svg
-    - images/flow-simple-circle.svg
-    - images/flow-to-left.svg
-    - images/flow-to-right.svg
-    - images/flow-vertical.svg
-    - images/flow-cross.svg
+    - images/flow/asterisk.svg
+    - images/flow/back-slash.svg
+    - images/flow/bar.svg
+    - images/flow/pipe.svg
+    - images/flow/start-asterisk.svg
+    - images/flow/trace.svg
+
 
 
 
