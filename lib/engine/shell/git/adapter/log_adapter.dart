@@ -12,40 +12,48 @@ class LogAdapter extends BaseAdapter {
   GitOutput toCommits() {
     return execute(transform: (gitOutput) {
       List<GitCommit> commits = List();
-
-      List<String> hashes = List();
-
+      String beforeLine = "";
+      int index = 0;
       gitOutput.lines.forEach((line) {
         line = line.replaceAll("\"", "");
         List<String> breakLine = line.split(Log.breakWord);
+        String nextGraph = "";
+        if((index + 1) < gitOutput.lines.length) {
+          nextGraph = gitOutput.lines[(index + 1)].split(Log.breakWord)[0];
+        }
+        List<Graph> graph = mountGraph(
+            beforeLine.trim().replaceAll("\"", "").split("|"),
+            breakLine[0].trim().replaceAll("\"", "").split("|"),
+            nextGraph.trim().replaceAll("\"", "").split("|"));
         if(breakLine.length > 0) {
           if(breakLine.length == 6) {
-            List<String> hashesAux;
-            if(hashes.length > 0) {
-              hashes.add(breakLine[0].trim());
-              hashesAux = hashes;
-              hashes = List();
-            }
             if(commits.length > 0) {
               commits.last.beforeHash = breakLine[1];
             }
             commits.add(GitCommit(
-              asciiGraph: breakLine[0].trim(),
+              graph: graph,
               abbreviatedHash: breakLine[1],
               author: breakLine[2],
               message: breakLine[3],
               date: breakLine[4],
               hash: breakLine[5],
-              asciiGraphs: hashesAux
             ));
-          } else {
-            hashes.add(breakLine[0].trim());
           }
         }
+        beforeLine = breakLine[0];
+        index++;
       });
 
       return gitOutput.withObject(commits).success();
     });
+  }
+
+  List<Graph> mountGraph(List<String> beforeGraph, List<String> graph, List<String> nextGraph) {
+    print(beforeGraph);
+    print(graph);
+    print(nextGraph);
+
+    return null;
   }
 }
 
