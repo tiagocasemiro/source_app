@@ -16,6 +16,8 @@ class GitCommit {
 }
 
 class Graph {
+  String hash;
+  String descripton;
   bool right_to_up = false;
   bool right_from_down = false;
   bool left_to_up = false;
@@ -27,4 +29,6 @@ class Graph {
   bool horizontal = false;
   bool cross = false;
   bool cross_commit = false;
+
+  Graph({ this.hash });
 }
