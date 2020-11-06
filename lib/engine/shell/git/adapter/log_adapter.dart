@@ -14,6 +14,7 @@ class LogAdapter extends BaseAdapter {
       List<GitCommit> commits = List();
       String beforeLine = "";
       int index = 0;
+      List<Graph> headLine = List();
       gitOutput.lines.forEach((line) {
         line = line.replaceAll("\"", "");
         List<String> breakLine = line.split(Log.breakWord);
@@ -22,9 +23,10 @@ class LogAdapter extends BaseAdapter {
           nextGraph = gitOutput.lines[(index + 1)].split(Log.breakWord)[0];
         }
         List<Graph> graph = mountGraph(
-            beforeLine.trim().replaceAll("\"", "").split("|"),
+            headLine,
             breakLine[0].trim().replaceAll("\"", "").split("|"),
             nextGraph.trim().replaceAll("\"", "").split("|"));
+        headLine = graph; // todo verificar se todos esses blocos ficam dentro da condicional
         if(breakLine.length > 0) {
           if(breakLine.length == 6) {
             if(commits.length > 0) {
@@ -48,12 +50,20 @@ class LogAdapter extends BaseAdapter {
     });
   }
 
-  List<Graph> mountGraph(List<String> beforeGraph, List<String> graph, List<String> nextGraph) {
-    print(beforeGraph);
-    print(graph);
-    print(nextGraph);
+  List<Graph> mountGraph(List<Graph> beforeGraph, List<String> hashs, List<String> nextHashs) {
+    List<Graph> graphLine = List();
+    graphLine.add(Graph(hash: hashs[0]));
+
+
+
+
+
+    print(hashs);
 
     return null;
   }
+
+
+
 }
 
