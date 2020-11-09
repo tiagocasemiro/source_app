@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:source_app/engine/domain/model/git_commit.dart';
 import 'package:source_app/engine/shell/git/adapter/base/base_adapter.dart';
 import 'package:source_app/engine/shell/git/command/log.dart';
@@ -52,18 +53,29 @@ class LogAdapter extends BaseAdapter {
 
   List<Graph> mountGraph(List<Graph> beforeGraph, List<String> hashs, List<String> nextHashs) {
     List<Graph> graphLine = List();
-    graphLine.add(Graph(hash: hashs[0]));
+   // graphLine.add(Graph(hash: hashs[0]));
 
-
-
-
+    int index = 0;
+    beforeGraph.forEach((currentGraph) {
+      int graphLineIndex = graphLine.length - 1 < 0 ? 0 : graphLine.length - 1;
+      if(currentGraph.hash == hashs[0]) {
+        Graph graph = Graph(hash: hashs[0]);
+        graph.commit = true;
+        graphLine.add(mount(index, graphLineIndex, graph));
+      } else {
+        Graph graph = Graph(hash: currentGraph.hash);
+        graphLine.add(mount(index, graphLineIndex, graph));
+      }
+      index++;
+    });
 
     print(hashs);
 
     return null;
   }
 
+  Graph mount(int from, int current, Graph graph) {
 
-
+  }
 }
 
