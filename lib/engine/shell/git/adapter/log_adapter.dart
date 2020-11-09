@@ -13,69 +13,71 @@ class LogAdapter extends BaseAdapter {
   GitOutput toCommits() {
     return execute(transform: (gitOutput) {
       List<GitCommit> commits = List();
-      String beforeLine = "";
-      int index = 0;
-      List<Graph> headLine = List();
+      List<Graph> headLine;
       gitOutput.lines.forEach((line) {
         line = line.replaceAll("\"", "");
-        List<String> breakLine = line.split(Log.breakWord);
-        String nextGraph = "";
-        if((index + 1) < gitOutput.lines.length) {
-          nextGraph = gitOutput.lines[(index + 1)].split(Log.breakWord)[0];
-        }
-        List<Graph> graph = mountGraph(
-            headLine,
-            breakLine[0].trim().replaceAll("\"", "").split("|"),
-            nextGraph.trim().replaceAll("\"", "").split("|"));
+        List<String> breakedLine = line.split(Log.breakWord);
+
+        List<Graph> graph = createLineGraph(headLine, breakedLine[0]);
         headLine = graph; // todo verificar se todos esses blocos ficam dentro da condicional
-        if(breakLine.length > 0) {
-          if(breakLine.length == 6) {
+        if(breakedLine.length > 0) {
+          if(breakedLine.length == 6) {
             if(commits.length > 0) {
-              commits.last.beforeHash = breakLine[1];
+              commits.last.beforeHash = breakedLine[1];
             }
             commits.add(GitCommit(
               graph: graph,
-              abbreviatedHash: breakLine[1],
-              author: breakLine[2],
-              message: breakLine[3],
-              date: breakLine[4],
-              hash: breakLine[5],
+              abbreviatedHash: breakedLine[1],
+              author: breakedLine[2],
+              message: breakedLine[3],
+              date: breakedLine[4],
+              hash: breakedLine[5],
             ));
           }
         }
-        beforeLine = breakLine[0];
-        index++;
       });
 
       return gitOutput.withObject(commits).success();
     });
   }
 
-  List<Graph> mountGraph(List<Graph> beforeGraph, List<String> hashs, List<String> nextHashs) {
-    List<Graph> graphLine = List();
-   // graphLine.add(Graph(hash: hashs[0]));
 
+  List<Graph> createLineGraph(List<Graph> beforeGraph, String commitWithParents) {
+    String hash = commitWithParents.split("|")[0].trim();
+    List<String> parents = commitWithParents.split("|")[1].trim().split(" ");
+
+    if(beforeGraph == null) {
+      return firstLineGraph(parents);
+    }
+
+    return lineGraph(beforeGraph, hash, parents);
+  }
+
+  List<Graph> firstLineGraph(List<String> parents) {
+    List<Graph> graphLine = List();
     int index = 0;
-    beforeGraph.forEach((currentGraph) {
-      int graphLineIndex = graphLine.length - 1 < 0 ? 0 : graphLine.length - 1;
-      if(currentGraph.hash == hashs[0]) {
-        Graph graph = Graph(hash: hashs[0]);
+    parents.forEach((parent) {
+      Graph graph = Graph(hash: parent);
+      graphLine.add(graph);
+      if(index == 0) {
         graph.commit = true;
-        graphLine.add(mount(index, graphLineIndex, graph));
       } else {
-        Graph graph = Graph(hash: currentGraph.hash);
-        graphLine.add(mount(index, graphLineIndex, graph));
+        Graph before = graphLine.last;
+        before.vertical = true;
+        graph.right_to_right  = true;
       }
       index++;
     });
 
-    print(hashs);
-
-    return null;
+    return graphLine;
   }
 
-  Graph mount(int from, int current, Graph graph) {
+  List<Graph> lineGraph(List<Graph> beforeGraph, String hash, List<String> parents) {
+    List<Graph> graphLine = List();
 
+
+
+    return graphLine;
   }
 }
 
