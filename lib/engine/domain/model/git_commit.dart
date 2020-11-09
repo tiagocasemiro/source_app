@@ -17,7 +17,6 @@ class GitCommit {
 
 class Graph {
   String hash;
-  String descripton;
   bool right_to_up = false;
   bool right_from_down = false;
   bool left_to_up = false;
