@@ -72,8 +72,34 @@ class LogAdapter extends BaseAdapter {
     return graphLine;
   }
 
-  List<Graph> lineGraph(List<Graph> beforeGraph, String hash, List<String> parents) {
+  List<Graph> lineGraph(List<Graph> beforeGraphs, String hash, List<String> parents) {
     List<Graph> graphLine = List();
+    beforeGraphs.forEach((beforeGraph) {
+      Graph graph = Graph();
+      if(beforeGraph.hash == hash) {
+        graph.commit = true;
+      } else {
+        graphLine.add(graph);
+      }
+    });
+    parents.forEach((parent) {
+      int index = 0;
+      graphLine.forEach((currentGraph) {
+        if(beforeGraphs[index].vertical || beforeGraphs[index].left_from_down || beforeGraphs[index].right_from_down) {
+
+
+        // todo parou aqui
+
+
+
+        }
+        index++;
+      });
+    });
+
+
+
+
 
 
 
