@@ -87,7 +87,12 @@ class LogAdapter extends BaseAdapter {
     graphLine.forEach((currentGraph) {
       if(beforeGraphs[index].vertical || beforeGraphs[index].left_from_down || beforeGraphs[index].right_from_down) {
         if(currentGraph.commit) {
-
+          if(index > 0) {
+            // todo
+          }
+          if(index < (graphLine.length - 1)) {
+            // todo
+          }
         }
 
         if(haveHash(parents, beforeGraphs[index].hash)) { // todo de cima pra baixo
