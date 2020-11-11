@@ -82,28 +82,41 @@ class LogAdapter extends BaseAdapter {
         graphLine.add(graph);
       }
     });
-    parents.forEach((parent) {
-      int index = 0;
-      graphLine.forEach((currentGraph) {
-        if(beforeGraphs[index].vertical || beforeGraphs[index].left_from_down || beforeGraphs[index].right_from_down) {
 
-
-        // todo parou aqui
-
-
+    int index = 0;
+    graphLine.forEach((currentGraph) {
+      if(beforeGraphs[index].vertical || beforeGraphs[index].left_from_down || beforeGraphs[index].right_from_down) {
+        if(currentGraph.commit) {
 
         }
-        index++;
-      });
+
+        if(haveHash(parents, beforeGraphs[index].hash)) { // todo de cima pra baixo
+          if(index > 0) {
+            // todo
+          }
+          if(index < (graphLine.length - 1)) {
+            // todo
+          }
+        } else {
+          currentGraph.vertical = true;
+          currentGraph.hash = beforeGraphs[index].hash;
+        }
+      }
+      index++;
     });
 
 
-
-
-
-
-
     return graphLine;
+  }
+
+  bool haveHash(List<String> hashs, String hash) {
+    hashs.forEach((element) {
+      if(element == hash) {
+        return true;
+      }
+    });
+
+    return false;
   }
 }
 
