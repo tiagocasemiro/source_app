@@ -74,26 +74,20 @@ class LogAdapter extends BaseAdapter {
 
   List<Graph> lineGraph(List<Graph> beforeGraphs, String hash, List<String> parents) {
     List<Graph> graphLine = List();
-    int index = 0;
     beforeGraphs.forEach((beforeGraph) {
       Graph graph = Graph();
+      graphLine.add(graph);
+    });
+    int index = 0;
+    beforeGraphs.forEach((beforeGraph) {
+      Graph graph = graphLine[index];
       if(beforeGraph.hash == hash) {
         graph.commit = true;
-        if(index > 0) {
-          // todo
-        }
-        if(index < (graphLine.length - 1)) {
-          // todo
-        }
       } else {
         if(beforeGraph.vertical || beforeGraph.left_from_down || beforeGraph.right_from_down) {
-          if(haveHash(parents, beforeGraphs[index].hash)) {
-            if(index > 0) {
-              // todo
-            }
-            if(index < (graphLine.length - 1)) {
-              // todo
-            }
+          int indexParent = haveHash(parents, beforeGraphs[index].hash);
+          if(indexParent != null) {
+            newMerge(graphLine, index, indexParent);
           } else {
             graph.vertical = true;
             graph.hash = beforeGraphs[index].hash;
@@ -103,17 +97,52 @@ class LogAdapter extends BaseAdapter {
       index++;
     });
 
-    return graphLine;
-  }
+    graphLine.forEach((graph) {
+      if(graph.commit) {
+        parents.forEach((parent) {
 
-  bool haveHash(List<String> hashs, String hash) {
-    hashs.forEach((element) {
-      if(element == hash) {
-        return true;
+
+        });
       }
     });
 
-    return false;
+
+
+    return graphLine;
+  }
+
+  int haveHash(List<String> hashs, String hash) {
+    int index = 0;
+    hashs.forEach((element) {
+      if(element == hash) {
+        return index;
+      }
+      index++;
+    });
+
+    return null;
+  }
+
+  void newMerge(List<Graph> graphLine, int current, int from) {
+    if(current > 0) {
+      // todo
+    }
+    if(current < (graphLine.length - 1)) {
+      // todo
+    }
+  }
+
+  void toBranch(List<Graph> graphLine, int current) {
+    if(current > 0) {
+      // todo
+    }
+    if(current < (graphLine.length - 1)) {
+      // todo
+    }
+  }
+
+  void newBranch(List<Graph> graphLine, int current) {
+
   }
 }
 
