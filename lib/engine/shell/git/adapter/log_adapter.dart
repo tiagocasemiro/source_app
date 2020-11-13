@@ -97,16 +97,26 @@ class LogAdapter extends BaseAdapter {
       index++;
     });
 
+    int indexFrom = 0;
     graphLine.forEach((graph) {
       if(graph.commit) {
         parents.forEach((parent) {
-
-
+          int indexTo = 0;
+          bool parentIsNoUsed = true;
+          graphLine.forEach((toGraph) {
+            if(parent == toGraph.hash) {
+              parentIsNoUsed = false;
+              toBranch(graphLine, indexFrom, indexTo);
+            }
+            indexTo++;
+          });
+          if(parentIsNoUsed) {
+            newBranch(graphLine, indexFrom);
+          }
         });
       }
+      indexFrom++;
     });
-
-
 
     return graphLine;
   }
@@ -132,7 +142,7 @@ class LogAdapter extends BaseAdapter {
     }
   }
 
-  void toBranch(List<Graph> graphLine, int current) {
+  void toBranch(List<Graph> graphLine, int current, int to) {
     if(current > 0) {
       // todo
     }
