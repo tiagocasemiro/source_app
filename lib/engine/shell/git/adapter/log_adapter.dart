@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:source_app/engine/domain/model/git_commit.dart';
 import 'package:source_app/engine/shell/git/adapter/base/base_adapter.dart';
 import 'package:source_app/engine/shell/git/command/log.dart';
@@ -41,32 +40,26 @@ class LogAdapter extends BaseAdapter {
     });
   }
 
-
   List<Graph> createLineGraph(List<Graph> beforeGraph, String commitWithParents) {
     String hash = commitWithParents.split("|")[0].trim();
     List<String> parents = commitWithParents.split("|")[1].trim().split(" ");
 
     if(beforeGraph == null) {
-      return firstLineGraph(parents);
+      return firstLineGraph(parents, hash);
     }
 
     return lineGraph(beforeGraph, hash, parents);
   }
 
-  List<Graph> firstLineGraph(List<String> parents) {
+  List<Graph> firstLineGraph(List<String> parents, String hash) {
     List<Graph> graphLine = List();
-    int index = 0;
+
+    Graph graph = Graph(hash: hash);
+    graph.commit = true;
+    graphLine.add(graph);
+
     parents.forEach((parent) {
-      Graph graph = Graph(hash: parent);
-      graphLine.add(graph);
-      if(index == 0) {
-        graph.commit = true;
-      } else {
-        Graph before = graphLine.last;
-        before.vertical = true;
-        graph.right_to_right  = true;
-      }
-      index++;
+      newBranch(graphLine, 0);
     });
 
     return graphLine;
@@ -152,7 +145,7 @@ class LogAdapter extends BaseAdapter {
   }
 
   void newBranch(List<Graph> graphLine, int current) {
-
+    // todo
   }
 }
 
