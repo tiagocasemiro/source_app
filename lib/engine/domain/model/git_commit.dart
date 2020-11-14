@@ -26,8 +26,11 @@ class Graph {
   bool commit = false;
   bool vertical = false;
   bool horizontal = false;
-  bool cross = false;
-  bool cross_commit = false;
 
   Graph({ this.hash });
+
+  @override
+  String toString() {
+    return '$hash';
+  }
 }
