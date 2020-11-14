@@ -16,23 +16,20 @@ class LogAdapter extends BaseAdapter {
       gitOutput.lines.forEach((line) {
         line = line.replaceAll("\"", "");
         List<String> breakedLine = line.split(Log.breakWord);
-
-        List<Graph> graph = createLineGraph(headLine, breakedLine[0]);
-        headLine = graph; // todo verificar se todos esses blocos ficam dentro da condicional
-        if(breakedLine.length > 0) {
-          if(breakedLine.length == 6) {
-            if(commits.length > 0) {
-              commits.last.beforeHash = breakedLine[1];
-            }
-            commits.add(GitCommit(
-              graph: graph,
-              abbreviatedHash: breakedLine[1],
-              author: breakedLine[2],
-              message: breakedLine[3],
-              date: breakedLine[4],
-              hash: breakedLine[5],
-            ));
+        if(breakedLine.length == 6) {
+          List<Graph> graph = createLineGraph(headLine, breakedLine[0]);
+          headLine = graph;
+          if(commits.length > 0) {
+            commits.last.beforeHash = breakedLine[1];
           }
+          commits.add(GitCommit(
+            graph: graph,
+            abbreviatedHash: breakedLine[1],
+            author: breakedLine[2],
+            message: breakedLine[3],
+            date: breakedLine[4],
+            hash: breakedLine[5],
+          ));
         }
       });
 
@@ -53,99 +50,155 @@ class LogAdapter extends BaseAdapter {
 
   List<Graph> firstLineGraph(List<String> parents, String hash) {
     List<Graph> graphLine = List();
-
-    Graph graph = Graph(hash: hash);
+    Graph graph = Graph(hash: parents[0]);
     graph.commit = true;
     graphLine.add(graph);
 
-    parents.forEach((parent) {
-      newBranch(graphLine, 0);
-    });
+    for(int index = 1; index < parents.length; index++) {
+      fromBottomNewGraph(graphLine, 0, parents[index]);
+    }
 
     return graphLine;
   }
 
   List<Graph> lineGraph(List<Graph> beforeGraphs, String hash, List<String> parents) {
+    bool commitInNewColumn = true;
     List<Graph> graphLine = List();
     beforeGraphs.forEach((beforeGraph) {
       Graph graph = Graph();
       graphLine.add(graph);
     });
     int index = 0;
-    beforeGraphs.forEach((beforeGraph) {
-      Graph graph = graphLine[index];
-      if(beforeGraph.hash == hash) {
+    graphLine.forEach((graph) {
+      if(beforeGraphs[index].hash == hash) {
         graph.commit = true;
-      } else {
-        if(beforeGraph.vertical || beforeGraph.left_from_down || beforeGraph.right_from_down) {
-          int indexParent = haveHash(parents, beforeGraphs[index].hash);
-          if(indexParent != null) {
-            newMerge(graphLine, index, indexParent);
-          } else {
-            graph.vertical = true;
-            graph.hash = beforeGraphs[index].hash;
-          }
-        }
+        commitInNewColumn = false;
+        List<int> indexBefores = haveHash(beforeGraphs, hash);
+        indexBefores.forEach((indexBefore) {
+          fromUpGraph(graphLine, index, indexBefore);
+        });
       }
+
+      if((beforeGraphs[index].vertical || beforeGraphs[index].left_from_down || beforeGraphs[index].right_from_down || beforeGraphs[index].commit) && graph.commit == false) {
+        graph.vertical = true;
+        graph.hash = beforeGraphs[index].hash;
+      }
+
       index++;
     });
 
-    int indexFrom = 0;
-    graphLine.forEach((graph) {
-      if(graph.commit) {
+    if(commitInNewColumn) {
+      Graph graph = Graph();
+      graph.commit = true;
+      graphLine.add(graph);
+    }
+
+    int sizeLine = graphLine.length;
+    for(int indexFrom = 0; indexFrom < sizeLine; indexFrom++) {
+      if(graphLine[indexFrom].commit) {
         parents.forEach((parent) {
           int indexTo = 0;
           bool parentIsNoUsed = true;
           graphLine.forEach((toGraph) {
             if(parent == toGraph.hash) {
               parentIsNoUsed = false;
-              toBranch(graphLine, indexFrom, indexTo);
+              fromBottomGraph(graphLine, indexFrom, indexTo);
             }
             indexTo++;
           });
+          if(graphLine[indexFrom].hash == null) {
+            parentIsNoUsed = false;
+            graphLine[indexFrom].hash = parent;
+          }
           if(parentIsNoUsed) {
-            newBranch(graphLine, indexFrom);
+            fromBottomNewGraph(graphLine, indexFrom, parent);
           }
         });
+        break;
       }
-      indexFrom++;
-    });
+    }
 
     return graphLine;
   }
 
-  int haveHash(List<String> hashs, String hash) {
+  List<int> haveHash(List<Graph> beforeGraphs, String hash) {
+    List<int> indexs = List();
+    int indexCheck = 0;
+    beforeGraphs.forEach((beforeGraph) {
+      if(beforeGraph.hash == hash) {
+        indexs.add(indexCheck);
+      }
+
+      indexCheck++;
+    });
+
+    return indexs;
+  }
+
+  void fromUpGraph(List<Graph> graphLine, int current, int from) {
+    int start;
+    int end;
+    if(current == from) {
+      start = current;
+      end = from;
+    } else if(current < from) {
+      graphLine[current].right_to_right = true;
+      graphLine[from].right_to_up = true;
+      start = current;
+      end = from;
+    } else {
+      graphLine[current].left_to_left = true;
+      graphLine[from].left_to_up = true;
+      start = from;
+      end = current;
+    }
     int index = 0;
-    hashs.forEach((element) {
-      if(element == hash) {
-        return index;
+    graphLine.forEach((graph) {
+      if(index > start && index < end) {
+        graph.horizontal = true;
       }
       index++;
     });
-
-    return null;
   }
 
-  void newMerge(List<Graph> graphLine, int current, int from) {
-    if(current > 0) {
-      // todo
+  void fromBottomGraph(List<Graph> graphLine, int current, int to) {
+    int start;
+    int end;
+    if(current < to) {
+      graphLine[current].right_to_right = true;
+      graphLine[to].right_from_down = true;
+      start = current;
+      end = to;
+    } else {
+      graphLine[current].left_to_left = true;
+      graphLine[to].left_from_down = true;
+      start = to;
+      end = current;
     }
-    if(current < (graphLine.length - 1)) {
-      // todo
-    }
+    int index = 0;
+
+    graphLine.forEach((graph) {
+      if(index > start && index < end) {
+        graph.vertical = true;
+      }
+      index++;
+    });
   }
 
-  void toBranch(List<Graph> graphLine, int current, int to) {
-    if(current > 0) {
-      // todo
+  void fromBottomNewGraph(List<Graph> graphLine, int current, String hash) {
+    int size = graphLine.length;
+    int indexOfEmpty;
+    for(int index = 0; index < size; index++) {
+      if(graphLine[index].hash == null) {
+        indexOfEmpty = index;
+      }
     }
-    if(current < (graphLine.length - 1)) {
-      // todo
+    if(indexOfEmpty == null) {
+      indexOfEmpty = graphLine.length - 1;
     }
-  }
-
-  void newBranch(List<Graph> graphLine, int current) {
-    // todo
+    Graph graph = Graph(hash: hash);
+    graphLine.add(graph);
+    fromBottomGraph(graphLine, current, indexOfEmpty);
   }
 }
 
