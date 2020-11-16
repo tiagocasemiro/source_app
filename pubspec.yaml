@@ -80,13 +80,14 @@ flutter:
     - images/file_deleted.svg
     - images/file_modified.svg
     - images/file_renamed.svg
-    - images/flow/asterisk.svg
-    - images/flow/back-slash.svg
-    - images/flow/bar.svg
-    - images/flow/pipe.svg
-    - images/flow/start-asterisk.svg
-    - images/flow/trace.svg
-
+    - images/flow/bottom-left.svg
+    - images/flow/bottom-right.svg
+    - images/flow/commit.svg
+    - images/flow/horizontal.svg
+    - images/flow/start-commit.svg
+    - images/flow/top-left.svg
+    - images/flow/top-right.svg
+    - images/flow/vertical.svg
 
 
 
