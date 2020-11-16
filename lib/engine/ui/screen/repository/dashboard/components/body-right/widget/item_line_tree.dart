@@ -6,11 +6,12 @@ import 'package:source_app/engine/domain/model/git_commit.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 
 class ItemLineTree extends StatelessWidget {
-  final List<Graph> graph;
+  final List<Graph> graphs;
   final double singleLine = 30.0;
+  final double width = 10.0;
   final int index;
 
-  const ItemLineTree(this.graph, this.index);
+  const ItemLineTree(this.graphs, this.index);
 
   //http://bit-booster.com/graph.html
   //https://stackoverflow.com/a/34987899/7249382
@@ -20,10 +21,10 @@ class ItemLineTree extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = graph != null? graph.length * singleLine : singleLine;
+    double width = graphs != null? graphs.length * singleLine : singleLine;
 
     return Visibility(
-      visible: graph != null,
+      visible: graphs != null,
       replacement: Container(width: width,),
       child: Container(
         color: SourceColors.grey[2],
@@ -38,46 +39,61 @@ class ItemLineTree extends StatelessWidget {
   List<Widget> buildLine() {
     List<Widget> line = List();
 
-    if(line.isEmpty)
-      line.add(Container());
+    graphs.forEach((graph) {
+      line.add(graphToWidget(graph));
+    });
 
     return line;
   }
 
-  Widget patternToWidget(String pattern) {
-    String image = "";
+  Widget graphToWidget(Graph graph) {
+   List<Widget> graphsDraw = List();
+   graphsDraw.add(Container(height: singleLine, width: width,));
 
-    switch(pattern.trim()){
-      case "|": {
-        image = "images/flow/pipe.svg";
-        break;
-      }
-      case "/": {
-        image = "images/flow/bar.svg";
-        break;
-      }
-      case "\\": {
-        image = "images/flow/back-slash.svg";
-        break;
-      }
-      case "-": {
-        image = "images/flow/trace.svg";
-        break;
-      }
-      case "*": {
-        if(index == 0) {
-          image = "images/flow/start-asterisk.svg";
-        } else {
-          image = "images/flow/asterisk.svg";
-        }
-        break;
-      }
+   if(graph.right_to_up) {
+     graphsDraw.add(patternImage("images/flow/top-right.svg"));
+   }
+   if(graph.right_from_down) {
+     graphsDraw.add(patternImage("images/flow/bottom-right.svg"));
+   }
+   if(graph.right_to_right) {
+     //graphsDraw.add(SvgPicture.asset("image", height: singleLine, color: SourceColors.blue,));
+   }
+   if(graph.left_to_left) {
+     //graphsDraw.add(SvgPicture.asset("image", height: singleLine, color: SourceColors.blue,));
+   }
+   if(graph.left_to_up) {
+     graphsDraw.add(patternImage("images/flow/top-left.svg"));
+   }
+   if(graph.left_from_down) {
+     graphsDraw.add(patternImage("images/flow/bottom-left.svg"));
+   }
+   if(graph.commit) {
+     if(index == 0) {
+       graphsDraw.add(patternImage("images/flow/start-commit.svg"));
+     } else {
+       graphsDraw.add(patternImage("images/flow/commit.svg"));
+     }
+   }
+   if(graph.vertical) {
+     graphsDraw.add(patternImage("images/flow/vertical.svg"));
+   }
+   if(graph.horizontal) {
+     graphsDraw.add(patternImage("images/flow/horizontal.svg"));
+   }
 
-      default: {
-        return null;
-      }
-    }
+   return Stack(children: graphsDraw);
+  }
 
-   return  SvgPicture.asset(image, height: singleLine, color: SourceColors.blue,);
+  Widget patternImage(String path) {
+    return Container(
+      padding: EdgeInsets.all(0),
+      width: width,
+      child: Center(
+        child: SvgPicture.asset(path,
+          fit: BoxFit.fill,
+          height: singleLine, color: SourceColors.blue,),
+      ),
+    );
   }
 }
