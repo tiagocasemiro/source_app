@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:source_app/engine/domain/model/git_commit.dart';
@@ -50,31 +48,31 @@ class ItemLineTree extends StatelessWidget {
    List<Widget> graphsDraw = List();
    graphsDraw.add(Container(height: singleLine, width: width,));
 
+   if(graph.right_to_right) {
+     graphsDraw.add(patternImage("images/flow/horizontal.svg"));
+   }
+   if(graph.left_to_left) {
+     graphsDraw.add(patternImage("images/flow/horizontal.svg"));
+   }
    if(graph.right_to_up) {
+     graphsDraw.add(patternImage("images/flow/top-left.svg"));
+   }
+   if(graph.left_to_up) {
      graphsDraw.add(patternImage("images/flow/top-right.svg"));
    }
    if(graph.right_from_down) {
-     graphsDraw.add(patternImage("images/flow/bottom-right.svg"));
-   }
-   if(graph.right_to_right) {
-     //graphsDraw.add(SvgPicture.asset("image", height: singleLine, color: SourceColors.blue,));
-   }
-   if(graph.left_to_left) {
-     //graphsDraw.add(SvgPicture.asset("image", height: singleLine, color: SourceColors.blue,));
-   }
-   if(graph.left_to_up) {
-     graphsDraw.add(patternImage("images/flow/top-left.svg"));
-   }
-   if(graph.left_from_down) {
      graphsDraw.add(patternImage("images/flow/bottom-left.svg"));
    }
-   if(graph.commit) {
-     if(index == 0) {
-       graphsDraw.add(patternImage("images/flow/start-commit.svg"));
-     } else {
-       graphsDraw.add(patternImage("images/flow/commit.svg"));
-     }
+   if(graph.left_from_down) {
+     graphsDraw.add(patternImage("images/flow/bottom-right.svg"));
    }
+   if(graph.commit) {
+     graphsDraw.add(patternImage("images/flow/commit.svg"));
+   }
+   if(graph.start_commit) {
+     graphsDraw.add(patternImage("images/flow/start-commit.svg"));
+   }
+
    if(graph.vertical) {
      graphsDraw.add(patternImage("images/flow/vertical.svg"));
    }
