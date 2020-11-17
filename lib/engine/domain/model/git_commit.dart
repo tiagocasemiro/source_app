@@ -24,6 +24,7 @@ class Graph {
   bool left_to_up = false;
   bool left_from_down = false;
   bool commit = false;
+  bool start_commit = false;
   bool vertical = false;
   bool horizontal = false;
 
