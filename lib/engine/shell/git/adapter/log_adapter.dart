@@ -51,7 +51,7 @@ class LogAdapter extends BaseAdapter {
   List<Graph> firstLineGraph(List<String> parents, String hash) {
     List<Graph> graphLine = List();
     Graph graph = Graph(hash: parents[0]);
-    graph.commit = true;
+    graph.start_commit = true;
     graphLine.add(graph);
 
     for(int index = 1; index < parents.length; index++) {
@@ -62,7 +62,7 @@ class LogAdapter extends BaseAdapter {
   }
 
   List<Graph> lineGraph(List<Graph> beforeGraphs, String hash, List<String> parents) {
-    bool commitInNewColumn = true;
+    int indexCommitGraph;
     List<Graph> graphLine = List();
     beforeGraphs.forEach((beforeGraph) {
       Graph graph = Graph();
@@ -72,51 +72,44 @@ class LogAdapter extends BaseAdapter {
     graphLine.forEach((graph) {
       if(beforeGraphs[index].hash == hash) {
         graph.commit = true;
-        commitInNewColumn = false;
-        List<int> indexBefores = haveHash(beforeGraphs, hash);
-        indexBefores.forEach((indexBefore) {
-          fromUpGraph(graphLine, index, indexBefore);
-        });
+        indexCommitGraph = index;
       }
 
-      if((beforeGraphs[index].vertical || beforeGraphs[index].left_from_down || beforeGraphs[index].right_from_down || beforeGraphs[index].commit) && graph.commit == false) {
+      if((beforeGraphs[index].vertical || beforeGraphs[index].left_from_down || beforeGraphs[index].right_from_down || beforeGraphs[index].commit || beforeGraphs[index].start_commit) && graph.commit == false) {
         graph.vertical = true;
         graph.hash = beforeGraphs[index].hash;
       }
 
       index++;
     });
-
-    if(commitInNewColumn) {
+    if(indexCommitGraph == null) {
       Graph graph = Graph();
-      graph.commit = true;
+      graph.start_commit = true;
       graphLine.add(graph);
+      indexCommitGraph = index + 1;
     }
-
-    int sizeLine = graphLine.length;
-    for(int indexFrom = 0; indexFrom < sizeLine; indexFrom++) {
-      if(graphLine[indexFrom].commit) {
-        parents.forEach((parent) {
-          int indexTo = 0;
-          bool parentIsNoUsed = true;
-          graphLine.forEach((toGraph) {
-            if(parent == toGraph.hash) {
-              parentIsNoUsed = false;
-              fromBottomGraph(graphLine, indexFrom, indexTo);
-            }
-            indexTo++;
-          });
-          if(graphLine[indexFrom].hash == null) {
-            parentIsNoUsed = false;
-            graphLine[indexFrom].hash = parent;
-          }
-          if(parentIsNoUsed) {
-            fromBottomNewGraph(graphLine, indexFrom, parent);
-          }
-        });
-        break;
+    List<int> indexBefores = haveHash(beforeGraphs, hash);
+    indexBefores.forEach((indexBefore) {
+      fromUpGraph(graphLine, indexCommitGraph, indexBefore);
+    });
+    parents.forEach((parent) {
+      int indexTo = 0;
+      bool parentIsNoUsed = true;
+      graphLine.forEach((toGraph) {
+        if(parent == toGraph.hash) {
+          parentIsNoUsed = false;
+          fromBottomGraph(graphLine, indexCommitGraph, indexTo);
+        }
+        indexTo++;
+      });
+      if(graphLine[indexCommitGraph].hash == null) {
+        parentIsNoUsed = false;
+        graphLine[indexCommitGraph].hash = parent;
       }
-    }
+      if(parentIsNoUsed) {
+        fromBottomNewGraph(graphLine, indexCommitGraph, parent);
+      }
+    });
 
     return graphLine;
   }
@@ -138,27 +131,26 @@ class LogAdapter extends BaseAdapter {
   void fromUpGraph(List<Graph> graphLine, int current, int from) {
     int start;
     int end;
-    if(current == from) {
-      start = current;
-      end = from;
-    } else if(current < from) {
-      graphLine[current].right_to_right = true;
-      graphLine[from].right_to_up = true;
-      start = current;
-      end = from;
-    } else {
-      graphLine[current].left_to_left = true;
-      graphLine[from].left_to_up = true;
-      start = from;
-      end = current;
-    }
-    int index = 0;
-    graphLine.forEach((graph) {
-      if(index > start && index < end) {
-        graph.horizontal = true;
+    if(current != from) {
+      if(current < from) {
+        graphLine[current].right_to_right = true;
+        graphLine[from].right_to_up = true;
+        start = current;
+        end = from;
+      } else {
+        graphLine[current].left_to_left = true;
+        graphLine[from].left_to_up = true;
+        start = from;
+        end = current;
       }
-      index++;
-    });
+      int index = 0;
+      graphLine.forEach((graph) {
+        if(index > start && index < end) {
+          graph.horizontal = true;
+        }
+        index++;
+      });
+    }
   }
 
   void fromBottomGraph(List<Graph> graphLine, int current, int to) {
@@ -201,4 +193,3 @@ class LogAdapter extends BaseAdapter {
     fromBottomGraph(graphLine, current, indexOfEmpty);
   }
 }
-
