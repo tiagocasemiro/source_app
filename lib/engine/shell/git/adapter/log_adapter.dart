@@ -86,7 +86,7 @@ class LogAdapter extends BaseAdapter {
       Graph graph = Graph();
       graph.start_commit = true;
       graphLine.add(graph);
-      indexCommitGraph = index + 1;
+      indexCommitGraph = index;
     }
     List<int> indexBefores = haveHash(beforeGraphs, hash);
     indexBefores.forEach((indexBefore) {
@@ -135,11 +135,15 @@ class LogAdapter extends BaseAdapter {
       if(current < from) {
         graphLine[current].right_to_right = true;
         graphLine[from].right_to_up = true;
+        graphLine[from].vertical = false;
+        graphLine[from].hash = null;
         start = current;
         end = from;
       } else {
         graphLine[current].left_to_left = true;
         graphLine[from].left_to_up = true;
+        graphLine[from].vertical = false;
+        graphLine[from].hash = null;
         start = from;
         end = current;
       }
@@ -167,11 +171,11 @@ class LogAdapter extends BaseAdapter {
       start = to;
       end = current;
     }
-    int index = 0;
 
+    int index = 0;
     graphLine.forEach((graph) {
       if(index > start && index < end) {
-        graph.vertical = true;
+        graph.horizontal = true;
       }
       index++;
     });
@@ -186,7 +190,7 @@ class LogAdapter extends BaseAdapter {
       }
     }
     if(indexOfEmpty == null) {
-      indexOfEmpty = graphLine.length - 1;
+      indexOfEmpty = size;
     }
     Graph graph = Graph(hash: hash);
     graphLine.add(graph);
