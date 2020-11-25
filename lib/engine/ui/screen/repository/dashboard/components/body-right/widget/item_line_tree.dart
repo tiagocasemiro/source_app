@@ -49,35 +49,37 @@ class ItemLineTree extends StatelessWidget {
    graphsDraw.add(Container(height: singleLine, width: width,));
 
    if(graph.right_to_right) {
-     graphsDraw.add(patternImage("images/flow/horizontal.svg"));
+    // graphsDraw.add(patternImage("images/flow/right-right.png"));
    }
    if(graph.left_to_left) {
-     graphsDraw.add(patternImage("images/flow/horizontal.svg"));
+    // graphsDraw.add(patternImage("images/flow/left-left.png"));
    }
-   if(graph.right_to_up) {
-     graphsDraw.add(patternImage("images/flow/top-left.svg"));
+   if(graph.top_left) {
+     graphsDraw.add(patternImage("images/flow/top-left.png"));
    }
-   if(graph.left_to_up) {
-     graphsDraw.add(patternImage("images/flow/top-right.svg"));
+   if(graph.top_right) {
+     graphsDraw.add(patternImage("images/flow/top-right.png"));
    }
-   if(graph.right_from_down) {
-     graphsDraw.add(patternImage("images/flow/bottom-left.svg"));
+   if(graph.bottom_left) {
+     graphsDraw.add(patternImage("images/flow/bottom-left.png"));
    }
-   if(graph.left_from_down) {
-     graphsDraw.add(patternImage("images/flow/bottom-right.svg"));
+   if(graph.bottom_right) {
+     graphsDraw.add(patternImage("images/flow/bottom-right.png"));
    }
    if(graph.commit) {
-     graphsDraw.add(patternImage("images/flow/commit.svg"));
+     graphsDraw.add(patternImage("images/flow/commit.png"));
    }
    if(graph.start_commit) {
-     graphsDraw.add(patternImage("images/flow/start-commit.svg"));
+     graphsDraw.add(patternImage("images/flow/start-commit.png"));
    }
-
+   if(graph.end_commit) {
+     graphsDraw.add(patternImage("images/flow/end-commit.png"));
+   }
    if(graph.vertical) {
-     graphsDraw.add(patternImage("images/flow/vertical.svg"));
+     graphsDraw.add(patternImage("images/flow/vertical.png"));
    }
    if(graph.horizontal) {
-     graphsDraw.add(patternImage("images/flow/horizontal.svg"));
+     graphsDraw.add(patternImage("images/flow/horizontal.png"));
    }
 
    return Stack(children: graphsDraw);
@@ -88,9 +90,12 @@ class ItemLineTree extends StatelessWidget {
       padding: EdgeInsets.all(0),
       width: width,
       child: Center(
-        child: SvgPicture.asset(path,
+        child: Image.asset(path,
           fit: BoxFit.fill,
-          height: singleLine, color: SourceColors.blue,),
+          height: singleLine,
+          width: width,
+          color: SourceColors.blue,
+        ),
       ),
     );
   }
