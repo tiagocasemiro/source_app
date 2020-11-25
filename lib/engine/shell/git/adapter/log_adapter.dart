@@ -65,23 +65,28 @@ class LogAdapter extends BaseAdapter {
     int indexCommitGraph;
     List<Graph> graphLine = List();
     beforeGraphs.forEach((beforeGraph) {
-      Graph graph = Graph();
-      graphLine.add(graph);
+      graphLine.add(Graph());
     });
+
     int index = 0;
     graphLine.forEach((graph) {
       if(beforeGraphs[index].hash == hash) {
-        graph.commit = true;
+        if(parents != null && parents.length > 0) {
+          graph.hash = parents[0];
+          graph.commit = true;
+        } else {
+          graph.end_commit = true;
+        }
         indexCommitGraph = index;
-      }
 
-      if((beforeGraphs[index].vertical || beforeGraphs[index].left_from_down || beforeGraphs[index].right_from_down || beforeGraphs[index].commit || beforeGraphs[index].start_commit) && graph.commit == false) {
+      } else if((beforeGraphs[index].vertical || beforeGraphs[index].bottom_right || beforeGraphs[index].bottom_left || beforeGraphs[index].commit || beforeGraphs[index].start_commit)
+          && beforeGraphs[index].hash != null) {
         graph.vertical = true;
         graph.hash = beforeGraphs[index].hash;
       }
-
       index++;
     });
+
     if(indexCommitGraph == null) {
       Graph graph = Graph();
       graph.start_commit = true;
@@ -92,17 +97,20 @@ class LogAdapter extends BaseAdapter {
     indexBefores.forEach((indexBefore) {
       fromUpGraph(graphLine, indexCommitGraph, indexBefore);
     });
+
+
     parents.forEach((parent) {
       int indexTo = 0;
       bool parentIsNoUsed = true;
+
       graphLine.forEach((toGraph) {
-        if(parent == toGraph.hash) {
+        if(parent == toGraph.hash && parentIsNoUsed) {
           parentIsNoUsed = false;
           fromBottomGraph(graphLine, indexCommitGraph, indexTo);
         }
         indexTo++;
       });
-      if(graphLine[indexCommitGraph].hash == null) {
+      if(graphLine[indexCommitGraph].hash == null && parentIsNoUsed) {
         parentIsNoUsed = false;
         graphLine[indexCommitGraph].hash = parent;
       }
@@ -110,6 +118,24 @@ class LogAdapter extends BaseAdapter {
         fromBottomNewGraph(graphLine, indexCommitGraph, parent);
       }
     });
+
+    while(graphLine.last.hash == null) {
+      graphLine.removeLast();
+    }
+
+    for(int i = 1; i < graphLine.length; i++) {
+      Graph before = graphLine[i - 1];
+      Graph current = graphLine[i];
+
+      if(before.isEmpty() && current.onlyVertical()) {
+        before.hash = current.hash;
+        before.bottom_right = true;
+
+        current.hash = null;
+        current.vertical = false;
+        current.top_left = true;
+      }
+    }
 
     return graphLine;
   }
@@ -134,14 +160,14 @@ class LogAdapter extends BaseAdapter {
     if(current != from) {
       if(current < from) {
         graphLine[current].right_to_right = true;
-        graphLine[from].right_to_up = true;
+        graphLine[from].top_left = true;
         graphLine[from].vertical = false;
         graphLine[from].hash = null;
         start = current;
         end = from;
       } else {
         graphLine[current].left_to_left = true;
-        graphLine[from].left_to_up = true;
+        graphLine[from].top_right = true;
         graphLine[from].vertical = false;
         graphLine[from].hash = null;
         start = from;
@@ -162,12 +188,12 @@ class LogAdapter extends BaseAdapter {
     int end;
     if(current < to) {
       graphLine[current].right_to_right = true;
-      graphLine[to].right_from_down = true;
+      graphLine[to].bottom_left = true;
       start = current;
       end = to;
     } else {
       graphLine[current].left_to_left = true;
-      graphLine[to].left_from_down = true;
+      graphLine[to].bottom_right = true;
       start = to;
       end = current;
     }
