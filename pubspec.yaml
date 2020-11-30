@@ -80,15 +80,17 @@ flutter:
     - images/file_deleted.svg
     - images/file_modified.svg
     - images/file_renamed.svg
-    - images/flow/bottom-left.svg
-    - images/flow/bottom-right.svg
-    - images/flow/commit.svg
-    - images/flow/horizontal.svg
-    - images/flow/start-commit.svg
-    - images/flow/top-left.svg
-    - images/flow/top-right.svg
-    - images/flow/vertical.svg
-
+    - images/flow/bottom-left.png
+    - images/flow/bottom-right.png
+    - images/flow/commit.png
+    - images/flow/horizontal.png
+    - images/flow/start-commit.png
+    - images/flow/end-commit.png
+    - images/flow/top-left.png
+    - images/flow/top-right.png
+    - images/flow/vertical.png
+    - images/flow/left-left.png
+    - images/flow/right-right.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
