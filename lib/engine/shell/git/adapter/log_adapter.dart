@@ -78,7 +78,6 @@ class LogAdapter extends BaseAdapter {
           graph.end_commit = true;
         }
         indexCommitGraph = index;
-
       } else if((beforeGraphs[index].vertical || beforeGraphs[index].bottom_right || beforeGraphs[index].bottom_left || beforeGraphs[index].commit || beforeGraphs[index].start_commit)
           && beforeGraphs[index].hash != null) {
         graph.vertical = true;
@@ -93,16 +92,15 @@ class LogAdapter extends BaseAdapter {
       graphLine.add(graph);
       indexCommitGraph = index;
     }
+
     List<int> indexBefores = haveHash(beforeGraphs, hash);
     indexBefores.forEach((indexBefore) {
       fromUpGraph(graphLine, indexCommitGraph, indexBefore);
     });
 
-
     parents.forEach((parent) {
       int indexTo = 0;
       bool parentIsNoUsed = true;
-
       graphLine.forEach((toGraph) {
         if(parent == toGraph.hash && parentIsNoUsed) {
           parentIsNoUsed = false;
@@ -119,7 +117,7 @@ class LogAdapter extends BaseAdapter {
       }
     });
 
-    while(graphLine.last.hash == null) {
+    while(graphLine.last.hash == null && !graphLine.last.end_commit && !graphLine.last.top_left) {
       graphLine.removeLast();
     }
 
@@ -127,7 +125,7 @@ class LogAdapter extends BaseAdapter {
       Graph before = graphLine[i - 1];
       Graph current = graphLine[i];
 
-      if(before.isEmpty() && current.onlyVertical()) {
+      if(before.isEmpty() && current.onlyVertical()) {  
         before.hash = current.hash;
         before.bottom_right = true;
 
@@ -191,20 +189,22 @@ class LogAdapter extends BaseAdapter {
       graphLine[to].bottom_left = true;
       start = current;
       end = to;
-    } else {
+    } else if(current > to) {
       graphLine[current].left_to_left = true;
       graphLine[to].bottom_right = true;
       start = to;
       end = current;
     }
 
-    int index = 0;
-    graphLine.forEach((graph) {
-      if(index > start && index < end) {
-        graph.horizontal = true;
-      }
-      index++;
-    });
+    if(start != null && end != null ){
+      int index = 0;
+      graphLine.forEach((graph) {
+        if(index > start && index < end) {
+          graph.horizontal = true;
+        }
+        index++;
+      });
+    }
   }
 
   void fromBottomNewGraph(List<Graph> graphLine, int current, String hash) {
