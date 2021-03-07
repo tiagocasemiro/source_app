@@ -5,6 +5,7 @@ import 'package:source_app/engine/ui/screen/repository/dashboard/components/body
 import 'package:source_app/engine/ui/source_resources.dart';
 
 class CommitDetailsDescription extends StatelessWidget {
+  // ignore: unused_field
   final BodyRightViewModel _bodyRightViewModel;
   final GitCommit _commitDetails;
   final TextStyle _styleLabel = GoogleFonts.roboto(

@@ -37,6 +37,7 @@ class CreateStashAlert {
   }
 
   Widget  createContent(BuildContext context) {
+    // ignore: deprecated_member_use
     Widget createButton = RaisedButton(
       color: SourceColors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -51,6 +52,7 @@ class CreateStashAlert {
         create(context);
       },
     );
+    // ignore: deprecated_member_use
     Widget cancelButton = RaisedButton(
       color: SourceColors.grey[5],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

@@ -15,16 +15,25 @@ class GitCommit {
   }
 }
 
+
 class Graph {
-  String hash;
+  // ignore: non_constant_identifier_names
   bool top_left = false;
-  bool bottom_left = false;
-  bool right_to_right = false;
-  bool left_to_left = false;
+  String hash;
+  // ignore: non_constant_identifier_names
   bool top_right = false;
+  // ignore: non_constant_identifier_names
+  bool bottom_left = false;
+  // ignore: non_constant_identifier_names
+  bool right_to_right = false;
+  // ignore: non_constant_identifier_names
+  bool left_to_left = false;
+  // ignore: non_constant_identifier_names
   bool bottom_right = false;
   bool commit = false;
+  // ignore: non_constant_identifier_names
   bool end_commit = false;
+  // ignore: non_constant_identifier_names
   bool start_commit = false;
   bool vertical = false;
   bool horizontal = false;

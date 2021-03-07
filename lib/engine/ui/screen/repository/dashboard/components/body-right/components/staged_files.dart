@@ -22,13 +22,13 @@ class StagedFiles extends StatelessWidget {
             initialData: [],
             future: _bodyRightViewModel.stagedFiles(),
             builder: (context, snapshotGitOutput) {
-              List<String> filesUncommitted = List();
+              List<String> filesUncommitted = [];
               filesUncommitted.add("");
               if (snapshotGitOutput.data is GitOutput) {
                 GitOutput gitOutput = snapshotGitOutput.data;
                 List<String> temp = gitOutput.isSuccess() &&
                     gitOutput.object != null &&
-                    gitOutput.object is List<String> ? gitOutput.object: List<String>();
+                    gitOutput.object is List<String> ? gitOutput.object: <String>[];
                 filesUncommitted.addAll(temp);
               }
 

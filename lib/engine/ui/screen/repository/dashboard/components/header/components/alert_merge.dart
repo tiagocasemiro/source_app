@@ -22,7 +22,7 @@ class MergeAlert {
       if(gitOutput.isSuccess()) {
         List<GitBranch> allBranches = gitOutput.object as List<GitBranch>;
 
-        List<GitBranch> _branches = List();
+        List<GitBranch> _branches = [];
         allBranches.forEach((GitBranch branch) {
           if(!branch.current) {
             _branches.add(branch);
@@ -60,6 +60,7 @@ class MergeAlert {
   }
 
   Widget  createContent(BuildContext context, List<GitBranch> branches) {
+    // ignore: deprecated_member_use
     Widget createButton = RaisedButton(
       color: SourceColors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -74,6 +75,7 @@ class MergeAlert {
         pull(context);
       },
     );
+    // ignore: deprecated_member_use
     Widget cancelButton = RaisedButton(
       color: SourceColors.grey[5],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

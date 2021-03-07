@@ -22,11 +22,12 @@ class FileDiff extends StatelessWidget {
           initialData: [],
           future: _bodyRightViewModel.diff(file),
           builder: (context, snapshotGitOutput) {
-            List<String> fileDiff = List();
+            List<String> fileDiff = [];
             if (snapshotGitOutput.data is GitOutput) {
               GitOutput gitOutput = snapshotGitOutput.data;
               List<String> temp =  gitOutput.isSuccess() &&
                 gitOutput.lines != null &&
+                // ignore: deprecated_member_use
                 gitOutput.lines is List<String> ? gitOutput.lines: List<String>();
               fileDiff.add("");
               fileDiff.addAll(temp);

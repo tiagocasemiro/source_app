@@ -46,6 +46,7 @@ class PullAlert {
 
   Widget  createContent(BuildContext context, List<GitBranch> branches) {
     _selectedBranch = null;
+    // ignore: deprecated_member_use
     Widget createButton = RaisedButton(
       color: SourceColors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -60,6 +61,7 @@ class PullAlert {
         pull(context);
       },
     );
+    // ignore: deprecated_member_use
     Widget cancelButton = RaisedButton(
       color: SourceColors.grey[5],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

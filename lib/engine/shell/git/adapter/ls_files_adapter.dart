@@ -8,7 +8,7 @@ class LsFilesAdapter extends BaseAdapter {
 
   GitOutput files() {
     return execute(transform: (gitOutput) {
-      List<String> files = List();
+      List<String> files = [];
       gitOutput.lines.forEach((String line) {
         files.add(clean(line));
       });

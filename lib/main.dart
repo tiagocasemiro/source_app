@@ -5,6 +5,7 @@ import 'engine/ui/source_resources.dart';
 import 'engine/ui/screen/repository/list/list_repositories_view.dart';
 import 'dart:convert';
 
+/*
 void shell() async {
   const Map<String, String> _language = {'LANG':'en_GB'};
   var process = await Process.start('git', ["remote", "show", "origin",], workingDirectory: "/directory/repo"
@@ -22,6 +23,7 @@ void shell() async {
     print(exitCode);
   });
 }
+*/
 
 void main() {
   runApp(MainWidget(SelectRepositoryView()));
@@ -87,6 +89,8 @@ class MainWidget extends StatelessWidget {
   }
 }
 
+
+/*
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => new _MyAppState();
@@ -144,4 +148,4 @@ class Vehicle {
   final IconData icon;
 
   Vehicle(this.title, this.contents, this.icon);
-}
+}*/

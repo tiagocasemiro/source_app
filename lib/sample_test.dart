@@ -102,7 +102,7 @@ class ListModel {
     @required this.removedItemBuilder
   }) : assert(listKey != null),
         assert(removedItemBuilder != null),
-        _items = List();
+        _items = [];
 
   final GlobalKey<AnimatedListState> listKey;
   final dynamic removedItemBuilder;

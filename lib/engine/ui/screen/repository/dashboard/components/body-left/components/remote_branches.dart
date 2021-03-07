@@ -29,7 +29,6 @@ class _RemoteBranchesState extends State<RemoteBranches> {
     final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
     return Theme(
       data: theme,
-      isMaterialAppTheme: true,
       child: Container(
         width: double.maxFinite,
         decoration: BoxDecoration(
@@ -65,12 +64,12 @@ class _RemoteBranchesState extends State<RemoteBranches> {
                 initialData: [],
                 future: _dashboardViewModel.remoteBranches(),
                 builder: (context, snapshot) {
-                  List<GitBranch> branches = List<GitBranch>();
+                  List<GitBranch> branches = <GitBranch>[];
                   if (snapshot.data is GitOutput) {
                     GitOutput gitOutput = snapshot.data;
                     branches = gitOutput.isSuccess() &&
                       gitOutput.object != null &&
-                      gitOutput.object is List<GitBranch> ? gitOutput.object: List<GitBranch>();
+                      gitOutput.object is List<GitBranch> ? gitOutput.object: <GitBranch>[];
                   }
 
                   return Visibility(

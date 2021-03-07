@@ -25,6 +25,7 @@ class AddRemoteRepository {
   AddRemoteRepository(this._selectRepositoryViewModel);
 
   displayAlert(BuildContext context) {
+    // ignore: deprecated_member_use
     Widget cloneButton = RaisedButton(
       color: SourceColors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -39,6 +40,7 @@ class AddRemoteRepository {
         validateAndSaveRepository(context);
       },
     );
+    // ignore: deprecated_member_use
     Widget cancelButton = RaisedButton(
       color: SourceColors.grey[5],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

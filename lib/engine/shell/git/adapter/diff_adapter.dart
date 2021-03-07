@@ -9,7 +9,7 @@ class DiffAdapter extends BaseAdapter {
 
   GitOutput files() {
     return execute(transform: (gitOutput) {
-      List<String> files = List();
+      List<String> files = [];
       gitOutput.lines.forEach((String line) {
         files.add(clean(line));
       });
@@ -20,7 +20,7 @@ class DiffAdapter extends BaseAdapter {
 
   GitOutput filesModifiedFromCommit() {
     return execute(transform: (gitOutput) {
-      List<GitFileModified> files = List();
+      List<GitFileModified> files = [];
       gitOutput.lines.forEach((String line) {
         List<String> parts = line.split("\t");
 

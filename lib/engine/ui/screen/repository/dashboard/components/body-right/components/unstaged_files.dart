@@ -5,7 +5,6 @@ import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/body_right_viewmodel.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-right/widget/item_file_check.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
-import 'package:source_app/engine/ui/utils/default_values.dart';
 import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
 
 class UnstagedFiles extends StatelessWidget {
@@ -23,13 +22,14 @@ class UnstagedFiles extends StatelessWidget {
             initialData: [],
             future: _bodyRightViewModel.unStagedFiles(),
             builder: (context, snapshotGitOutput) {
+              // ignore: deprecated_member_use
               List<String> filesUncommitted = List();
               filesUncommitted.add("");
               if (snapshotGitOutput.data is GitOutput) {
                 GitOutput gitOutput = snapshotGitOutput.data;
                 List<String> temp = gitOutput.isSuccess() &&
                     gitOutput.object != null &&
-                    gitOutput.object is List<String> ? gitOutput.object: List<String>();
+                    gitOutput.object is List<String> ? gitOutput.object: <String>[];
                 filesUncommitted.addAll(temp);
               }
 

@@ -16,6 +16,7 @@ class NewBranchAlert {
   NewBranchAlert(this._headerViewModel);
 
   displayAlert(BuildContext context) {
+    // ignore: deprecated_member_use
     Widget createButton = RaisedButton(
       color: SourceColors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -30,6 +31,7 @@ class NewBranchAlert {
         create(context);
       },
     );
+    // ignore: deprecated_member_use
     Widget cancelButton = RaisedButton(
       color: SourceColors.grey[5],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

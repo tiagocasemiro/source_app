@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:source_app/engine/domain/model/git_commit.dart';
 import 'package:source_app/engine/domain/model/git_file_modified.dart';
 import 'package:source_app/engine/domain/use.case/commit_usecase.dart';
@@ -91,7 +90,7 @@ class BodyRightViewModel {
   }
 
   List<String> filter(List<String> fullList) {
-    List<String> newList = List();
+    List<String> newList = [];
     bool canAdd = false;
     fullList.forEach((element) {
       if(canAdd) {
@@ -115,7 +114,7 @@ class BodyRightViewModel {
       return unTracked;
     }
     GitOutput gitOutput = GitOutput("").success();
-    List<String> allFiles = List();
+    List<String> allFiles = [];
     allFiles.addAll(unCommitted.object as List<String>);
     allFiles.addAll(unTracked.object as List<String>);
     gitOutput.withObject(allFiles);

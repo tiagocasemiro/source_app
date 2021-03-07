@@ -44,7 +44,7 @@ class RepositoryDao {
   Future<List<Repository>> findAll() async {
     final Database db = await getDatabase();
     var records = await _store.find(db);
-    List<Repository> repositories = List();
+    List<Repository> repositories = [];
     records.forEach((item) {
       final Repository repository = Repository(item[_name],item[_workDirectory]);
       repository.credentials = item[_credentials];
@@ -80,7 +80,7 @@ class RepositoryDao {
 
   // ignore: unused_element
   List<Repository> _toList(List<Map<String, dynamic>> result) {
-    final List<Repository> repositories = List();
+    final List<Repository> repositories = [];
     for(Map<String, dynamic> map in result) {
       final Repository repository = Repository(
           map[_name],

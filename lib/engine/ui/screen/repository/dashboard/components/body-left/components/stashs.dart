@@ -29,7 +29,6 @@ class _StashState extends State<StashDashboard> {
     final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
     return Theme(
       data: theme,
-      isMaterialAppTheme: true,
       child: Container(
         width: double.maxFinite,
         decoration: BoxDecoration(
@@ -65,12 +64,12 @@ class _StashState extends State<StashDashboard> {
                 initialData: [],
                 future: _dashboardViewModel.stashs(),
                 builder: (context, snapshot) {
-                  List<GitStash> stashes = List<GitStash>();
+                  List<GitStash> stashes = <GitStash>[];
                   if (snapshot.data is GitOutput) {
                     GitOutput gitOutput = snapshot.data;
                     stashes = gitOutput.isSuccess() &&
                       gitOutput.object != null &&
-                      gitOutput.object is List<GitStash> ? gitOutput.object : List<GitStash>();
+                      gitOutput.object is List<GitStash> ? gitOutput.object : <GitStash>[];
                   }
 
                   return Visibility(

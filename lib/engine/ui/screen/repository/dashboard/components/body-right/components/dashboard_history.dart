@@ -60,6 +60,7 @@ class HistoryDashboard extends StatelessWidget {
                   GitOutput gitOutput = snapshot.data;
                   List<GitCommit> commits = snapshot.data is GitOutput &&
                       gitOutput.isSuccess() && gitOutput.object != null &&
+                      // ignore: deprecated_member_use
                       gitOutput.object is List<GitCommit> ? gitOutput.object: List<GitCommit>();
 
                    return Visibility(

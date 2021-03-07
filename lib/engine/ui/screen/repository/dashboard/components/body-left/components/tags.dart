@@ -29,7 +29,6 @@ class _TagsState extends State<TagsDashboard> {
    final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
    return Theme(
      data: theme,
-     isMaterialAppTheme: true,
      child: Container(
        width: double.maxFinite,
        decoration: BoxDecoration(
@@ -65,13 +64,13 @@ class _TagsState extends State<TagsDashboard> {
                initialData: [],
                future: _bodyLeftViewModel.tags(),
                builder: (context, snapshot) {
-                 List<GitTag> tags = List<GitTag>();
+                 List<GitTag> tags = <GitTag>[];
                  if (snapshot.data is GitOutput) {
                    GitOutput gitOutput = snapshot.data;
 
                    tags = gitOutput.isSuccess() &&
                        gitOutput.object != null &&
-                       gitOutput.object is List<GitTag> ? gitOutput.object : List<GitTag>();
+                       gitOutput.object is List<GitTag> ? gitOutput.object : <GitTag>[];
                 }
 
                  return Visibility(

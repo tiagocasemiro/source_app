@@ -20,6 +20,7 @@ class _SelectRepositoryViewState extends State<SelectRepositoryView> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     var childButtons = List<UnicornButton>();
     childButtons.add(UnicornButton(
         hasLabel: true,

@@ -9,7 +9,7 @@ class StashAdapter extends BaseAdapter {
 
   GitOutput toList() {
     return execute(transform: (gitOutput) {
-      List<GitStash> stashes = List();
+      List<GitStash> stashes = [];
       gitOutput.lines.forEach((line) {
         List<String> parts = line.split(":");
         stashes.add(GitStash(

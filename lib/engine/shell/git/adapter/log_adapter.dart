@@ -11,7 +11,7 @@ class LogAdapter extends BaseAdapter {
   // to try get color of line -> https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
   GitOutput toCommits() {
     return execute(transform: (gitOutput) {
-      List<GitCommit> commits = List();
+      List<GitCommit> commits = [];
       List<Graph> headLine;
       gitOutput.lines.forEach((line) {
         line = line.replaceAll("\"", "");
@@ -49,7 +49,7 @@ class LogAdapter extends BaseAdapter {
   }
 
   List<Graph> firstLineGraph(List<String> parents, String hash) {
-    List<Graph> graphLine = List();
+    List<Graph> graphLine = [];
     Graph graph = Graph(hash: parents[0]);
     graph.start_commit = true;
     graphLine.add(graph);
@@ -63,7 +63,7 @@ class LogAdapter extends BaseAdapter {
 
   List<Graph> lineGraph(List<Graph> beforeGraphs, String hash, List<String> parents) {
     int indexCommitGraph;
-    List<Graph> graphLine = List();
+    List<Graph> graphLine = [];
     beforeGraphs.forEach((beforeGraph) {
       graphLine.add(Graph());
     });
@@ -139,7 +139,7 @@ class LogAdapter extends BaseAdapter {
   }
 
   List<int> haveHash(List<Graph> beforeGraphs, String hash) {
-    List<int> indexs = List();
+    List<int> indexs = [];
     int indexCheck = 0;
     beforeGraphs.forEach((beforeGraph) {
       if(beforeGraph.hash == hash) {

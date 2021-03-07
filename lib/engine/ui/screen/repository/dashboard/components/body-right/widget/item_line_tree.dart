@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:source_app/engine/domain/model/git_commit.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
 
@@ -35,6 +34,7 @@ class ItemLineTree extends StatelessWidget {
   }
 
   List<Widget> buildLine() {
+    // ignore: deprecated_member_use
     List<Widget> line = List();
 
     graphs.forEach((graph) {
@@ -45,7 +45,7 @@ class ItemLineTree extends StatelessWidget {
   }
 
   Widget graphToWidget(Graph graph) {
-   List<Widget> graphsDraw = List();
+   List<Widget> graphsDraw = [];
    graphsDraw.add(Container(height: singleLine, width: width,));
 
    if(graph.right_to_right) {

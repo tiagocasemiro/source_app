@@ -7,6 +7,7 @@ class GitOutputErrorAlert {
   GitOutputErrorAlert(this.context);
 
   displayAlert(String message) {
+    // ignore: deprecated_member_use
     Widget closeButton = RaisedButton(
       color: SourceColors.red,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

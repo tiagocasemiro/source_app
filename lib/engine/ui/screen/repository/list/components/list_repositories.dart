@@ -14,7 +14,7 @@ class ListRepositories extends StatelessWidget {
       initialData: [],
       future: _selectRepositoryViewModel.all(),
       builder: (context, snapshot) {
-        final List<Repository> repositories = snapshot.data != null? snapshot.data: List();
+        final List<Repository> repositories = snapshot.data != null? snapshot.data: [];
         return Visibility(
           visible: repositories.isNotEmpty,
           replacement: Center(child: snapshot.connectionState != ConnectionState.done? CircularProgressIndicator(): Text("No repository")),

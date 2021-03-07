@@ -9,7 +9,7 @@ class TagAdapter extends BaseAdapter {
 
   GitOutput toTags() {
     return execute(transform: (gitOutput) {
-      List<GitTag> tags = List();
+      List<GitTag> tags = [];
       gitOutput.lines.forEach((line) {
         if (line.isNotEmpty) {
           tags.add(GitTag(clean(line)));

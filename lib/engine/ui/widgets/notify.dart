@@ -13,16 +13,19 @@ class Notify {
   void showSuccessWithMessage(GitOutput gitOutput) {
     String message = gitOutput != null && gitOutput.message != null && gitOutput.message.isNotEmpty ? gitOutput.message.trim() : _defaultMessage;
     breakCurrent();
+    // ignore: deprecated_member_use
     _current = Scaffold.of(context).showSnackBar(_buildSuccessSnackBar(message));
   }
 
   void showDefaultSuccess() {
     breakCurrent();
+    // ignore: deprecated_member_use
     _current = Scaffold.of(context).showSnackBar(_buildSuccessSnackBar(_defaultMessage));
   }
 
   void showWarning(String message) {
     breakCurrent();
+    // ignore: deprecated_member_use
     _current = Scaffold.of(context).showSnackBar(_buildWarningSnackBar(message));
   }
 
@@ -60,6 +63,7 @@ class Notify {
                 fontSize: 18.0, ),
               ),
             ),
+            // ignore: deprecated_member_use
             RaisedButton(
               color: SourceColors.white,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

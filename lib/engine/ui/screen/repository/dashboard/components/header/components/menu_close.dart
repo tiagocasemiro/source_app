@@ -3,6 +3,7 @@ import 'package:source_app/engine/ui/screen/repository/dashboard/components/head
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/header/widget/menu_button.dart';
 
 class MenuCloseButton extends StatelessWidget {
+  // ignore: unused_field
   final HeaderViewModel _dashboardViewModel;
 
   MenuCloseButton(this._dashboardViewModel);

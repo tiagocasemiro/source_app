@@ -6,7 +6,7 @@ abstract class BaseGitCommand {
   Map<String, String> _environmentVariable = {'LANG':'en_GB'};
   static const String _git = 'git';
 
-  final List<String> parameters = List();
+  final List<String> parameters = [];
   String _workDirectory;
 
   BaseGitCommand(this._workDirectory);

@@ -15,6 +15,7 @@ class CommitDetailsFiles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     GitOutput initialData = GitOutput("").withObject( List<GitFileModified>());
     return FutureBuilder(
       initialData: initialData,
@@ -23,6 +24,7 @@ class CommitDetailsFiles extends StatelessWidget {
         GitOutput gitOutput = snapshot.data;
         List<GitFileModified> filesCommitted = snapshot.data is GitOutput &&
           gitOutput.isSuccess() && gitOutput.object != null &&
+          // ignore: deprecated_member_use
           gitOutput.object is List<GitFileModified> ? gitOutput.object: List<GitFileModified>();
 
         if(snapshot.connectionState == ConnectionState.done && filesCommitted != null && filesCommitted.isNotEmpty) {
