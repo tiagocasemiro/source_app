@@ -15,6 +15,7 @@ apps:
     plugs:
       - network
       - desktop
+      - home
     slots: [home]
 
 parts:
