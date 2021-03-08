@@ -4,7 +4,7 @@ summary: A gui git to Linux
 description: Source is a simple client for working with git.
 confinement: devmode
 base: core18
-grade: stable
+grade: devel
 icon: snap/gui/icon.png
 
 
