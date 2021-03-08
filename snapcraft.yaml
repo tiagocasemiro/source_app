@@ -1,10 +1,10 @@
 name: source-app
-version: 0.0.2
+version: 0.0.3
 summary: A gui git to Linux
 description: Source is a simple client for working with git.
-confinement: classic
+confinement: strict
 base: core18
-grade: devel
+grade: stable
 icon: snap/gui/icon.png
 
 
@@ -15,6 +15,7 @@ apps:
     plugs:
       - network
       - desktop
+    slots: [home]
 
 parts:
   source-app:
