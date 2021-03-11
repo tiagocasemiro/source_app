@@ -1,13 +1,14 @@
 name: source-app
-version: 0.0.4
+version: 0.0.6
 summary: A gui git to Linux
 description: Source is a simple client for working with git.
 confinement: strict
 base: core18
 grade: stable
 icon: snap/gui/icon.png
-
-
+architectures:
+  - build-on: amd64
+  - build-on: i386
 apps:
   source-app:
     command: source_app
@@ -16,9 +17,15 @@ apps:
       - network
       - desktop
       - home
-
+  git:
+    command: git
+    plugs: [network, home]
 parts:
   source-app:
     plugin: flutter
     flutter-target: lib/main.dart # The main entry-point file of the application
     source: .
+    stage-packages:
+      - bash
+      - git
+    build-packages: [git]
