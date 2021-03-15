@@ -1,4 +1,3 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,10 +5,10 @@ import 'package:source_app/engine/domain/model/git_branch.dart';
 import 'package:source_app/engine/shell/git/model/git_output.dart';
 import 'package:source_app/engine/ui/screen/repository/dashboard/components/body-left/body_left_viewmodel.dart';
 import 'package:source_app/engine/ui/source_resources.dart';
+import 'package:source_app/engine/ui/utils/context_menu.dart';
 import 'package:source_app/engine/ui/widgets/application_load.dart';
 import 'package:source_app/engine/ui/widgets/gitoutput_error_alert.dart';
 import 'package:source_app/engine/ui/widgets/notify.dart';
-
 
 class LocalBranches extends StatefulWidget {
   final BodyLeftViewModel _bodyLeftViewModel;
@@ -137,19 +136,6 @@ class _LocalBranchesState extends State<LocalBranches> {
     );
   }
 
-  Widget _contextMenu(Widget widget) {
-    return Builder(
-        builder: (ctx) {
-          return GestureDetector(
-            child: widget,
-            onSecondaryTap: () {
-              show(context: ctx);
-            },
-          );
-        }
-    );
-  }
-
   Widget _buildBranch(GitBranch branch) {
     double leftPadding = branch.hasFolder() ? 32 : 16;
     TextStyle currentBranche = GoogleFonts.balooBhai(
@@ -163,7 +149,7 @@ class _LocalBranchesState extends State<LocalBranches> {
       fontSize: 16.0,
     );
 
-    return _contextMenu(Container(
+    return contextMenu(Container(
       padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
       child: Material(
         color: Colors.transparent,
@@ -212,55 +198,11 @@ class _LocalBranchesState extends State<LocalBranches> {
           },
         ),
       ),
-    ));
-  }
-
-
-
-  CancelFunc show({BuildContext context, Offset target}) {
-    return BotToast.showAttachedWidget(
-        attachedBuilder: (_) => Card(
-          color:  SourceColors.white,
-          child: _menu(),
-        ),
-        animationDuration: Duration(milliseconds: 300),
-        enableSafeArea: false,
-        targetContext: context,
-        preferDirection: PreferDirection.bottomCenter
-    );
-  }
-
-  Widget _menu() {
-    TextStyle allBranches = GoogleFonts.roboto(
-      fontWeight: FontWeight.w500,
-      color: SourceColors.blue[2],
-      fontSize: 16.0,
-    );
-
-    return  Card(
-      color: SourceColors.white,
-      child: Container(
-        padding:
-        const EdgeInsets.symmetric(horizontal: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            TextButton(
-              onPressed: () {
-                // todo impplement delete local branch
-                BotToast.cleanAll();
-              },
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(minWidth: 70, maxWidth: 140),
-                child: Row(children: [
-                  Icon(Icons.delete, color: SourceColors.blue[2]),
-                  Text('delete', style: allBranches,),
-                ]),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    ), [
+      ItemContextMenu(Icons.delete, "delete", (){
+        // todo delete local branch
+        print("delete local branch: " + branch.name);
+      })
+    ]);
   }
 }
