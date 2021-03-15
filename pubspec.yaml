@@ -43,6 +43,7 @@ dependencies:
     git:
       url: git://github.com/CaiJingLong/flutter_load_widget.git
       ref: 070a58bb23729c73f3729883a15af9b8edd0b79c
+  bot_toast: ^4.0.1
 
 dev_dependencies:
   flutter_test:
