@@ -200,8 +200,16 @@ class _LocalBranchesState extends State<LocalBranches> {
       ),
     ), [
       ItemContextMenu(Icons.delete, "delete", (){
-        // todo delete local branch
-        print("delete local branch: " + branch.name);
+        Load.show();
+        _dashboardViewModel.delete(branch).then((GitOutput gitOutput) {
+          Load.hide();
+          if(gitOutput.isFailure()) {
+            GitOutputErrorAlert(context).displayAlert(gitOutput.message);
+          } else {
+            _dashboardViewModel.refreshLocalBranches();
+            Notify(context).showSuccessWithMessage(gitOutput);
+          }
+        }, onError: (e) => Load.hide());
       })
     ]);
   }

@@ -10,6 +10,10 @@ class BranchesUseCase {
     return Git().branch().local().call();
   }
 
+  Future<GitOutput> delete(String name) async {
+    return Git().branch().delete(name).call();
+  }
+
   Future<GitOutput> remote() async {
     return Git().branch().remote().call();
   }

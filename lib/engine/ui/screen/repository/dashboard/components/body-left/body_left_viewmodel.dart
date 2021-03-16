@@ -1,3 +1,4 @@
+import 'package:source_app/engine/domain/model/git_branch.dart';
 import 'package:source_app/engine/domain/model/git_stash.dart';
 import 'package:source_app/engine/domain/model/git_tag.dart';
 import 'package:source_app/engine/domain/use.case/branches_usecase.dart';
@@ -81,6 +82,12 @@ class BodyLeftViewModel {
 
   Future<GitOutput> apply(GitStash stash) async {
     GitOutput gitOutput = await StashesUseCase().apply(stash);
+
+    return gitOutput;
+  }
+
+  Future<GitOutput> delete(GitBranch localBranch) async {
+    GitOutput gitOutput = await BranchesUseCase().delete(localBranch.name);
 
     return gitOutput;
   }
