@@ -46,7 +46,7 @@ class HistoryDashboard extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 child: Row(
                   children: [
-                    Container(child: Text("Tree", style: _style), width: columnWithTreeHistory,),
+                   // Container(child: Text("Tree", style: _style), width: columnWithTreeHistory,), todo implement tree
                     Container(child: Text("Hash", style: _style), width: columnWithHashHistory,),
                     Expanded(child: Text("Message", style: _style)),
                     Container(child: Text("Author", style:_style), width: columnWithAuthorHistory,),

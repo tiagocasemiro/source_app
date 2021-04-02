@@ -33,10 +33,10 @@ class ItemHistory extends StatelessWidget {
           color: isPair ? SourceColors.grey[11] : SourceColors.grey[10],
           child: Row(
             children: [
-              Container(
+              /*Container( // todo implementar arvore
                 child: ItemLineTree(_commit.graph, _index),
                 width: HistoryDashboard.columnWithTreeHistory,
-                height: lineHeight,),
+                height: lineHeight,),*/
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(_commit.abbreviatedHash, style: _style, maxLines: 1,),
