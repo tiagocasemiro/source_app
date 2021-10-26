@@ -1,5 +1,5 @@
 name: source-app
-version: 0.0.7
+version: 0.0.8
 summary: A gui git to Linux
 description: Source is a simple client for working with git.
 confinement: strict
